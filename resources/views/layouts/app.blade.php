@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
+    <div id="wrapper">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -72,13 +72,15 @@
             </div>
         </nav>
 
-        <div class="bg-light border-right" id="sidebarWrapper">
-            @yield('sidebar')
-        </div>
+        <div class="d-flex">
+            <div class="col-2 bg-light border-right" id="sidebar-wrapper">
+                @section('sidebar')
+            </div>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <main class="col-12 py-4">
+                @yield('content')
+            </main>
+        </div>
     </div>
 </body>
 </html>
