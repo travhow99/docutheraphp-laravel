@@ -18,7 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->smallInteger('user_id');
             $table->smallInteger('client_id');
             $table->longText('documentation');
-            $table->dateTime('date');
+            $table->dateTime('session_date');
             $table->timestamps();
         });
     }

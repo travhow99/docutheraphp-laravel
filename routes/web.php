@@ -1,5 +1,8 @@
 <?php
 
+use App\Document;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,13 +15,46 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (!Auth::user()) {
+        return view('welcome');
+    } else {
+        return view('dashboard');
+    }
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+/**
+ * Add new documentation
+ */
+Route::post('/document', function (Request $request) {
+    $validator = Validator::make($request->all(), [
+        'session_date'  => 'required',
+        'documentation' => 'required',
+    ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+    if ($validator->fails()) {
+        return redirect('/')
+            ->withInput()
+            ->withErrors($validator);
+    }
+    
+    $document = new Document;
+    $document->session_date = $request->session_date;
+    $document->documentation = $request->documentation;
+    
+    $document->save();
+
+    return redirect('/');
+});
+
+/**
+ * Delete existing documentation
+ */
+Route::delete('/document/{id}', function ($id) {
+    Document::findOrFail($id)->delete();
+
+    return redirect('/');
+});

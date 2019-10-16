@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Docutherapy
@@ -73,13 +73,27 @@
         </nav>
 
         <div class="d-flex">
-            <div class="col-2 bg-light border-right" id="sidebar-wrapper">
-                @section('sidebar')
-            </div>
+            @guest
+                <main class="col-12 py-4">
+                    @yield('content')
+                </main>
+            @else
+                <div class="col-2 bg-light border-right" id="sidebar-wrapper">
+                    <div class="list-group list-group-flush">
+                        <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                        <a href="/sessions" class="list-group-item list-group-item-action bg-light">Sessions</a>
+                        <a href="/clients" class="list-group-item list-group-item-action bg-light">Clients</a>
+                        <a href="/billing" class="list-group-item list-group-item-action bg-light">Billing</a>
+                        <a href="/profile" class="list-group-item list-group-item-action bg-light">Profile</a>
+                        <a href="/account" class="list-group-item list-group-item-action bg-light">Account</a>
+                    </div>
+                </div>
 
-            <main class="col-12 py-4">
-                @yield('content')
-            </main>
+                <main class="col-10 py-4">
+                    @yield('content')
+                </main>
+            @endguest
+
         </div>
     </div>
 </body>
