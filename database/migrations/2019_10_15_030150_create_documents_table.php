@@ -15,7 +15,7 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->smallInteger('user_id');
+            $table->smallInteger('user_id')->index();
             $table->smallInteger('client_id');
             $table->longText('documentation');
             $table->dateTime('session_date');

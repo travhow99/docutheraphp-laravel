@@ -26,6 +26,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/sessions', function () {
+    $sessions = Document::orderBy('session_date', 'asc')->get();
+    
+    return view('documents', [
+        'sessions' => $sessions
+    ]);
+});
+
 /**
  * Add new documentation
  */

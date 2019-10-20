@@ -32,7 +32,7 @@
 
             <div class="form-group">
                 <div class="col-offset-3 col-6">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-plus"></i> Save Documentation</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Save Documentation</button>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
     </div>
 
     {{-- TODO: Past Documentation --}}
-    @if (count($documents) > 0)
+    @if (count($sessions) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
                 Recent Documentation
@@ -57,7 +57,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($documents as $session)
+                        @foreach ($sessions as $session)
                             <tr>
                                 <td class="table-text">
                                     <div>{{ $session->$client_id }}</div>
