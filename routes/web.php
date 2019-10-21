@@ -26,9 +26,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/**
+ * Clients
+ */
+Route::get('/clients', 'ClientController@index');
+Route::post('/client', 'ClientController@store');
+Route::delete('/client/{client}', 'ClientController@destroy');
+
+/**
+ * Sessions
+ */
 Route::get('/sessions', function () {
     $sessions = Document::orderBy('session_date', 'asc')->get();
-    
+
     return view('documents', [
         'sessions' => $sessions
     ]);

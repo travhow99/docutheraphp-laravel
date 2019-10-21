@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Document::class);
     }
+
+    /**
+     * Get all clients for the user.
+     */
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
 }

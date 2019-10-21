@@ -70,4 +70,9 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
+
+    /**
+     * Define the "client" routes for the application.
+     */
+    $router->model('client', 'App\Client');
 }
