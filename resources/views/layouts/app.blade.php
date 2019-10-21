@@ -22,7 +22,7 @@
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Docutherapy
                 </a>

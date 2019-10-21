@@ -23,7 +23,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         * Define the "client" routes for the application.
+         */
+        // TODO: 
+        // $router->model('client', 'App\Client');
+
 
         parent::boot();
     }
@@ -70,9 +75,4 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
-
-    /**
-     * Define the "client" routes for the application.
-     */
-    $router->model('client', 'App\Client');
 }
