@@ -27,7 +27,19 @@
                                 </div>
 
                                 <div class="card-footer">
-                                    <button class="btn btn-primary btn-block">Manage</button>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-block">Manage</button>
+                                        </div>
+                                        <div class="col">
+                                            <form action="/client/{{ $client->id }}" method="post">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+
+                                                <button class="btn btn-danger btn-block">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
 
                         </div>

@@ -67,6 +67,7 @@ class ClientController extends Controller
 
         return redirect('/clients');
     }
+    
     /**
      * Update the given client.
      * 

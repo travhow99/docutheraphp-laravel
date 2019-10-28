@@ -19,7 +19,7 @@ class ClientPolicy
      */
     public function destroy(User $user, Client $client)
     {
-        return $user->id === $client->user_id;
+        return $user->id == $client->user_id;
     }
 
     /**
