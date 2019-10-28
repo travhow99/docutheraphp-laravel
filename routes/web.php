@@ -31,6 +31,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::get('/clients', 'ClientController@index');
 Route::post('/client', 'ClientController@store');
+Route::patch('/client', 'ClientController@update');
 Route::delete('/client/{client}', 'ClientController@destroy');
 
 /**

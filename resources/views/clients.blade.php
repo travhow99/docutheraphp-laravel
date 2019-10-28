@@ -37,6 +37,43 @@
         @else
             <div class="row"><h1>New client</h1></div>
         @endif
+            {{-- Add Client form --}}
+            <form action="/client" method="post">
+                {{ csrf_field() }}
+
+                {{-- Documentation Session Date --}}
+                <div class="form-group">
+                    <label for="name" class="col-3 control-label">Client Name</label>
+
+                    <div class="col-6">
+                        <input type="text" name="name" id="client-name" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="agency" class="col-3 control-label">Agency</label>
+
+                    <div class="col-6">
+                        <input type="text" name="agency" id="agency" name="agency" class="form-control">
+                    </div>
+                </div>
+
+{{--                 <div class="form-group">
+                    <label for="documentation" class="col-3 control-label">Documentation</label>
+
+                    <div class="col-6">
+                        <input type="text" name="documentation" id="documentation" class="form-control">
+                    </div>
+                </div> --}}
+
+                <div class="form-group">
+                    <div class="col-6 ">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Save Client</button>
+                    </div>
+                </div>
+
+            </form>
+
     </div>
 
 @endsection

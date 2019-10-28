@@ -17,11 +17,11 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->index();
             $table->string('name');
-            $table->string('session_day');
-            $table->string('session_time');
-            $table->dateTime('start_date');
+            $table->string('session_day')->nullable();
+            $table->string('session_time')->nullable();
+            $table->dateTime('start_date')->nullable();
             $table->string('agency');
-            $table->boolean('active');
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

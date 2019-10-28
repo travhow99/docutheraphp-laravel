@@ -23,14 +23,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         /**
          * Define the "client" routes for the application.
          */
-        // TODO: 
-        // $router->model('client', 'App\Client');
-
-
-        parent::boot();
+        Route::model('client', App\Client::class);
     }
 
     /**
