@@ -114,6 +114,8 @@ class ClientController extends Controller
         $client->fill($data);
 
         $client->save();
+
+        return redirect("/clients/{$client->id}/edit");
     }
 
     /**
