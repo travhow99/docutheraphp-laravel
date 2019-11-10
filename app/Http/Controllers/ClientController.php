@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use App\Repositories\ClientRepository;
 
@@ -40,7 +41,7 @@ class ClientController extends Controller
     {
         $clients = Client::where('user_id', $request->user()->id)->get();
 
-        return view('clients', [
+        return view('clients.index', [
             'clients' => $clients,
         ]);
     }
@@ -51,6 +52,7 @@ class ClientController extends Controller
      * @param Request $request
      * @return Response
      */
+    // TODO: possibly switched with @create?
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -67,6 +69,20 @@ class ClientController extends Controller
 
         return redirect('/clients');
     }
+
+    /**
+     * Edit the given client.
+     * 
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Request $request, $client)
+    {
+        // dd($client->session_day);
+        return view('clients.edit', [
+            'client' => $client,
+        ]);
+    }
     
     /**
      * Update the given client.
@@ -75,7 +91,7 @@ class ClientController extends Controller
      * @param string $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $client)
     {
         // Take input from Manage User page
         // $name = Input::get('name');
@@ -85,10 +101,14 @@ class ClientController extends Controller
         // $start_date = Input::get('start_date');
         // $active = Input::get('active');
 
-        $data = Input::all();
+        $data = Request()->all();
+
+        // $data = Input::all();
 
         // Grab the record to be updated
-        $client = Client::find($id);
+        // $client = Client::find($id);
+
+        // dd($client);
 
         // Fill in updated values
         $client->fill($data);

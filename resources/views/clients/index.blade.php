@@ -22,14 +22,14 @@
                                         Session Day: <strong>{{ $client->session_day }}</strong><br>
                                         Session Time: <strong>{{ $client->session_time }}</strong><br>
                                         {{-- TODO: Calculate next session date --}}
-                                        Next Session: <strong>10/24/2019</strong>
+                                        Next Session: <strong>Coming soon...</strong>
                                     </p>
                                 </div>
 
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col">
-                                            <button class="btn btn-primary btn-block">Manage</button>
+                                            <button class="btn btn-success btn-block">Manage</button>
                                         </div>
                                         <div class="col">
                                             <form action="/client/{{ $client->id }}" method="post">
@@ -38,6 +38,11 @@
 
                                                 <button class="btn btn-danger btn-block">Delete</button>
                                             </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mt-2">
+                                            <button class="btn btn-primary btn-block">New Session</button>
                                         </div>
                                     </div>
                                 </div>

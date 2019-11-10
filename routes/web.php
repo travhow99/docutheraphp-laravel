@@ -30,6 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  * Clients
  */
 Route::get('/clients', 'ClientController@index');
+Route::get('clients/{client}/edit', 'ClientController@edit');
 Route::post('/client', 'ClientController@store');
 Route::patch('/client/{client}', 'ClientController@update');
 Route::delete('/client/{client}', 'ClientController@destroy');
