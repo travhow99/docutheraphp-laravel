@@ -14,7 +14,7 @@
                 @foreach ($clients as $client)
                     <div class="col-6">
 
-                        <div class="card">
+                        <div class="card mb-4">
                     
                                 <div class="card-body">
                                     <h4 class="text-center">{{ $client->name }}</h4>
@@ -29,7 +29,7 @@
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col">
-                                            <button class="btn btn-success btn-block">Manage</button>
+                                            <a href="/clients/{{ $client->id }}/edit" class="btn btn-success btn-block">Manage</a>
                                         </div>
                                         <div class="col">
                                             <form action="/client/{{ $client->id }}" method="post">

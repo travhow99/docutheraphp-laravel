@@ -27,11 +27,11 @@
                                             {{-- TODO: show selected from DB --}}
                                             <select name="session_day" id="session_day" class="form-control">
                                                 <option value="">Select a Day</option>
-                                                <option value="Monday">Monday</option>
-                                                <option value="Tuesday">Tuesday</option>
-                                                <option value="Wednesday">Wednesday</option>
-                                                <option value="Thursday">Thursday</option>
-                                                <option value="Friday">Friday</option>
+                                                <option value="Monday" {{ $client->session_day = "Monday" ? "selected" : ""}}>Monday</option>
+                                                <option value="Tuesday" {{ $client->session_day = "Tuesday" ? "selected" : ""}}>Tuesday</option>
+                                                <option value="Wednesday" {{ $client->session_day = "Monday" ? "selected" : ""}}>Monday</option>
+                                                <option value="Thursday" {{ $client->session_day = "Thursday" ? "selected" : ""}}>Thursday</option>
+                                                <option value="Friday" {{ $client->session_day = "Friday" ? "selected" : ""}}>Friday</option>
                                             </select>
                                         </div>
 
@@ -59,21 +59,14 @@
 
                             <div class="card-footer">
                                 <div class="row">
-                                    <div class="col">
-                                        <button class="btn btn-primary btn-block">Update</button>
-                                    </div>
-                                    <div class="col">
-                                        <form action="/client/{{ $client->id }}" method="post">
-                                            {{ csrf_field() }}
-
-                                            <button class="btn btn-danger btn-block">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col mt-2">
-                                        <button class="btn btn-secondary btn-block">Deactivate</button>
-                                    </div>
+                                        {{-- TODO: Discontinue Method --}}
+                                            <form action="/client/{{ $client->id }}" method="post">
+                                                {{ csrf_field() }}
+    
+                                                <button class="btn btn-danger btn-block">Discontinue</button>
+                                            </form>
+                                        </div>
                                 </div>
                             </div>
 

@@ -93,22 +93,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $client)
     {
-        // Take input from Manage User page
-        // $name = Input::get('name');
-        // $agency = Input::get('agency');
-        // $session_day = Input::get('session_day');
-        // $session_time = Input::get('session_time');
-        // $start_date = Input::get('start_date');
-        // $active = Input::get('active');
-
         $data = Request()->all();
-
-        // $data = Input::all();
-
-        // Grab the record to be updated
-        // $client = Client::find($id);
-
-        // dd($client);
 
         // Fill in updated values
         $client->fill($data);
