@@ -1,0 +1,34 @@
+TODO 11/10
+
+Sessions
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
+
+POC (point of contadct)
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
+--> Routings [ ]
+
+Templates
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
+--> Routings [ ]
+
+Sessions
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
+--> Routings [ ]
+
+Goals
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
+
+Goal_history ?
+--> Migration [ ]
+--> Model [ ]
+--> Controller [ ]
