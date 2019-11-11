@@ -4347,7 +4347,6 @@ input[type=button].btn-block {
 .navbar {
   position: relative;
   display: flex;
-  flex: 0 0 100%;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -10643,14 +10642,5 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
-}
-
-#sidebar-wrapper {
-  min-height: 100vh;
-  /* margin-left: -15rem; */
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
 }
 

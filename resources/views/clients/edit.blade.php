@@ -26,12 +26,12 @@
                                             <label for="session_day">Session Day</label>    
                                             {{-- TODO: show selected from DB --}}
                                             <select name="session_day" id="session_day" class="form-control">
-                                                <option value="">Select a Day</option>
-                                                <option value="Monday" {{ $client->session_day = "Monday" ? "selected" : ""}}>Monday</option>
-                                                <option value="Tuesday" {{ $client->session_day = "Tuesday" ? "selected" : ""}}>Tuesday</option>
-                                                <option value="Wednesday" {{ $client->session_day = "Monday" ? "selected" : ""}}>Monday</option>
-                                                <option value="Thursday" {{ $client->session_day = "Thursday" ? "selected" : ""}}>Thursday</option>
-                                                <option value="Friday" {{ $client->session_day = "Friday" ? "selected" : ""}}>Friday</option>
+                                                <option value="" selected>Select a Day</option>
+                                                <option value="Monday" {{ $client->session_day === "Monday" ? "selected" : ""}}>Monday</option>
+                                                <option value="Tuesday" {{ $client->session_day === "Tuesday" ? "selected" : ""}}>Tuesday</option>
+                                                <option value="Wednesday" {{ $client->session_day === "Monday" ? "selected" : ""}}>Monday</option>
+                                                <option value="Thursday" {{ $client->session_day === "Thursday" ? "selected" : ""}}>Thursday</option>
+                                                <option value="Friday" {{ $client->session_day === "Friday" ? "selected" : ""}}>Friday</option>
                                             </select>
                                         </div>
 
@@ -41,6 +41,7 @@
                                         </div>
                                     </div>
 
+                                    {{-- TODO: Dropdown list of populated Agencies --}}
                                     <div class="form-group">
                                         <label for="agency">Agency</label>    
                                         <input type="text" name="agency" id="agency" class="form-control" value="{{ $client->agency }}">
@@ -64,7 +65,7 @@
                                             <form action="/client/{{ $client->id }}" method="post">
                                                 {{ csrf_field() }}
     
-                                                <button class="btn btn-danger btn-block">Discontinue</button>
+                                                <button class="btn btn-outline-danger btn-block">Discontinue</button>
                                             </form>
                                         </div>
                                 </div>
