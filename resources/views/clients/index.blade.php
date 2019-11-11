@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col mt-2">
-                                            <button class="btn btn-primary btn-block">New Session</button>
+                                            <a href="/clients/{{ $client->id }}/sessions" class="btn btn-primary btn-block">Sessions</a>
                                         </div>
                                     </div>
                                 </div>

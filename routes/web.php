@@ -38,12 +38,8 @@ Route::delete('/client/{client}', 'ClientController@destroy');
 /**
  * Sessions
  */
-Route::get('/sessions', function () {
-    $sessions = Document::orderBy('session_date', 'asc')->get();
-
-    return view('documents', [
-        'sessions' => $sessions
-    ]);
+Route::get('/clients/{client}/sessions', function () {
+    return view('sessions.index');
 });
 
 /**

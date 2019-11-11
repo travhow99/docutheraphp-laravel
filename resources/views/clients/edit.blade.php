@@ -61,6 +61,10 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col mt-2">
+                                        {{-- TODO: Contact Info --}}
+                                        <a class="btn btn-outline-info btn-block" href="/client/{{ $client->id }}/contact">Contact Info</a>
+                                    </div>
+                                    <div class="col mt-2">
                                         {{-- TODO: Discontinue Method --}}
                                             <form action="/client/{{ $client->id }}" method="post">
                                                 {{ csrf_field() }}
