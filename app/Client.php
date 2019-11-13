@@ -20,4 +20,12 @@ class Client extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the sessions for the client.
+     */
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
 }

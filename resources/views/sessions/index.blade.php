@@ -24,8 +24,8 @@
 
     @push('scripts')
         <script>
-        jQuery(document).ready(function() {
-            jQuery('#entry').summernote({
+        $(document).ready(function() {
+            $('#entry').summernote({
                 height:300,
             });
         });

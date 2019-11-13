@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Client::class);
     }
+
+    /**
+     * Get all sessions through clients for this user.
+     */
+    public function sessions()
+    {
+        return $this->hasManyThrough('App\Session', 'App\Client');
+    }
 }
