@@ -29,7 +29,7 @@ class DocumentController extends Controller
      * Display a list of all the user's documents.
      * 
      * @param Request $request
-     * @return response
+     * @return Response
      */
     public function index(Request $request)
     {

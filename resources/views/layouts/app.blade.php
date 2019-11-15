@@ -99,7 +99,7 @@
 
         </div>
     </div>
-
+    <script src="js/app.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
 </body>
 </html>
