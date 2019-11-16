@@ -3,7 +3,6 @@
 @section('content')
 
     {{-- Bootstrap Boilderplate --}}
-
     <div class="container-fluid">
         {{-- Display Validation Errors --}}
         @include('common.errors')
@@ -23,20 +22,27 @@
 
         <div class="row">
             <div class="col">
-                <div id="entry"></div>
+                <table class="table">
+                    <thead>
+                        <td>Date</td>
+                        <td></td>
+                        <td></td>
+                    </thead>
+                    <tbody>
+                        @foreach ($client->pastSessions() as $pSession)
+                            <tr>
+                                <td>
+                                    {{ $pSession }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
-
-    @push('scripts')
-        <script>
-        $(document).ready(function() {
-            $('#entry').summernote({
-                height:300,
-            });
-        });
-        </script>
-    @endpush
 
 @endsection

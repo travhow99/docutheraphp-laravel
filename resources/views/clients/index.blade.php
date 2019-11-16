@@ -22,7 +22,7 @@
                                         Session Day: <strong>{{ $client->session_day }}</strong><br>
                                         Session Time: <strong>{{ $client->session_time }}</strong><br>
                                         {{-- TODO: Calculate next session date --}}
-                                        Next Session: <strong>Coming soon...</strong>
+                                        Next Session: <strong>{{ $client->nextSession() }}</strong>
                                     </p>
                                 </div>
 

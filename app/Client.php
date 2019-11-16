@@ -38,10 +38,32 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
-        // Modify the date it contains
-        $date->modify("next " . $this->session_day);
+        if ($this->session_day) {
+            // Modify the date it contains
+            $date->modify("next " . $this->session_day);
+    
+            // Output
+            return $date->format('m-d-Y');
+        } else {
+            return "Session not available";
+        }
+    }
 
-        // Output
-        return $date->format('m-d-Y');
+    /**
+     * Determine past estimated session dates.
+     * @return Collection
+     */
+    public function pastSessions()
+    {
+        $day = $this->session_day;
+        $startDate = strtotime($this->start_date);
+        $endDate = strtotime('today');
+
+        $sessionDates = [];
+        for ($x = strtotime('Monday', $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
+            array_push($sessionDates, date('l m-d-Y', $x));
+        }
+
+        return $sessionDates;
     }
 }
