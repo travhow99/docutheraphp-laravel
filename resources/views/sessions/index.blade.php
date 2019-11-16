@@ -10,7 +10,8 @@
 
         <div class="row">
             <div class="col">
-                <h3>New Session</h3>
+                <h3>Sessions for {{ $client->name }}</h3>
+                <p>Next session: {{ $client->nextSession() }}</p>
             </div>
         </div>
 

@@ -4,12 +4,9 @@ import ReactDOM from 'react-dom';
 export default class Card extends Component {
     render() {
         return (
-            <div className="col-md-8">
-                <div className="card">
-                    <div className="card-header">{this.props.title}</div>
-
-                    <div className="card-body">I'm an example component!</div>
-                </div>
+            <div className="card mb-4">
+                <div className="card-header">{this.props.title}</div>
+                <div className="card-body">I'm an example component!</div>
             </div>
         );
     }

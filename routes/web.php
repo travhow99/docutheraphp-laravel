@@ -38,9 +38,7 @@ Route::delete('/client/{client}', 'ClientController@destroy');
 /**
  * Sessions
  */
-Route::get('/clients/{client}/sessions', function () {
-    return view('sessions.index');
-});
+Route::get('/clients/{client}/sessions', 'SessionController@index');
 
 /**
  * Add new documentation

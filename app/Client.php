@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
 
 class Client extends Model
 {
@@ -27,5 +28,20 @@ class Client extends Model
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    /**
+     * Determine the client's next session.
+     */
+    public function nextSession()
+    {
+        // Create a new DateTime object
+        $date = new DateTime();
+
+        // Modify the date it contains
+        $date->modify("next " . $this->session_day);
+
+        // Output
+        return $date->format('m-d-Y');
     }
 }
