@@ -16,6 +16,12 @@
 
         <div class="row">
             <div class="col">
+                <div id="card" data-title="My Title"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
                 <div id="entry"></div>
             </div>
         </div>
