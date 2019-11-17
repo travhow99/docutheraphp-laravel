@@ -62,11 +62,26 @@ class Client extends Model
 
         $sessionDates = [];
         for ($x = strtotime('Monday', $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
-            $status = (count(Session::where('session_date', date('m-d-Y', $x))->get()) > 0) ? 'In Progress' : 'Outstanding';
+            // $status = (count(Session::where('session_date', date('m-d-Y', $x))->get()) > 0) ? 'In Progress' : 'Outstanding';
+            $status = $this->sessionStatus(date('m-d-Y', $x));
+
 
             array_push($sessionDates, ['date' => date('l m-d-Y', $x), 'status' => $status]);
         }
 
         return array_slice($sessionDates, 0, 6);
+    }
+
+    /**
+     * Generate past sessions expected for Client.
+     * @param $session_date
+     * format: date(m-d-Y, $date);
+     * @return boolean
+     */
+    public function sessionStatus($sessionDate)
+    {
+        return (count(Session::where('session_date', $sessionDate)->get()) > 0) 
+                                                        ? 'In Progress' : 
+                                                        'Outstanding';
     }
 }
