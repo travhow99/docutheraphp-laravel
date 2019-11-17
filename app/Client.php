@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use App\Session;
 
 class Client extends Model
 {
@@ -61,9 +62,11 @@ class Client extends Model
 
         $sessionDates = [];
         for ($x = strtotime('Monday', $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
-            array_push($sessionDates, date('l m-d-Y', $x));
+            $status = (count(Session::where('session_date', date('m-d-Y', $x))->get()) > 0) ? 'In Progress' : 'Outstanding';
+
+            array_push($sessionDates, ['date' => date('l m-d-Y', $x), 'status' => $status]);
         }
 
-        return $sessionDates;
+        return array_slice($sessionDates, 0, 6);
     }
 }

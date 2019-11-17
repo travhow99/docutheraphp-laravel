@@ -23,18 +23,22 @@
         <div class="row">
             <div class="col">
                 <table class="table">
-                    <thead>
-                        <td>Date</td>
-                        <td></td>
-                        <td></td>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($client->pastSessions() as $pSession)
                             <tr>
                                 <td>
-                                    {{ $pSession }}
+                                    {{ $pSession['date'] }}
                                 </td>
-                                <td></td>
+                                <td>
+                                    {{ $pSession['status'] }}
+                                </td>
                                 <td></td>
                             </tr>
                         @endforeach
