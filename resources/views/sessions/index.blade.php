@@ -27,7 +27,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,9 +37,16 @@
                                     {{ $pSession['date'] }}
                                 </td>
                                 <td>
-                                    {{ $pSession['status'] }}
+                                    @if($pSession['status'] === 'Outstanding')
+                                        <span class="text-danger">{{ $pSession['status'] }}</span>
+                                    @else
+                                        <span class="text-success">{{ $pSession['status'] }}</span>
+                                    @endif
                                 </td>
-                                <td></td>
+                                <td>
+                                    <a href="" class="btn btn-success">Occured</a>
+                                    <a href="" class="btn btn-danger">Cancelled</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
