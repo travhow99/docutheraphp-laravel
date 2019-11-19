@@ -44,8 +44,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-success">Occured</a>
-                                    <a href="" class="btn btn-danger">Cancelled</a>
+                                    <form class="d-inline" action="" method="post">
+                                        @csrf
+                                        <input type="hidden" name="status" value="complete">
+                                        <button href="" type="submit" class="btn btn-success">Occured</button>
+                                    </form>
+                                    <form class="d-inline" action="" method="post">
+                                        @csrf
+                                        <input type="hidden" name="status" value="cancelled">
+                                        <button href="" type="submit" class="btn btn-danger">Cancelled</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
