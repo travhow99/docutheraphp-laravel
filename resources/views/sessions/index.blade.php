@@ -44,14 +44,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form class="d-inline" action="" method="post">
+                                    <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
                                         @csrf
                                         <input type="hidden" name="status" value="complete">
+                                        <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
                                         <button href="" type="submit" class="btn btn-success">Occured</button>
                                     </form>
-                                    <form class="d-inline" action="" method="post">
+                                    <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
                                         @csrf
                                         <input type="hidden" name="status" value="cancelled">
+                                        <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
                                         <button href="" type="submit" class="btn btn-danger">Cancelled</button>
                                     </form>
                                 </td>
