@@ -61,6 +61,8 @@ class TemplateController extends Controller
             'template' => html_entity_decode($request->template),
         ]);
 
+        return redirect('/templates');
+
     }
 
     /**

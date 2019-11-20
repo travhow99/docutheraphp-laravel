@@ -86,6 +86,7 @@
                         <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                         <a href="/sessions" class="list-group-item list-group-item-action bg-light">Sessions</a>
                         <a href="/clients" class="list-group-item list-group-item-action bg-light">Clients</a>
+                        <a href="/templates" class="list-group-item list-group-item-action bg-light">Templates</a>
                         <a href="/billing" class="list-group-item list-group-item-action bg-light">Billing</a>
                         <a href="/profile" class="list-group-item list-group-item-action bg-light">Profile</a>
                         <a href="/account" class="list-group-item list-group-item-action bg-light">Account</a>
