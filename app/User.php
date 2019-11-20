@@ -54,6 +54,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all templates for the user.
+     */
+    public function templates()
+    {
+        return $this->hasMany(Template::class);
+    }
+
+    /**
      * Get all sessions through clients for this user.
      */
     public function sessions()

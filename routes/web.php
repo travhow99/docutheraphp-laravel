@@ -41,6 +41,11 @@ Route::delete('/client/{client}', 'ClientController@destroy');
 Route::get('/clients/{client}/sessions', 'SessionController@index');
 Route::post('/clients/{client}/session', 'SessionController@store');
 
+/**
+ * Templates
+ */
+Route::get('/templates', 'TemplateController@index');
+Route::post('/template', 'TemplateController@store');
 
 /**
  * Add new documentation

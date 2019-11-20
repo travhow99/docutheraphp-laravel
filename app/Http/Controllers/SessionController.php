@@ -22,6 +22,7 @@ class SessionController extends Controller
      * Display all of a client's past sessions.
      * 
      * @param Request $request
+     * @param Client $client
      * @return Response
      */
     public function index(Request $request, Client $client)
