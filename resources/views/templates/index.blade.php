@@ -17,12 +17,12 @@
                         <div class="card mb-4">
                     
                                 <div class="card-body">
-                                    <h4 class="text-center">{{ $template->name }}</h4>
+                                    <h4 class="text-center">{{ $template }}</h4>
                                     <p>
-                                        Session Day: <strong>{{ $template->session_day }}</strong><br>
-                                        Session Time: <strong>{{ $template->session_time }}</strong><br>
+                                        Session Day: <strong>{{ $template }}</strong><br>
+                                        Session Time: <strong>{{ $template }}</strong><br>
                                         {{-- TODO: Calculate next session date --}}
-                                        Next Session: <strong>{{ $template->nextSession() }}</strong>
+                                        Next Session: <strong>{{ $template }}</strong>
                                     </p>
                                 </div>
 

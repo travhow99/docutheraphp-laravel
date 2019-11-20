@@ -24,10 +24,12 @@ class TemplateController extends Controller
      * @param Template $template
      * @return Response
      */
-    public function index(Template $templates)
+    public function index()
     {
+        $user = auth()->user();
+        $templates = $user->templates;
         return view('templates.index', [
-            'templates' => [],
+            'templates' => $templates,
         ]);
     }
 
