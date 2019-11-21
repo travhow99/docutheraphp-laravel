@@ -115,6 +115,11 @@
         $(document).ready(function() {
             $('#template').summernote({
                 height:300,
+                popover: {
+                    image: [],
+                    link: [],
+                    air: []
+                }
             });
         });
         </script>
