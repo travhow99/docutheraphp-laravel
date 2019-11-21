@@ -49,7 +49,7 @@
 
                         </div>
                     </div>
-                    @endforeach
+                @endforeach
             </div>
         @else
             <div class="row"><h1>New client</h1></div>

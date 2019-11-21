@@ -17,19 +17,14 @@
                         <div class="card mb-4">
                     
                                 <div class="card-body">
-                                    <h4 class="text-center">{{ $template }}</h4>
-                                    <p>
-                                        Session Day: <strong>{{ $template }}</strong><br>
-                                        Session Time: <strong>{{ $template }}</strong><br>
-                                        {{-- TODO: Calculate next session date --}}
-                                        Next Session: <strong>{{ $template }}</strong>
-                                    </p>
+                                    <h4 class="text-center">{{ $template->name }}</h4>
+                                    <span><strong>Last Updated</strong>: {{ \Carbon\Carbon::parse($template->updated_at)->format('m/d/Y') }}</span>
                                 </div>
 
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col">
-                                            <a href="/templates/{{ $template->id }}/edit" class="btn btn-success btn-block">Manage</a>
+                                            <a href="/templates/{{ $template->id }}/edit" class="btn btn-primary btn-block">Edit</a>
                                         </div>
                                         <div class="col">
                                             <form action="/template/{{ $template->id }}" method="post">
@@ -42,13 +37,35 @@
                                     </div>
                                     <div class="row">
                                         <div class="col mt-2">
-                                            <a href="/templates/{{ $template->id }}/sessions" class="btn btn-primary btn-block">Sessions</a>
+                                            <button data-toggle="modal" data-target="#modal{{ $template->id }}" class="btn btn-success btn-block">Preview</button>
                                         </div>
                                     </div>
                                 </div>
 
                         </div>
                     </div>
+                    
+                    {{-- BS4 Modal --}}
+                    <div id="modal{{ $template->id }}" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       {!! $template->template !!}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                          
                     @endforeach
             </div>
         @else
