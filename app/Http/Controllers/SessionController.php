@@ -37,7 +37,7 @@ class SessionController extends Controller
      * @param Client $client
      * @return Response
      */
-    public function store(Request $request, Client $client)
+    public function create(Request $request, Client $client)
     {
 
         $this->validate($request, [
@@ -63,9 +63,34 @@ class SessionController extends Controller
      */
     public function edit(Request $request, Session $session)
     {
+        $templates = $session->client()->first()->user()->first()->templates()->get();
+
         return view('sessions.edit', [
             'session' => $session,
+            'templates' => $templates
         ]);
     }
+
+    /**
+     * Update the given client.
+     * 
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function update(Request $request, $session)
+    {
+        $data = Request()->all();
+
+        dd($data);
+
+        // Fill in updated values
+        $session->fill($data);
+
+        $session->save();
+
+        return redirect("/clients/{$client->id}/edit");
+    }
+
 
 }

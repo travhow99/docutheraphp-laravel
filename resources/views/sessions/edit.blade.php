@@ -19,15 +19,31 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <div>{{ $session->session_date }}</div>
-                        <div>{{ $session->session_time }}</div>
+                        <div><strong>Date</strong>: {{ $session->session_date }}</div>
+                        <div><strong>Time</strong>: {{ $session->session_time }}</div>
                         <div><strong>Billed</strong>: {{ $session->billed === '0' ? 'No' : 'Yes' }}</div>
-
+                        <div>
+                            <strong>Template</strong>: 
+                            <select name="template" id="template">
+                                <option value="none" selected disabled>Choose a Template</option>
+                                @foreach ($templates as $template)
+                                    <option value="{{ $template->id }}">{{ $template->name }}</option>            
+                                @endforeach
+                            </select>
+                        </div>    
                     </div>
                 </div>
             </div>
             <div class="col-9">
-                <div id="documentation"></div>
+                <form action="/session/{{ $session->id }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <textarea name="documentation" id="documentation"></textarea>
+                    </div>
+                    <div class="d-flex flex-row-reverse">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
 

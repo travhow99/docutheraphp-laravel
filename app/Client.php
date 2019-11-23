@@ -61,7 +61,7 @@ class Client extends Model
         $endDate = strtotime('today');
 
         $sessionDates = [];
-        for ($x = strtotime('Monday', $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
+        for ($x = strtotime($day, $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
             // $status = (count(Session::where('session_date', date('m-d-Y', $x))->get()) > 0) ? 'In Progress' : 'Outstanding';
             $status = $this->sessionStatus(date('l m-d-Y', $x));
 

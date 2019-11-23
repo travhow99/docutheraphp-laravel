@@ -40,7 +40,8 @@ Route::delete('/client/{client}', 'ClientController@destroy');
  */
 Route::get('/clients/{client}/sessions', 'SessionController@index');
 Route::get('/session/{session}/edit', 'SessionController@edit');
-Route::post('/clients/{client}/session', 'SessionController@store');
+Route::post('/clients/{client}/session', 'SessionController@create');
+Route::post('/session/{session}', 'SessionController@update');
 
 /**
  * Templates
