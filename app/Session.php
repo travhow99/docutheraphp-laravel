@@ -20,4 +20,14 @@ class Session extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    /**
+     * Get the session id for that date.
+     * @param Client $client
+     */
+    public static function single(Client $client, $date)
+    {
+        // $client = $this->client();
+        return $client->sessions->where('session_date', $date)->first()->id;
+    }
 }

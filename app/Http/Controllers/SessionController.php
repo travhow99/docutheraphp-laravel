@@ -56,4 +56,16 @@ class SessionController extends Controller
             'session' => $session,
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @param Session $session
+     */
+    public function edit(Request $request, Session $session)
+    {
+        return view('sessions.edit', [
+            'session' => $session,
+        ]);
+    }
+
 }

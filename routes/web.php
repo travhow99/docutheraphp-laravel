@@ -39,6 +39,7 @@ Route::delete('/client/{client}', 'ClientController@destroy');
  * Sessions
  */
 Route::get('/clients/{client}/sessions', 'SessionController@index');
+Route::get('/session/{session}/edit', 'SessionController@edit');
 Route::post('/clients/{client}/session', 'SessionController@store');
 
 /**

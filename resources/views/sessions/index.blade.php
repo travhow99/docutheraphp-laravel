@@ -44,18 +44,22 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
-                                        @csrf
-                                        <input type="hidden" name="status" value="complete">
-                                        <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
-                                        <button href="" type="submit" class="btn btn-success">Occured</button>
-                                    </form>
-                                    <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
-                                        @csrf
-                                        <input type="hidden" name="status" value="cancelled">
-                                        <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
-                                        <button href="" type="submit" class="btn btn-danger">Cancelled</button>
-                                    </form>
+                                    @if($pSession['status'] === 'Outstanding')
+                                        <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
+                                            @csrf
+                                            <input type="hidden" name="status" value="complete">
+                                            <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
+                                            <button href="" type="submit" class="btn btn-success">Occured</button>
+                                        </form>
+                                        <form class="d-inline" action="/clients/{{ $client->id }}/session" method="post">
+                                            @csrf
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <input type="hidden" name="session_date" value="{{ $pSession['date'] }}">
+                                            <button href="" type="submit" class="btn btn-danger">Cancelled</button>
+                                        </form>
+                                    @else
+                                        <a href="/session/{{ \App\Session::single($client, $pSession['date']) }}/edit" class="btn btn-primary">Manage</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

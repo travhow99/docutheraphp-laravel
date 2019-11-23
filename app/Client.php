@@ -80,7 +80,7 @@ class Client extends Model
      */
     public function sessionStatus($sessionDate)
     {
-        return (count(Session::where('session_date', $sessionDate)->get()) > 0) 
+        return (count($this->sessions()->where('session_date', $sessionDate)->get()) > 0) 
                                                         ? 'In Progress' : 
                                                         'Outstanding';
     }

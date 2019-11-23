@@ -40,11 +40,19 @@
                                             </form>
                                         </div>
                                     </div>
+                                    @if ($client->session_time && $client->session_day)
                                     <div class="row">
                                         <div class="col mt-2">
                                             <a href="/clients/{{ $client->id }}/sessions" class="btn btn-primary btn-block">Sessions</a>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="row">
+                                        <div class="col mt-2">
+                                            <a href="/clients/{{ $client->id }}/sessions" class="btn btn-outline-danger btn-block disabled">Setup Session Time</a>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
 
                         </div>
