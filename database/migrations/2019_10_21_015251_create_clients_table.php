@@ -24,7 +24,7 @@ class CreateClientsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->string('agency');
             $table->boolean('active')->default(1);
-            $table->string('diagnosis');
+            $table->string('diagnosis')->nullable();
             $table->longText('approach')->nullable();
             $table->timestamps();
         });
