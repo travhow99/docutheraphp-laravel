@@ -78,18 +78,18 @@ class SessionController extends Controller
      * @param string $id
      * @return Response
      */
-    public function update(Request $request, $session)
+    public function update(Request $request, $sessionId)
     {
         $data = Request()->all();
 
-        dd($data);
+        $session = Session::find($sessionId);
 
         // Fill in updated values
         $session->fill($data);
 
         $session->save();
 
-        return redirect("/clients/{$client->id}/edit");
+        return redirect("/session/{$session->id}/edit");
     }
 
 
