@@ -11,11 +11,16 @@ class DocumentationController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $documentationId)
     {
-        //
+        $documentation = Documentation::find($documentationId);
+
+        return view('documentation.index', [
+            'documentation' => $documentationId,
+        ]);
     }
 
     /**
@@ -47,7 +52,7 @@ class DocumentationController extends Controller
             'session_goals' => '',
         ]);
 
-        dd($documentation);
+        return redirect("/documentation/{$documentation->id}");
     }
 
     /**
@@ -67,9 +72,11 @@ class DocumentationController extends Controller
      * @param  \App\documentation  $documentation
      * @return \Illuminate\Http\Response
      */
-    public function edit(documentation $documentation)
+    public function edit(Documentation $documentation)
     {
-        //
+        return view('documentations.edit', [
+            'documentation' => $documentation,
+        ]);
     }
 
     /**
@@ -79,7 +86,7 @@ class DocumentationController extends Controller
      * @param  \App\documentation  $documentation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, documentation $documentation)
+    public function update(Request $request, Documentation $documentation)
     {
         //
     }

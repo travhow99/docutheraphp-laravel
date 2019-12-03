@@ -46,7 +46,9 @@ Route::post('/session/{session}', 'SessionController@update');
 /**
  * Documentations
  */
-Route::post('session/{session}/documentation', 'DocumentationController@store');
+Route::get('/documentation/{documentation}', 'DocumentationController@index');
+Route::get('/documentation/{documentation}/edit', 'DocumentationController@edit');
+Route::post('/session/{session}/documentation', 'DocumentationController@store');
 
 /**
  * Templates
