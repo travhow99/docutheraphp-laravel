@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-9">
-                <form action="/session/{{ $session->id }}" method="post">
+                <form action="/session/{{ $session->id }}/documentation" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <textarea name="documentation" id="documentation"></textarea>

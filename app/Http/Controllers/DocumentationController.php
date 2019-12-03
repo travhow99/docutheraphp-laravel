@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\documentation;
+use App\Documentation;
+use App\Session;
 use Illuminate\Http\Request;
 
 class DocumentationController extends Controller
@@ -31,11 +32,22 @@ class DocumentationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param Session $session
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Session $session)
     {
-        //
+        $this->validate($request, [
+            'documentation' => 'required',
+        ]);
+
+        $documentation = Documentation::create([
+            'session_id' => $session->id,
+            'documentation' => $request->documentation,
+            'session_goals' => '',
+        ]);
+
+        dd($documentation);
     }
 
     /**

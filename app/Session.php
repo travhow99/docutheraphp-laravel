@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Client;
 
 class Session extends Model
 {
@@ -19,6 +20,14 @@ class Session extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Get the documentation for this session.
+     */
+    public function documentation()
+    {
+        return $this->hasOne(Documentation::class);
     }
 
     /**

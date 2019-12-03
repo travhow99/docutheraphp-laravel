@@ -44,6 +44,11 @@ Route::post('/clients/{client}/session', 'SessionController@create');
 Route::post('/session/{session}', 'SessionController@update');
 
 /**
+ * Documentations
+ */
+Route::post('session/{session}/documentation', 'DocumentationController@store');
+
+/**
  * Templates
  */
 Route::get('/templates', 'TemplateController@index');

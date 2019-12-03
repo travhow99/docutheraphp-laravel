@@ -84,4 +84,12 @@ class Client extends Model
                                                         ? 'In Progress' : 
                                                         'Outstanding';
     }
+
+    /**
+     * Get all documentations through clients for this user.
+     */
+    public function documentations()
+    {
+        return $this->hasManyThrough('App\Documentation', 'App\Session');
+    }
 }

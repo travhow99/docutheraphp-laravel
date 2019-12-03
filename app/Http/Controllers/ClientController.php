@@ -74,11 +74,15 @@ class ClientController extends Controller
      * Edit the given client.
      * 
      * @param Request $request
+     * @param Client $client
      * @return Response
      */
     public function edit(Request $request, $client)
     {
-        // dd($client->session_day);
+        // TODO 12/2
+        // Update form to allow for all Client attributes
+        // dd(count($client));
+        // dd($client);
         return view('clients.edit', [
             'client' => $client,
         ]);
