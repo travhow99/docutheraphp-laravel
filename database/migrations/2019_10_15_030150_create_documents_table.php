@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocumentationsTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateDocumentationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documentations', function (Blueprint $table) {            
+        Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->smallInteger('session_id')->index();
+            $table->smallInteger('user_id')->index();
+            $table->smallInteger('client_id');
             $table->longText('documentation');
-            $table->longText('session_goals');
+            $table->dateTime('session_date');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateDocumentationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentations');
+        Schema::dropIfExists('documents');
     }
 }

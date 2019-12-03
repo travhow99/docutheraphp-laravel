@@ -17,15 +17,11 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->index();
             $table->string('name');
-            $table->bigInteger('poc')->nullable();
-            $table->string('address')->nullable();
             $table->string('session_day')->nullable();
             $table->string('session_time')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->string('agency');
             $table->boolean('active')->default(1);
-            $table->string('diagnosis');
-            $table->longText('approach')->nullable();
             $table->timestamps();
         });
     }
