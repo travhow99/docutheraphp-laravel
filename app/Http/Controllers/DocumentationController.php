@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 class DocumentationController extends Controller
 {
     /**
+     * Create a new controller instance
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request $request
@@ -19,7 +29,7 @@ class DocumentationController extends Controller
         $documentation = Documentation::find($documentationId);
 
         return view('documentation.index', [
-            'documentation' => $documentationId,
+            'documentation' => $documentation,
         ]);
     }
 
