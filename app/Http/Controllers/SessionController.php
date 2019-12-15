@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Session;
 use App\Client;
+use App\Documentation;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -64,6 +65,10 @@ class SessionController extends Controller
     public function edit(Request $request, Session $session)
     {
         $templates = $session->client()->first()->user()->first()->templates()->get();
+        // dd(Session::find(1)->documentation);
+        // dd($session->documentation->documentation);
+        // $documentation = $session->documentation;
+        // dd($documentation);
 
         return view('sessions.edit', [
             'session' => $session,

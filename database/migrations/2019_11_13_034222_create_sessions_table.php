@@ -18,7 +18,6 @@ class CreateSessionsTable extends Migration
             $table->bigInteger('client_id')->index();
             $table->date('session_date');
             $table->time('session_time');
-            $table->bigInteger('documentation')->nullable();
             $table->boolean('complete')->default(false);
             $table->boolean('cancelled')->default(false);
             $table->boolean('submitted')->default(false);

@@ -111,4 +111,15 @@ class TemplateController extends Controller
     {
         //
     }
+
+    /**
+     * Return the requested template.
+     * 
+     * @param Request $request
+     * @return Response
+     */
+    public function single(Request $request)
+    {
+        dd($request);
+    }
 }

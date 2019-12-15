@@ -26,8 +26,8 @@
                             <strong>Template</strong>: 
                             <select name="template" id="template">
                                 <option value="none" selected disabled>Choose a Template</option>
-                                @foreach ($templates as $template)
-                                    <option value="{{ $template->id }}">{{ $template->name }}</option>            
+                                @foreach ($templates as $key=>$template)
+                                    <option value="{{ $key }}">{{ $template->name }}</option>            
                                 @endforeach
                             </select>
                         </div>    
@@ -38,7 +38,11 @@
                 <form action="/session/{{ $session->id }}/documentation" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <textarea name="documentation" id="documentation"></textarea>
+                        {!! $session->documentation !!}
+
+                        <textarea name="documentation" id="documentation">
+                            {{ $session->documentation }}
+                        </textarea>
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-primary" type="submit">Save</button>
@@ -52,6 +56,7 @@
     @push('scripts')
         <script>
         $(document).ready(function() {
+            // Initialize editor
             $('#documentation').summernote({
                 height:300,
                 popover: {
@@ -60,6 +65,17 @@
                     air: []
                 }
             });
+            // Update template
+            $('#template').change(function() {
+                // console.log({!! $templates !!});
+                console.log($(this).val());
+
+                // $.get()
+                $('#documentation').summernote('destroy');
+                $('#documentation').html({!! $templates !!}[$(this).val()].template);
+                $('#documentation').summernote();
+
+            })
         });
         </script>
     @endpush

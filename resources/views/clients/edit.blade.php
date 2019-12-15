@@ -27,7 +27,7 @@
                                             <option value="" selected>Select a Day</option>
                                             <option value="Monday" {{ $client->session_day === "Monday" ? "selected" : ""}}>Monday</option>
                                             <option value="Tuesday" {{ $client->session_day === "Tuesday" ? "selected" : ""}}>Tuesday</option>
-                                            <option value="Wednesday" {{ $client->session_day === "Monday" ? "selected" : ""}}>Monday</option>
+                                            <option value="Wednesday" {{ $client->session_day === "Wednesday" ? "selected" : ""}}>Wednesday</option>
                                             <option value="Thursday" {{ $client->session_day === "Thursday" ? "selected" : ""}}>Thursday</option>
                                             <option value="Friday" {{ $client->session_day === "Friday" ? "selected" : ""}}>Friday</option>
                                         </select>
