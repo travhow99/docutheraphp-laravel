@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Button from './Button';
 
 export default class Card extends Component {
     render() {
@@ -7,6 +8,7 @@ export default class Card extends Component {
             <div className="card mb-4">
                 <div className="card-header">{this.props.title}</div>
                 <div className="card-body">I'm an example component!</div>
+                <Button />
             </div>
         );
     }

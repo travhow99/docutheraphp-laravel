@@ -56,11 +56,11 @@ class DocumentationController extends Controller
             'documentation' => 'required',
         ]);
 
-        $documentation = Documentation::create([
-            'session_id' => $session->id,
-            'documentation' => $request->documentation,
-            'session_goals' => '',
-        ]);
+        $documentation = Documentation::updateOrCreate(
+            ['session_id' => $session->id],
+            ['documentation' => $request->documentation,
+            'session_goals' => '',]
+        );
 
         return redirect("/documentation/{$documentation->id}");
     }

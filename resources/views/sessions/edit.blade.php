@@ -38,13 +38,15 @@
                 <form action="/session/{{ $session->id }}/documentation" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        {!! $session->documentation !!}
-
                         <textarea name="documentation" id="documentation">
-                            {{ $session->documentation }}
+                            @if ($session->documentation)
+                                {!! $session->documentation->documentation !!}
+                            @endif
                         </textarea>
                     </div>
                     <div class="d-flex flex-row-reverse">
+                        <div id="card" data-title="My Title"></div>
+
                         <button class="btn btn-primary" type="submit">Save</button>
                     </div>
                 </form>
@@ -67,15 +69,20 @@
             });
             // Update template
             $('#template').change(function() {
-                // console.log({!! $templates !!});
-                console.log($(this).val());
-
-                // $.get()
                 $('#documentation').summernote('destroy');
-                $('#documentation').html({!! $templates !!}[$(this).val()].template);
-                $('#documentation').summernote();
+                $('#documentation').val({!! $templates !!}[$(this).val()].template);
+                $('#documentation').summernote({
+                    height:300,
+                    popover: {
+                        image: [],
+                        link: [],
+                        air: []
+                    }
+                });
 
-            })
+            });
+
+            // 
         });
         </script>
     @endpush
