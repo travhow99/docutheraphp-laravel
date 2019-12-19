@@ -56,7 +56,7 @@ class Client extends Model
      */
     public function pastSessions()
     {
-        $day = $this->session_day;
+        $day = 'last ' . $this->session_day;
         $startDate = strtotime($this->start_date);
         $endDate = strtotime('today');
 
