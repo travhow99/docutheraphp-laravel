@@ -38,15 +38,13 @@
                 <form action="/session/{{ $session->id }}/documentation" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <textarea name="documentation" id="documentation">
+                        <textarea name="documentation" id="documentation" style="display: none;">
                             @if ($session->documentation)
                                 {!! $session->documentation->documentation !!}
                             @endif
                         </textarea>
                     </div>
                     <div class="d-flex flex-row-reverse">
-                        <div id="card" data-title="My Title"></div>
-
                         <button class="btn btn-primary" type="submit">Save</button>
                     </div>
                 </form>
@@ -58,28 +56,41 @@
     @push('scripts')
         <script>
         $(document).ready(function() {
-            // Initialize editor
-            $('#documentation').summernote({
+            const summernoteConfig = {
                 height:300,
                 popover: {
                     image: [],
                     link: [],
                     air: []
                 }
-            });
+            };
+            // Initialize editor
+            $('#documentation').summernote(summernoteConfig);
             // Update template
             $('#template').change(function() {
-                $('#documentation').summernote('destroy');
-                $('#documentation').val({!! $templates !!}[$(this).val()].template);
-                $('#documentation').summernote({
-                    height:300,
-                    popover: {
-                        image: [],
-                        link: [],
-                        air: []
+                const $_this = $(this);
+                bootbox.confirm({
+                    message: "This is a confirm with custom button text and color! Do you like it?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (response) {
+                        if (response) {
+                            console.log(response);
+                          $('#documentation').summernote('destroy');
+
+                            $('#documentation').val({!! $templates !!}[$_this.val()].template);
+                            $('#documentation').summernote(summernoteConfig);
+                        }
                     }
                 });
-
             });
 
             // 
