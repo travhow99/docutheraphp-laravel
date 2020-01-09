@@ -24,7 +24,7 @@
                         <div><strong>Billed</strong>: {{ $session->billed === '0' ? 'No' : 'Yes' }}</div>
                         <div>
                             <strong>Template</strong>: 
-                            <select name="template" id="template">
+                            <select name="template" id="template" class="form-control">
                                 <option value="none" selected disabled>Choose a Template</option>
                                 @foreach ($templates as $key=>$template)
                                     <option value="{{ $key }}">{{ $template->name }}</option>            
@@ -68,6 +68,8 @@
             $('#documentation').summernote(summernoteConfig);
             // Update template
             $('#template').change(function() {
+                // if ($('#documentation').summernote('code').trim() === '') return;
+
                 const $_this = $(this);
                 bootbox.confirm({
                     message: "This is a confirm with custom button text and color! Do you like it?",
@@ -83,11 +85,7 @@
                     },
                     callback: function (response) {
                         if (response) {
-                            console.log(response);
-                          $('#documentation').summernote('destroy');
-
-                            $('#documentation').val({!! $templates !!}[$_this.val()].template);
-                            $('#documentation').summernote(summernoteConfig);
+                            return response;
                         }
                     }
                 });

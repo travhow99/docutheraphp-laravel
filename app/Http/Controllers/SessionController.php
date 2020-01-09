@@ -53,8 +53,11 @@ class SessionController extends Controller
             "$request->status" => 1,
         ]);
 
+        $templates = $session->client()->first()->user()->first()->templates()->get();
+
         return view('sessions.edit', [
             'session' => $session,
+            'templates' => $templates,
         ]);
     }
 
@@ -72,7 +75,7 @@ class SessionController extends Controller
 
         return view('sessions.edit', [
             'session' => $session,
-            'templates' => $templates
+            'templates' => $templates,
         ]);
     }
 

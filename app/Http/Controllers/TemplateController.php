@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Template;
+use App\Http\Requests;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\Controller;
 
 class TemplateController extends Controller
 {
@@ -102,15 +105,34 @@ class TemplateController extends Controller
     }
 
     /**
+     * Destroy the given client.
+     * 
+     * @param Request $request
+     * @param Template $template
+     * @return Response
+     */
+    public function destroy(Request $request, Template $template)
+    {
+        $this->authorize('destroy', $template);
+
+        $template->delete();
+
+        return redirect('/templates');
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Template  $template
      * @return Response
      */
-    public function destroy(Template $template)
+    /* public function destroy(Template $template)
     {
-        //
-    }
+        $this->authorize('destroy', $template);
+
+        dd($template);
+    } */
 
     /**
      * Return the requested template.

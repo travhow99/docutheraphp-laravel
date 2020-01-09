@@ -44,3 +44,5 @@ Route::post('/session/{session}/documentation', 'DocumentationController@store')
  */
 Route::get('/templates', 'TemplateController@index');
 Route::post('/template', 'TemplateController@store');
+Route::delete('/template/{template}', 'TemplateController@destroy');
+

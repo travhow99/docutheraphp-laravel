@@ -14,12 +14,13 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- React Component example --}}
+{{--         <div class="row">
             <div class="col">
                 <div id="card" data-title="My Title"></div>
             </div>
         </div>
-
+ --}}
         <div class="row">
             <div class="col">
                 <table class="table">

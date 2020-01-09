@@ -38,14 +38,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all documentation for the user.
-     */
-    public function documents()
-    {
-        return $this->hasMany(Document::class);
-    }
-
-    /**
      * Get all clients for the user.
      */
     public function clients()
@@ -67,5 +59,13 @@ class User extends Authenticatable
     public function sessions()
     {
         return $this->hasManyThrough('App\Session', 'App\Client');
+    }
+
+        /**
+     * Get all documentation for the user.
+     */
+    public function documentations()
+    {
+        return $this->hasMany(Documentation::class);
     }
 }

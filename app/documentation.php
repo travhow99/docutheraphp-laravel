@@ -14,6 +14,11 @@ class Documentation extends Model
      */
     protected $fillable = ['session_id', 'documentation', 'session_goals'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get the session that owns the documentation.
      */

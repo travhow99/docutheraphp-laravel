@@ -36,7 +36,7 @@
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
 
-                                                <button class="btn btn-danger btn-block">Delete</button>
+                                                <button class="btn btn-danger btn-block delete-client">Delete</button>
                                             </form>
                                         </div>
                                     </div>
@@ -100,5 +100,39 @@
             </form>
 
     </div>
+
+    @push('scripts')
+        <script>
+        $(document).ready(function() {
+            // Update template
+            $('.delete-client').click(function(e) {
+                e.preventDefault();
+
+                const $form = $(this).parent('form')[0];
+                
+                bootbox.confirm({
+                    message: "Are you sure you wish to delete this client?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (response) {
+                        if (response) {
+                            $form.submit();
+                        }
+                    }
+                });
+            });
+
+            // 
+        });
+        </script>
+    @endpush
 
 @endsection

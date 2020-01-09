@@ -31,7 +31,7 @@
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
 
-                                                <button class="btn btn-danger btn-block">Delete</button>
+                                                <button class="btn btn-danger btn-block delete-template">Delete</button>
                                             </form>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
     @push('scripts')
         <script>
         $(document).ready(function() {
-            $('#template').summernote({
+/*             $('#template').summernote({
                 height:300,
                 popover: {
                     image: [],
@@ -120,6 +120,32 @@
                     air: []
                 }
             });
+ */
+            $('.delete-template').click(function(e) {
+                e.preventDefault();
+
+                const $form = $(this).parent('form')[0];
+                
+                bootbox.confirm({
+                    message: "Are you sure you wish to delete this template?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (response) {
+                        if (response) {
+                            $form.submit();
+                        }
+                    }
+                });
+            });
+
         });
         </script>
     @endpush
