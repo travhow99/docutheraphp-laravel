@@ -44,6 +44,8 @@
                 </div>
             </div>
 
+            <input type="hidden" name="client_id" value="{{ $client->id }}">
+
             <div class="form-group">
                 <div class="col-6 ">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Save Contact</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Poc;
 use Illuminate\Http\Request;
 
 class PocController extends Controller
@@ -54,18 +55,23 @@ class PocController extends Controller
     public function store(Request $request, Client $client)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'template' => 'required',
+            'contact_name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'client_id' => 'required',
         ]);
 
-        $request->user()->pocs()->create([
-            'user_id' => $request->user()->id,
-            'name' => $request->name,
-            'agency' => $request->agency,
-            'template' => html_entity_decode($request->template),
+        $notes = $request->notes ?: '';
+
+        Poc::create([
+            'client_id' => $request->client_id,
+            'contact_name' => $request->contact_name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'notes' => $notes,
         ]);
 
-        return redirect('/pocs');
+        return redirect("/clients/{$request->client_id}/edit");
 
     }
 

@@ -11,6 +11,6 @@ class Poc extends Model
      * 
      * @var array
      */
-    protected $fillable = ['contact_name', 'email', 'phone_number', 'notes'];
+    protected $fillable = ['client_id', 'contact_name', 'email', 'phone_number', 'notes'];
 
 }
