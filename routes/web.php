@@ -25,6 +25,16 @@ Route::patch('/client/{client}', 'ClientController@update');
 Route::delete('/client/{client}', 'ClientController@destroy');
 
 /**
+* Pocs
+*/
+// Route::get('/contacts', 'PocController@index');
+Route::get('/client/{client}/contact', 'PocController@create');
+Route::get('contacts/{contact}/edit', 'PocController@edit');
+Route::post('/contact', 'PocController@store');
+Route::patch('/contact/{contact}', 'PocController@update');
+Route::delete('/contact/{contact}', 'PocController@destroy');
+
+/**
  * Sessions
  */
 Route::get('/clients/{client}/sessions', 'SessionController@index');
