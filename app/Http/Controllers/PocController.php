@@ -24,25 +24,13 @@ class PocController extends Controller
      * @param Poc $poc
      * @return Response
      */
-    public function index()
+    public function index(Client $client)
     {
-        $user = auth()->user();
-        $pocs = $user->pocs;
-        return view('pocs.index', [
-            'pocs' => $pocs,
-        ]);
-    }
+        $poc = $client->poc()->first() ?: new Poc;// ?: null;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param Client $client
-     * @return Response
-     */
-    public function create(Client $client)
-    {
         return view('poc.index', [
             'client' => $client,
+            'poc' => $poc,
         ]);
     }
 
@@ -63,15 +51,16 @@ class PocController extends Controller
 
         $notes = $request->notes ?: '';
 
-        Poc::create([
-            'client_id' => $request->client_id,
+        $poc = Poc::updateOrCreate(
+            ['id' => $request->poc_id],
+            ['client_id' => $request->client_id,
             'contact_name' => $request->contact_name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'notes' => $notes,
-        ]);
+            'notes' => $notes]
+        );
 
-        return redirect("/clients/{$request->client_id}/edit");
+        return redirect("/client/{$request->client_id}/contact");
 
     }
 

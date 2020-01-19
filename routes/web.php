@@ -28,7 +28,7 @@ Route::delete('/client/{client}', 'ClientController@destroy');
 * Pocs
 */
 // Route::get('/contacts', 'PocController@index');
-Route::get('/client/{client}/contact', 'PocController@create');
+Route::get('/client/{client}/contact', 'PocController@index');
 Route::get('contacts/{contact}/edit', 'PocController@edit');
 Route::post('/poc', 'PocController@store');
 Route::patch('/contact/{contact}', 'PocController@update');

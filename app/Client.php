@@ -24,6 +24,14 @@ class Client extends Model
     }
 
     /**
+     * Get the user that owns the client.
+     */
+    public function poc()
+    {
+        return $this->hasOne(Poc::class);
+    }
+
+    /**
      * Get the sessions for the client.
      */
     public function sessions()
