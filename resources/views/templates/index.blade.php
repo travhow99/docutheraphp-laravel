@@ -112,7 +112,7 @@
     @push('scripts')
         <script>
         $(document).ready(function() {
-/*             $('#template').summernote({
+            $('#template').summernote({
                 height:300,
                 popover: {
                     image: [],
@@ -120,7 +120,7 @@
                     air: []
                 }
             });
- */
+
             $('.delete-template').click(function(e) {
                 e.preventDefault();
 

@@ -10644,18 +10644,3 @@ a.text-dark:focus {
   }
 }
 
-/* Bootbox */
-.modal-dialog {
-  margin-top: 0;
-  margin-bottom: 0;
-  display: -webkit-box;
-  display: flex;
-  height: 100%;
-}
-
-.modal-content {
-  margin-top: auto;
-  margin-bottom: auto;
-  border: none;
-}
-
