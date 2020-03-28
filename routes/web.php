@@ -1,8 +1,5 @@
 <?php
 
-use App\Document;
-use Illuminate\Http\Request;
-
 Route::get('/', function () {
     if (!Auth::user()) {
         return view('welcome');
