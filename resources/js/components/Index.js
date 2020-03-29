@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
-import Login from './Login';
+import Login from './login/Login';
 import Clients from './Clients';
+import PrivateRoute from '../PrivateRoute';
 
 export default class App extends Component {
     render() {
@@ -13,8 +14,17 @@ export default class App extends Component {
                 <div>
                     <Header />
                     <Switch>
+                        {/* User might login */}
+                        {/* <Route exact path="/" component={Home} /> */}
+
+                        {/* User will login */}
                         <Route path="/login" component={Login} />
-                        <Route exact path="/clients" component={Clients} />
+                        {/* <Route path="/register" component={Register} /> */}
+
+                        {/* Logged in */}
+                        {/* <Route exact path="/clients" component={Clients} /> */}
+                        <PrivateRoute path="/clients" component={Clients} />
+
                     </Switch>
                 </div>
             </BrowserRouter>

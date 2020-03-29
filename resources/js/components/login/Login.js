@@ -6,12 +6,25 @@ import {
     CardTitle, CardSubtitle, Button, CardHeader,
     Form, FormGroup, FormFeedback, Label, Input
 } from 'reactstrap';
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom'
+import LoginContainer from './LoginContainer';
 
-export default class Login extends Component {
+class Login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            redirect: props.location,
+        };
+    }
+
     render() {
         return (
-            <Container>
+            <div className="content">
+                <LoginContainer redirect={this.state.redirect} />
+            </div>
+        )
+            {/* <Container>
                 <Row className="justify-content-center">
                     <Col md={8}>
                         <Card>
@@ -55,7 +68,8 @@ export default class Login extends Component {
                         </Card>
                     </Col>
                 </Row>
-            </Container>
-        )
+            </Container> */}
     }
 }
+
+export default withRouter(Login);
