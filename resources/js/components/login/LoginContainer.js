@@ -1,29 +1,27 @@
 import React, {Component} from 'react';
 import {Link, Redirect, withRouter} from 'react-router-dom';
+import FlashMessage from 'react-flash-message';
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
+
+    let state = localStorage["appState"];
+    let AppState = JSON.parse(state);
+
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: AppState.isLoggedIn || false,
       error: '',
       formSubmitting: false,
-      user: {
-        email: '',
-        password: '',
+      user: AppState.user ? AppState.user : {
+          email: '',
+          password: '',
       },
       redirect: props.redirect,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-  }
-  componentWillMount() {
-    let state = localStorage["appState"];
-    if (state) {
-      let AppState = JSON.parse(state);
-      this.setState({isLoggedIn: AppState.isLoggedIn, user: AppState});
-    }
   }
   componentDidMount() {
     const { prevLocation } = this.state.redirect.state || { prevLocation: { pathname: '/dashboard' } };
@@ -103,8 +101,8 @@ handlePassword(e) {
   }));
 }
 render() {
-  const { state = {} } = this.state.redirect;
-  const { error } = state;
+//   const { state = {} } = this.state.redirect;
+//   const { error } = state;
   return (
     <div className="container">
       <div className="row">

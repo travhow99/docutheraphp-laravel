@@ -56,3 +56,7 @@ Route::post('/session/{session}/documentation', 'DocumentationController@store')
 Route::post('/template', 'TemplateController@store');
 Route::delete('/template/{template}', 'TemplateController@destroy');
  */
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
