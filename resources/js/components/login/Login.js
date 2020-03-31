@@ -1,12 +1,12 @@
-import React, { Component } from 'React'
-import axios from 'axios'
+import React, { Component } from 'react';
+
 import { 
     Container, Row, Col,
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, CardHeader,
+    CardTitle, CardSubtitle, Button, CardHeader, CardFooter,
     Form, FormGroup, FormFeedback, Label, Input
 } from 'reactstrap';
-import { Link, Route, withRouter } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom';
 import LoginContainer from './LoginContainer';
 
 class Login extends Component {
@@ -21,7 +21,26 @@ class Login extends Component {
     render() {
         return (
             <div className="content">
-                <LoginContainer redirect={this.state.redirect} />
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col md={8}>
+                            <Card className="mt-4">
+                                <CardHeader>Login</CardHeader>
+                                <CardBody>
+                                    <LoginContainer redirect={this.state.redirect} />
+                                </CardBody>
+                                <CardFooter>
+                                    <div className="text-dark text-center">
+                                        Don't have an account? 
+                                        <Link to="/register" className="text-yellow">
+                                            &nbsp;Register Now
+                                        </Link>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
             {/* <Container>

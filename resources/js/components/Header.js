@@ -64,26 +64,29 @@ class Header extends Component {
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={this.state.navIsOpen} navbar>
                         {this.state.isLoggedIn ? (
-                            <Nav className="mr-auto" navbar>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/home'>Home</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/clients'>Clients</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/contacts'>Contacts</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/sessions'>Sessions</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/documentation'>Documentation</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/templates'>Templates</NavLink>
-                                </NavItem>
-                            </Nav>
+                            <React.Fragment>
+                                <Nav className="mr-auto" navbar>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/home'>Home</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/clients'>Clients</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/contacts'>Contacts</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/sessions'>Sessions</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/documentation'>Documentation</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink tag={RRNavLink} to='/templates'>Templates</NavLink>
+                                    </NavItem>
+                                </Nav>
+                                <NavbarText>Log Out</NavbarText>
+                            </React.Fragment>
                             ) : (
                             <Nav className="mr-auto" navbar>
                                 <NavItem>
