@@ -8,11 +8,6 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
 } from 'reactstrap';
 
 class Header extends Component {
@@ -23,7 +18,6 @@ class Header extends Component {
             user: props.userData,
             isLoggedIn: props.userIsLoggedIn,
             navIsOpen: false,
-
         };
 
         this.logOut = this.logOut.bind(this);
@@ -85,7 +79,7 @@ class Header extends Component {
                                         <NavLink tag={RRNavLink} to='/templates'>Templates</NavLink>
                                     </NavItem>
                                 </Nav>
-                                <NavbarText>Log Out</NavbarText>
+                                <NavLink onClick={this.logOut}>Log Out</NavLink>
                             </React.Fragment>
                             ) : (
                             <Nav className="mr-auto" navbar>

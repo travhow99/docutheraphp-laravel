@@ -28,17 +28,19 @@ Route::group([
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+
+        /**
+         * Clients
+         */
+        Route::get('clients', 'ClientController@index');
+        // Route::get('clients/{client}/edit', 'ClientController@edit');
+        // Route::post('client', 'ClientController@store');
+        // Route::patch('client/{client}', 'ClientController@update');
+        // Route::delete('client/{client}', 'ClientController@destroy');
+
     });
 });
 
-/**
- * Clients
- */
-Route::get('clients', 'ClientController@index');
-Route::get('clients/{client}/edit', 'ClientController@edit');
-Route::post('client', 'ClientController@store');
-Route::patch('client/{client}', 'ClientController@update');
-Route::delete('client/{client}', 'ClientController@destroy');
 
 /**
 * Pocs

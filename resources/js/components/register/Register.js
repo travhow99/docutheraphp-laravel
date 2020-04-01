@@ -23,7 +23,7 @@ class Register extends Component {
                     <Row className="justify-content-center">
                         <Col md={8}>
                             <Card className="mt-4">
-                                <CardHeader>Login</CardHeader>
+                                <CardHeader>Register</CardHeader>
                                 <CardBody>
                                     <RegisterContainer redirect={this.state.redirect} />
                                 </CardBody>

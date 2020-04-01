@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import { Redirect, Route, withRoute, withRouter } from 'react-router-dom';
+import React from 'react';
+import { Redirect, Route, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 let state_of_state = localStorage["appState"];
+
 if (!state_of_state) {
     let appState = {
         isLoggedIn: false,
@@ -12,6 +14,16 @@ if (!state_of_state) {
 
 let state = localStorage["appState"];
 let AppState = JSON.parse(state);
+console.log('state', AppState);
+
+const Auth = {
+    isLoggedIn: AppState.isLoggedIn,
+    user: AppState,
+}
+
+const token = AppState.user.access_token;
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
     <Route path={path}

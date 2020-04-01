@@ -2,21 +2,32 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { 
     Container, Row, Col,
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button  
+    Card, CardBody, CardTitle
 } from 'reactstrap';
-import { Link } from 'react-router-dom'
 
 class Clients extends Component {
     constructor() {
         super()
+
+        let AppState;
+        let state = localStorage["appState"];
+        if (state) {
+          AppState = JSON.parse(state);
+        }
+    
         this.state = {
+            isLoggedIn: AppState.isLoggedIn,
+            user: AppState.user,
             clients: [],
         }
     }
 
     componentDidMount() {
-        axios.get('/api/clients').then((response) => {
+        console.log(this.state);
+        
+        axios.get('/api/auth/user').then((response) => {
+            console.log(response);
+            return;
             this.setState({
                 clients: response.data,
             })
@@ -25,7 +36,7 @@ class Clients extends Component {
     }
 
     render() {
-        const { clients } = this.state.clients;
+        // const { clients } = this.state.clients;
 
         return (
             <Container>

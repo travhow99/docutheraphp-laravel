@@ -31,7 +31,7 @@ class LoginContainer extends Component {
     componentDidMount() {
         console.log(this.state);
 
-        const { prevLocation } = this.state.redirect.state || { prevLocation: { pathname: '/dashboard' } };
+        const { prevLocation } = this.state.redirect.state || { prevLocation: { pathname: '/clients' } };
         if (prevLocation && this.state.isLoggedIn) {
             return this.props.history.push(prevLocation);
         }
