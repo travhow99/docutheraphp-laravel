@@ -25,7 +25,7 @@ class Clients extends Component {
     componentDidMount() {
         console.log(this.state);
         
-        axios.get('/api/auth/user').then((response) => {
+        axios.get('/api/user').then((response) => {
             console.log(response);
             return;
             this.setState({

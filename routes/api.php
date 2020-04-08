@@ -13,11 +13,25 @@ use Illuminate\Http\Request;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
+Route::group(['middleware' => ['json.response']], function () {
 
-Route::group([
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // public routes
+    Route::post('/login', 'AuthController@login')->name('login.api');
+    Route::post('/register', 'AuthController@register')->name('register.api');
+
+    // private routes
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/logout', 'AuthController@logout')->name('logout');
+    });
+
+});
+
+
+/* Route::group([
     'prefix' => 'auth'
 ], function () {
     Route::post('login', 'AuthController@login');
@@ -31,15 +45,15 @@ Route::group([
 
         /**
          * Clients
-         */
-        Route::get('clients', 'ClientController@index');
+         *
+        // Route::get('clients', 'ClientController@index');
         // Route::get('clients/{client}/edit', 'ClientController@edit');
         // Route::post('client', 'ClientController@store');
         // Route::patch('client/{client}', 'ClientController@update');
         // Route::delete('client/{client}', 'ClientController@destroy');
 
     });
-});
+}); */
 
 
 /**
@@ -70,6 +84,6 @@ Route::group([
 /**
  * Templates
  */
-Route::get('templates', 'TemplateController@index');
-Route::post('template', 'TemplateController@store');
-Route::delete('template/{template}', 'TemplateController@destroy');
+// Route::get('templates', 'TemplateController@index');
+// Route::post('template', 'TemplateController@store');
+// Route::delete('template/{template}', 'TemplateController@destroy');

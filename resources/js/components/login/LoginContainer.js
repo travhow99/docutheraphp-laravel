@@ -41,7 +41,7 @@ class LoginContainer extends Component {
         this.setState({ formSubmitting: true });
         let userData = this.state.user;
         console.log(userData);
-        axios.post("/api/auth/login", userData).then((response) => {
+        axios.post("/api/login", userData).then((response) => {
             console.log(response);
             return response;
         }).then((json) => {
@@ -49,7 +49,6 @@ class LoginContainer extends Component {
             if (json.status === 200) {
                 let userData = {
                     id: json.data.id,
-                    name: json.data.name,
                     email: json.data.email,
                     access_token: json.data.access_token,
                 };
@@ -63,6 +62,10 @@ class LoginContainer extends Component {
                     user: appState.user,
                     error: ''
                 });
+
+                console.log(localStorage['appState']);
+                console.log(this.state);
+                return;
                 location.reload()
             } else {
                 alert(`Our System Failed To Register Your Account!`);

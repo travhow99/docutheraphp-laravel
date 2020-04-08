@@ -87146,7 +87146,7 @@ function (_Component) {
       var _this2 = this;
 
       console.log(this.state);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/auth/user').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/user').then(function (response) {
         console.log(response);
         return;
 
@@ -87710,7 +87710,7 @@ function (_Component) {
       });
       var userData = this.state.user;
       console.log(userData);
-      axios.post("/api/auth/login", userData).then(function (response) {
+      axios.post("/api/login", userData).then(function (response) {
         console.log(response);
         return response;
       }).then(function (json) {
@@ -87719,7 +87719,6 @@ function (_Component) {
         if (json.status === 200) {
           var _userData = {
             id: json.data.id,
-            name: json.data.name,
             email: json.data.email,
             access_token: json.data.access_token
           };
@@ -87735,6 +87734,9 @@ function (_Component) {
             error: ''
           });
 
+          console.log(localStorage['appState']);
+          console.log(_this2.state);
+          return;
           location.reload();
         } else {
           alert("Our System Failed To Register Your Account!");
