@@ -4,11 +4,12 @@ namespace App;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -38,34 +39,18 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all clients for the user.
+     * Get a user's therapy clients.
      */
-    public function clients()
+    public function therapy_clients()
     {
-        return $this->hasMany(Client::class);
+        return $this->hasMany('App\Client');
     }
 
     /**
-     * Get all templates for the user.
+     * Get a user's client's pocs.
      */
-    public function templates()
+    public function pocs()
     {
-        return $this->hasMany(Template::class);
-    }
-
-    /**
-     * Get all sessions through clients for this user.
-     */
-    public function sessions()
-    {
-        return $this->hasManyThrough('App\Session', 'App\Client');
-    }
-
-        /**
-     * Get all documentation for the user.
-     */
-    public function documentations()
-    {
-        return $this->hasMany(Documentation::class);
+        return $this->hasManyThrough('App\Poc', 'App\Client');
     }
 }

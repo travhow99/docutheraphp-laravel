@@ -15,75 +15,38 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['json.response']], function () {
 
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     // public routes
-    Route::post('/login', 'AuthController@login')->name('login.api');
-    Route::post('/register', 'AuthController@register')->name('register.api');
+    Route::post('/login', 'Api\AuthController@login')->name('login.api');
+    Route::post('/register', 'Api\AuthController@register')->name('register.api');
 
     // private routes
     Route::middleware('auth:api')->group(function () {
-        Route::get('/logout', 'AuthController@logout')->name('logout');
-    });
-
-});
-
-
-/* Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
-
-    Route::group([
-        'middleware' => 'auth:api'
-    ], function() {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
 
         /**
          * Clients
-         *
-        // Route::get('clients', 'ClientController@index');
-        // Route::get('clients/{client}/edit', 'ClientController@edit');
-        // Route::post('client', 'ClientController@store');
-        // Route::patch('client/{client}', 'ClientController@update');
-        // Route::delete('client/{client}', 'ClientController@destroy');
+         */
+        Route::apiResource('clients', 'Api\ClientController');
+
+        // Route::get('/clients', 'Api\ClientController@index');
+        // Route::get('/client/{id}', 'Api\ClientController@show');
+        // Route::get('/clients/{client}/edit', 'Api\ClientController@edit');
+        // Route::post('/client', 'Api\ClientController@store');
+        // Route::patch('/client/{client}', 'Api\ClientController@update');
+        // Route::delete('/clients/{client}', 'Api\ClientController@destroy');
+
+        /**
+         * Pocs, Sessions
+         * TODO: Switch to shallow resource upon upgrading Laravel.
+         */
+        Route::apiResources([
+            'clients.pocs' => 'Api\PocController',
+            'clients.sessions' => 'Api\SessionController',
+        ]);//->shallow();
 
     });
-}); */
 
-
-/**
-* Pocs
-*/
-// Route::get('contacts', 'PocController@index');
-// Route::get('client/{client}/contact', 'PocController@index');
-// Route::get('contacts/{contact}/edit', 'PocController@edit');
-// Route::post('poc', 'PocController@store');
-// Route::patch('contact/{contact}', 'PocController@update');
-// Route::delete('contact/{contact}', 'PocController@destroy');
-
-/**
- * Sessions
- */
-// Route::get('clients/{client}/sessions', 'SessionController@index');
-// Route::get('session/{session}/edit', 'SessionController@edit');
-// Route::post('clients/{client}/session', 'SessionController@create');
-// Route::post('session/{session}', 'SessionController@update');
-
-/**
- * Documentations
- */
-// Route::get('documentation/{documentation}', 'DocumentationController@index');
-// Route::get('documentation/{documentation}/edit', 'DocumentationController@edit');
-// Route::post('session/{session}/documentation', 'DocumentationController@store');
-
-/**
- * Templates
- */
-// Route::get('templates', 'TemplateController@index');
-// Route::post('template', 'TemplateController@store');
-// Route::delete('template/{template}', 'TemplateController@destroy');
+});

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +23,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
     
-        $request['password'] = Hash::make($request['password']);
+        $request['password']= Hash::make($request['password']);
         $user = User::create($request->toArray());
     
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
@@ -42,19 +41,11 @@ class AuthController extends Controller
     
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token' => $token];
-
-                return response()->json([
-                    'success' => true,
-                    'id' => $user->id,
+                $response = [
+                    'token' => $token,
                     'email' => $user->email,
-                    'access_token' => $token,
-                    'token_type' => 'Bearer',
-                    /* 'expires_at' => Carbon::parse(
-                        $token->expires_at
-                    )->toDateTimeString() */
-                ]);
-        
+                    'id'    => $user->id,
+                ];
                 return response($response, 200);
             } else {
                 $response = "Password missmatch";

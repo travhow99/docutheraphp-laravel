@@ -8,9 +8,13 @@ class LoginContainer extends Component {
         super(props);
 
         let state = localStorage["appState"];
-        let AppState = JSON.parse(state);
+        let AppState;
 
-        console.log('app', AppState);
+        if (state) {
+            AppState = JSON.parse(state);
+        } else {
+            AppState = {user: []};
+        }
 
         this.state = {
             isLoggedIn: AppState.isLoggedIn || false,
@@ -47,25 +51,25 @@ class LoginContainer extends Component {
         }).then((json) => {
             console.log(json);
             if (json.status === 200) {
+                console.log(json.data, json.data.token);
+
+                axios.defaults.headers.common['Authorization'] = `Bearer ${json.data.token}`;
+
                 let userData = {
                     id: json.data.id,
                     email: json.data.email,
-                    access_token: json.data.access_token,
-                };
+                    access_token: json.data.token,
+                }
+
                 let appState = {
                     isLoggedIn: true,
-                    user: userData
-                };
-                localStorage["appState"] = JSON.stringify(appState);
-                this.setState({
-                    isLoggedIn: appState.isLoggedIn,
-                    user: appState.user,
-                    error: ''
-                });
+                    user: userData,
+                }
 
-                console.log(localStorage['appState']);
-                console.log(this.state);
-                return;
+                localStorage['appState'] = JSON.stringify(appState);
+
+                // return;
+                // <Redirect to="/clients" />
                 location.reload()
             } else {
                 alert(`Our System Failed To Register Your Account!`);

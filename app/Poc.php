@@ -14,12 +14,18 @@ class Poc extends Model
     protected $fillable = ['client_id', 'contact_name', 'email', 'phone_number', 'notes'];
 
     /**
-     * Get the user that owns the client.
+     * Get the client that owns the poc.
      */
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo('App\Client');
     }
 
-
+    /**
+     * Get the user that owns the poc's client.
+     */
+/*     public function user()
+    {
+        return $this->
+    } */
 }

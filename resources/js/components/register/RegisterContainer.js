@@ -14,7 +14,7 @@ class RegisterContainer extends Component {
         if (state) {
             AppState = JSON.parse(state);
         } else {
-            AppState = false;
+            AppState = {user: []};
         }
 
         this.state = {
@@ -64,7 +64,7 @@ class RegisterContainer extends Component {
         this.setState({ formSubmitting: true });
         ReactDOM.findDOMNode(this).scrollIntoView();
         let userData = this.state.user;
-        axios.post("/api/auth/register", userData)
+        axios.post("/api/register", userData)
             .then((response) => {
                 console.log(response);
                 return response;

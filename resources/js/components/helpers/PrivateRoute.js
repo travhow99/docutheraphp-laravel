@@ -26,10 +26,13 @@ const token = AppState.user.access_token;
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => (
-    <Route path={path}
+    <div>
+        <Route path={path}
             {...rest}
             render={(props) => Auth.isLoggedIn ? (
-                <Component {...props} />) : (<Redirect to={{
+                <Component {...props} />
+                ) : (
+                <Redirect to={{
                     pathname: "/login",
                     state: {
                         prevLocation: path,
@@ -37,8 +40,9 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => (
                     },
                 }}
                 />
-        )
-    }
-/>);
+                )
+            }
+        />
+    </div>);
 
 export default withRouter(PrivateRoute);

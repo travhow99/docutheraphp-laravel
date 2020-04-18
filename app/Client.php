@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
-use App\Session;
 
 class Client extends Model
 {
@@ -16,38 +15,46 @@ class Client extends Model
     protected $fillable = ['name', 'session_day', 'session_time', 'start_date', 'agency', 'active'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['next_session'];
+
+    /**
      * Get the user that owns the client.
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
     }
 
     /**
-     * Get the user that owns the client.
+     * Get the client's Pocs.
      */
-    public function poc()
+    public function pocs()
     {
-        return $this->hasOne(Poc::class);
+        return $this->hasMany('App\Poc');
     }
 
     /**
-     * Get the sessions for the client.
+     * Get the client's Sessions.
      */
     public function sessions()
     {
-        return $this->hasMany(Session::class);
+        return $this->hasMany('App\Session');
     }
 
     /**
-     * Determine the client's next session.
+     * Get the client's next session.
+     * 
      */
-    public function nextSession()
+    public function getNextSessionAttribute()
     {
         // Create a new DateTime object
         $date = new DateTime();
 
-        if ($this->session_day) {
+        if ($this->session_day && $this->start_date) {
             // Modify the date it contains
             $date->modify("next " . $this->session_day);
     
@@ -58,46 +65,4 @@ class Client extends Model
         }
     }
 
-    /**
-     * Determine past estimated session dates.
-     * @return Collection
-     */
-    public function pastSessions()
-    {
-        $day = 'last ' . $this->session_day;
-        $startDate = strtotime($this->start_date);
-        $endDate = strtotime('today');
-
-        $sessionDates = [];
-        for ($x = strtotime($day, $endDate); $x >= $startDate; $x = strtotime('-1 week', $x)) {
-            // $status = (count(Session::where('session_date', date('m-d-Y', $x))->get()) > 0) ? 'In Progress' : 'Outstanding';
-            $status = $this->sessionStatus(date('l m-d-Y', $x));
-
-
-            array_push($sessionDates, ['date' => date('l m-d-Y', $x), 'status' => $status]);
-        }
-
-        return array_slice($sessionDates, 0, 6);
-    }
-
-    /**
-     * Generate past sessions expected for Client.
-     * @param $session_date
-     * format: date(m-d-Y, $date);
-     * @return boolean
-     */
-    public function sessionStatus($sessionDate)
-    {
-        return (count($this->sessions()->where('session_date', $sessionDate)->get()) > 0) 
-                                                        ? 'In Progress' : 
-                                                        'Outstanding';
-    }
-
-    /**
-     * Get all documentations through clients for this user.
-     */
-    public function documentations()
-    {
-        return $this->hasManyThrough('App\Documentation', 'App\Session');
-    }
 }
