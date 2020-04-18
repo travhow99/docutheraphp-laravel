@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('address')->nullable();
             $table->string('session_day')->nullable();
             $table->string('session_time')->nullable();
-            $table->dateTime('start_date')->nullable();
+            $table->date('start_date')->nullable();
             $table->string('agency');
             $table->boolean('active')->default(1);
             $table->string('diagnosis')->nullable();
