@@ -30,6 +30,10 @@ Route::group(['middleware' => ['json.response']], function () {
          * Clients
          */
         Route::apiResource('clients', 'Api\ClientController');
+        Route::post('/clients/upcoming', function (Request $request) {
+            // TODO: Order by next_session day
+            return response($request->user()->therapy_clients()->get(), 200);
+        });
 
         // Route::get('/clients', 'Api\ClientController@index');
         // Route::get('/client/{id}', 'Api\ClientController@show');

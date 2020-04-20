@@ -7,7 +7,7 @@ import {
     Form, FormGroup, FormFeedback, Label
 } from 'reactstrap';
 
-class EditClient extends Component {
+class AddClient extends Component {
     constructor(props) {
         super(props);
 
@@ -100,4 +100,4 @@ class EditClient extends Component {
     }
 }
 
-export default EditClient;
+export default AddClient;

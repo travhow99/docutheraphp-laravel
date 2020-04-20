@@ -5,8 +5,10 @@ import Header from './Header';
 import Login from './login/Login';
 import Register from './register/Register';
 import Home from './Home';
-import Clients from './Clients';
+import Clients from './clients/Clients';
 import PrivateRoute from './helpers/PrivateRoute';
+import EditClient from './clients/EditClients';
+import Sessions from './sessions/Sessions';
 
 
 class App extends Component {
@@ -26,7 +28,7 @@ class App extends Component {
         }
     }
 
-    render() {       
+    render() {
         return (
             <BrowserRouter>
                 <div>
@@ -41,7 +43,10 @@ class App extends Component {
 
                         {/* Logged in */}
                         <PrivateRoute exact path="/" component={Home} />
-                        <PrivateRoute path="/clients" component={Clients} />
+                        <PrivateRoute exact path="/clients" component={Clients} />
+                        <PrivateRoute path="/clients/:id" component={EditClient} />
+                        <PrivateRoute path="/sessions/:id" component={Sessions} />
+
                         {/* <PrivateRoute path="/clients" component={Clients} /> */}
                     </Switch>
                 </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { 
     Container, Row, Col,
     Card, CardBody, Button,
@@ -11,11 +11,12 @@ class EditClient extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props.client.start_date);
         this.state = {
             client: {
-                ...this.props.client,
-                start_date: this.props.client.start_date ? this.props.client.start_date.substr(0, 10) : null,
+                id: null,
+                start_date: null,
+                session_time: null,
+                agency: null,
             },
             days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         }
@@ -25,7 +26,14 @@ class EditClient extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state);
+        const id = this.props.match.params.id;
+
+        axios.get(`/api/clients/${id}`).then((response) => {
+            this.setState({
+                client: response.data,
+            })
+            console.log(this.state);
+        })
     }
 
     componentDidUpdate() {
@@ -56,7 +64,7 @@ class EditClient extends Component {
 
     }
 
-    render() {        
+    render() {
         return (
             <Container>
                 <Row className="mt-4">
@@ -64,16 +72,17 @@ class EditClient extends Component {
                         <Card>
                             <CardBody>
                                 <h3>Edit Client</h3>
+                                <h5>{this.state.client.name}</h5>
                                 <Form onSubmit={this.handleSubmit}>
                                     <FormGroup row>
                                         <select id="sessionDay" name="session_day" className="form-control"
                                         onChange={this.handleInput}
                                         defaultValue={this.state.client.session_day || 'default'}
                                         >
-                                            <option defaultValue="default" disabled /* selected={!this.state.client.session_day} */>Session Day</option>
+                                            <option defaultValue="default" disabled>Session Day</option>
                                             {this.state.days.map((day, i) => (
                                                 <option defaultValue={day} key={i}
-                                                /* selected={this.state.client.session_day === day} */>{day}</option>
+                                                >{day}</option>
                                             ))}
                                         </select>
                                     </FormGroup>
@@ -105,4 +114,4 @@ class EditClient extends Component {
     }
 }
 
-export default EditClient;
+export default withRouter(EditClient);

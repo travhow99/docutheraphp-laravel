@@ -45,11 +45,13 @@ class Client extends Model
         return $this->hasMany('App\Session');
     }
 
+    
+
     /**
      * Get the client's next session.
      * 
      */
-    public function getNextSessionAttribute()
+    public function nextSession()
     {
         // Create a new DateTime object
         $date = new DateTime();
@@ -57,12 +59,20 @@ class Client extends Model
         if ($this->session_day && $this->start_date) {
             // Modify the date it contains
             $date->modify("next " . $this->session_day);
-    
+
             // Output
             return $date->format('m-d-Y');
         } else {
             return "Session not available";
         }
+    }
+
+    /**
+     * Set the next session attribute.
+     */
+    public function getNextSessionAttribute()
+    {
+        return $this->nextSession();
     }
 
 }

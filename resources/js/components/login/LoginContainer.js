@@ -42,6 +42,7 @@ class LoginContainer extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
+        
         this.setState({ formSubmitting: true });
         let userData = this.state.user;
         console.log(userData);

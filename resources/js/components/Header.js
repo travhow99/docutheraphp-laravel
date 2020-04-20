@@ -61,9 +61,6 @@ class Header extends Component {
                             <React.Fragment>
                                 <Nav className="mr-auto" navbar>
                                     <NavItem>
-                                        <NavLink tag={RRNavLink} to='/home'>Home</NavLink>
-                                    </NavItem>
-                                    <NavItem>
                                         <NavLink tag={RRNavLink} to='/clients'>Clients</NavLink>
                                     </NavItem>
                                     <NavItem>

@@ -44,6 +44,10 @@ class Clients extends Component {
         this.setState({
             currentClient: this.state.clients[index],
         });
+
+        this.props.history.push('/clients');
+
+        console.log(this.props);
     }
 
     handleDelete(e, id) {
@@ -107,9 +111,11 @@ class Clients extends Component {
                                 <CardFooter>
                                     <Row>
                                         <Col>
-                                            <Button color="success" block onClick={(e) => this.manageClient(e, index)}>
-                                                Manage
-                                            </Button>
+                                            <Link to={`/clients/${client.id}`}>
+                                                <Button color="success" block>
+                                                    Manage
+                                                </Button>
+                                            </Link>
                                         </Col>
                                         <Col>
                                             <Button color="danger" block onClick={(e) => this.handleDelete(e, client.id)}>
@@ -117,10 +123,10 @@ class Clients extends Component {
                                             </Button>
                                         </Col>
                                     </Row>
-                                    {(client.session_time && client.session_day) ? 
+                                    {(client.session_time && client.session_day && client.start_date) ? 
                                         <Row>
                                             <Col className="mt-2">
-                                                <Link to={`/clients/sessions/${client.id}`} style={{ textDecoration: 'none' }}>
+                                                <Link to={`/sessions/${client.id}`} style={{ textDecoration: 'none' }}>
                                                     <Button color="primary" block>
                                                         Sessions
                                                     </Button>

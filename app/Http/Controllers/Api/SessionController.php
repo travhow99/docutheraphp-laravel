@@ -19,7 +19,10 @@ class SessionController extends Controller
         $client = Client::find($id);
         $sessions = $client->sessions()->get();
 
-        return response($sessions, 200);
+        return response([
+            'client' => $client,
+            'sessions' => $sessions,
+        ], 200);
     }
 
     /**

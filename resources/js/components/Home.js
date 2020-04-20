@@ -12,56 +12,46 @@ class Home extends Component {
 
         console.log(this.props);
 
-        let AppState;
-        let state = localStorage["appState"];
-        if (state) {
-            AppState = JSON.parse(state);
-        }
-
         this.state = {
-            isLoggedIn: AppState.isLoggedIn || false,
-            user: AppState.user || {},
+            clients: [],
+            upcomingSessions: [],
         }
     }
 
+    componentDidMount() {
+        axios.post('/api/clients/upcoming').then((response) => {
+            console.log(response);
+            this.setState({
+                clients: response.data,
+            });
+            console.log('state:',this.state);
+        });
+
+    }
+
     render() {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
         return (
             <Container>
                 <Row className="mt-4">
-                    <Col md="6">
-                        <Card>
-                            <CardBody>
-                                <CardTitle className="text-center">
-                                    <h3>Test</h3>
-                                </CardTitle>
-                                <CardText>Testing</CardText>
-                            </CardBody>
-                            <CardFooter>
-                                <Row>
-                                    <Col>
-                                        <Link to={`/client`} style={{ textDecoration: 'none' }}>
-                                            <Button color="success" block>
-                                                Manage
-                                                </Button>
-                                        </Link>
-                                    </Col>
-                                    <Col>
-                                        <Button color="danger" block>
-                                            Delete
-                                            </Button>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="mt-2">
-                                        <Link to={`/clients`} style={{ textDecoration: 'none' }}>
-                                            <Button color="primary" block>
-                                                Sessions
-                                            </Button>
-                                        </Link>
-                                    </Col>
-                                </Row>
-                            </CardFooter>
-                        </Card>
+                    <Col md="4">
+                        {this.state.clients.map((client, index) => (
+                            (client.next_session !== 'Session not available') &&
+                                <Card key={index} className="text-center">
+                                    <CardBody>
+                                        <CardTitle>
+                                            <h3>{client.name}</h3>
+                                        </CardTitle>
+                                        <CardText>
+                                            {days[new Date(client.next_session).getDay()]}
+                                            <br />
+                                            {client.session_time}
+                                        </CardText>
+                                        <Link to="/clients">Manage Client</Link>
+                                    </CardBody>
+                                </Card>
+                        ))}
                     </Col>
                 </Row>
             </Container>
