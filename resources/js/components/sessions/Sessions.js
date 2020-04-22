@@ -5,6 +5,7 @@ import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form
 } from 'reactstrap';
+import Pill from '../utilities/Pill';
 
 class Sessions extends Component {
     constructor(props) {
@@ -52,30 +53,43 @@ class Sessions extends Component {
         return(
             <Container>
                 <Row className="mt-4">
+                    {this.state.client && 
+                        <Col>
+                            <h3>Sessions With {this.state.client.name}</h3>
+                            <div className="mt-4">
+                                <h5>Past</h5>
+                                {this.state.sessions.length >= 1 ? 
+                                    this.state.sessions.map((session, key) => (
+                                        <div key={key} className="session-date">
+                                            <div className="flex-grow-1">
+                                                {session.date}
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" />
+                                            </div>
+                                        </div>
+                                    )) : (
+                                        <p>Not currently available</p>
+                                    )}
+                            </div>
+                            <div className="mt-4">
+                                <h5>Upcoming</h5>
+                                <Pill 
+                                    main={[
+                                        this.state.client.session_day,
+                                        this.state.client.next_session,
+                                        this.state.client.session_time,
+                                    ]} 
+                                    status={0} />
+                            </div>
+                        </Col>
+                    }
                     <Col>
-                        {this.state.client && 
-                            <Card>
-                                <CardBody>
-                                    <CardTitle>
-                                        <h3>{this.state.client.name}</h3>
-                                    </CardTitle>
-                                    <Form>
-                                        <FormGroup row>
-                                            <input id="session_time" type="time" name="session_time" placeholder="Session Time" className="form-control" onChange={this.handleInput} defaultValue={this.state.client.session_time} required />
-                                        </FormGroup>
-
-                                        <FormGroup row>
-                                            <Col>
-                                                <Button type="submit" color="primary" size="lg" block onSubmit={this.handleSubmit}>
-                                                    Save
-                                                </Button>
-                                            </Col>
-                                        </FormGroup>
-
-                                    </Form>
-                                </CardBody>
-                            </Card>
-                        }
+                        <h3>&nbsp;</h3>
+                        <div className="mt-4">
+                            <h5>Add Session</h5>
+                            + {/* Add expander */}
+                        </div>
                     </Col>
                 </Row>
             </Container>
