@@ -45,7 +45,13 @@ class Client extends Model
         return $this->hasMany('App\Session');
     }
 
-    
+    /**
+     * Get the client's Goals.
+     */
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 
     /**
      * Get the client's next session.

@@ -9,6 +9,7 @@ import Clients from './clients/Clients';
 import PrivateRoute from './helpers/PrivateRoute';
 import EditClient from './clients/EditClients';
 import Sessions from './sessions/Sessions';
+import AddSession from './sessions/AddSession';
 
 
 class App extends Component {
@@ -44,8 +45,10 @@ class App extends Component {
                         {/* Logged in */}
                         <PrivateRoute exact path="/" component={Home} />
                         <PrivateRoute exact path="/clients" component={Clients} />
+                        <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} />
+                        <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
                         <PrivateRoute path="/clients/:id" component={EditClient} />
-                        <PrivateRoute path="/sessions/:id" component={Sessions} />
+                        <PrivateRoute path="/sessions/edit/:id" component={AddSession} />
 
                         {/* <PrivateRoute path="/clients" component={Clients} /> */}
                     </Switch>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FaCog } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 class Pill extends Component {
     constructor(props) {
@@ -9,7 +10,9 @@ class Pill extends Component {
         return (
             <div className="session-date">
                 <div className="mr-3 align-self-center">
-                    <FaCog />
+                    <Link to={this.props.target}>
+                        <FaCog style={{cursor: 'pointer'}} />
+                    </Link>
                 </div>
                 <div className="details flex-grow-1">
                     {Array.isArray(this.props.main) ?
@@ -21,7 +24,10 @@ class Pill extends Component {
                     }
                 </div>
                 <div className="align-self-center">
-                    <input type="checkbox" />
+                    <div className="border border-danger" style={{
+                        width: '1rem',
+                        height: '1rem',
+                    }}></div>
                 </div>
             </div>
         )

@@ -51,6 +51,9 @@ class Clients extends Component {
     }
 
     handleDelete(e, id) {
+        // TODO: discontinue, don't delete client...
+        return;
+
         axios.delete(`/api/clients/${id}`).then((response) => {
             console.log(response);
 
@@ -119,14 +122,14 @@ class Clients extends Component {
                                         </Col>
                                         <Col>
                                             <Button color="danger" block onClick={(e) => this.handleDelete(e, client.id)}>
-                                                Delete
+                                                Discontinue
                                             </Button>
                                         </Col>
                                     </Row>
                                     {(client.session_time && client.session_day && client.start_date) ? 
                                         <Row>
                                             <Col className="mt-2">
-                                                <Link to={`/sessions/${client.id}`} style={{ textDecoration: 'none' }}>
+                                                <Link to={`/clients/${client.id}/sessions`} style={{ textDecoration: 'none' }}>
                                                     <Button color="primary" block>
                                                         Sessions
                                                     </Button>

@@ -5,7 +5,7 @@ Sessions
 --> Model [ ]
 --> Controller [ ]
 
-POC (point of contadct)
+POC (point of contact)
 --> Migration [ ]
 --> Model [ ]
 --> Controller [ ]

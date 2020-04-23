@@ -11,5 +11,5 @@
 
   /* Pill */
   .details>div:nth-child(1) {
-    font-size: large;
+    font-size: larger;
   }

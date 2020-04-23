@@ -36,7 +36,8 @@ class Sessions extends Component {
         let clientData = this.state.client;
         console.log(clientData);
 
-        axios.put(`/api/sessions/${this.state.client.id}`, clientData).then((response) => {
+        // TODO: 
+        axios.put(`/api/clients/${this.state.client.id}/sessions`, clientData).then((response) => {
             console.log(response);
             return response;
         }).then((json) => {
@@ -74,7 +75,8 @@ class Sessions extends Component {
                             </div>
                             <div className="mt-4">
                                 <h5>Upcoming</h5>
-                                <Pill 
+                                <Pill
+                                    target={`/clients/${this.state.client.id}/sessions/new`} 
                                     main={[
                                         this.state.client.session_day,
                                         this.state.client.next_session,

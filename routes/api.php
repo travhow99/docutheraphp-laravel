@@ -35,6 +35,11 @@ Route::group(['middleware' => ['json.response']], function () {
             return response($request->user()->therapy_clients()->get(), 200);
         });
 
+        /**
+         * Session
+         */
+        // Route::get('/')
+
         // Route::get('/clients', 'Api\ClientController@index');
         // Route::get('/client/{id}', 'Api\ClientController@show');
         // Route::get('/clients/{client}/edit', 'Api\ClientController@edit');
@@ -48,6 +53,7 @@ Route::group(['middleware' => ['json.response']], function () {
          */
         Route::apiResources([
             'clients.pocs' => 'Api\PocController',
+            'clients.goals' => 'Api\GoalController',
             'clients.sessions' => 'Api\SessionController',
         ]);//->shallow();
 
