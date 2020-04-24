@@ -1,3 +1,10 @@
+/* Helpers */
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+/* Specific */
 .session-date {
     display: flex;
     background: var(--bg-gray);

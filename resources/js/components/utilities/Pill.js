@@ -9,11 +9,14 @@ class Pill extends Component {
     render() {
         return (
             <div className="session-date">
-                <div className="mr-3 align-self-center">
-                    <Link to={this.props.target}>
-                        <FaCog style={{cursor: 'pointer'}} />
-                    </Link>
-                </div>
+                {
+                    this.props.target && 
+                    <div className="mr-3 align-self-center">
+                        <Link to={this.props.target}>
+                            <FaCog style={{cursor: 'pointer'}} />
+                        </Link>
+                    </div>
+                }
                 <div className="details flex-grow-1">
                     {Array.isArray(this.props.main) ?
                         this.props.main.map((i, key) => (
