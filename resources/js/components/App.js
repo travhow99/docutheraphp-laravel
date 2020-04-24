@@ -8,6 +8,8 @@ import Home from './Home';
 import Clients from './clients/Clients';
 import PrivateRoute from './helpers/PrivateRoute';
 import EditClient from './clients/EditClients';
+import Goals from './goals/Goals';
+import AddGoal from './goals/AddGoal';
 import Sessions from './sessions/Sessions';
 import AddSession from './sessions/AddSession';
 
@@ -45,8 +47,15 @@ class App extends Component {
                         {/* Logged in */}
                         <PrivateRoute exact path="/" component={Home} />
                         <PrivateRoute exact path="/clients" component={Clients} />
+
+                        {/* Goal Paths */}
+                        <PrivateRoute path="/clients/:id/goals/new" component={AddGoal} />
+                        <PrivateRoute path="/clients/:id/goals" component={Goals} />
+
+                        {/* Session Paths */}
                         <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} />
                         <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
+
                         <PrivateRoute path="/clients/:id" component={EditClient} />
                         <PrivateRoute path="/sessions/edit/:id" component={AddSession} />
 

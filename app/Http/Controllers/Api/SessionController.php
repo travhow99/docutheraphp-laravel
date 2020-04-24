@@ -79,7 +79,7 @@ class SessionController extends Controller
 
         $session->save();
 
-        return response('success', 200);
+        return response('success', 201);
     }
 
     /**

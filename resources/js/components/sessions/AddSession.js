@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form
@@ -68,7 +68,12 @@ class AddSession extends Component {
                                         />
                                     })
                                 :
-                                <div>No Sessions</div>
+                                <React.Fragment>
+                                    <div>No Goals</div>
+                                    <Link to={`/clients/${this.state.client.id}/goals/new`}>
+                                        <Button color="primary">Add One?</Button>
+                                    </Link>
+                                </React.Fragment>
                                 }
                                 {/* 
                                     map(g&o {

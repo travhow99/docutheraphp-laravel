@@ -98,7 +98,7 @@ class EditClient extends Component {
 
                                     <FormGroup row>
                                         <Col>
-                                            <Button type="submit" color="primary" size="lg" block onSubmit={this.handleSubmit}>
+                                            <Button type="submit" color="primary" size="lg" block>
                                                 Submit
                                             </Button>
                                         </Col>

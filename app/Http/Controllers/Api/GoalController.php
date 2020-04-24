@@ -28,11 +28,26 @@ class GoalController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'goal' => 'required',
+            'objective' => 'required',
+        ]);
+
+        $client = Client::find($id);
+
+        $goal = $client->goals()->create([
+            'client_id' => $id,
+            'goal' => $request->goal,
+            'objective' => $request->objective,
+            'date_started' => date('Y-m-d'),
+        ]);
+
+        return response($goal, 201);
     }
 
     /**
