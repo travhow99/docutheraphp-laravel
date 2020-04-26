@@ -20,4 +20,12 @@ class Goal extends Model
     {
         return $this->belongsTo('App\Client');
     }
+
+    /**
+     * Get the SessionGoals the Goal has.
+     */
+    public function sessionGoals()
+    {
+        return $this->hasMany('App\SessionGoal');
+    }
 }

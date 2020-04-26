@@ -37,16 +37,20 @@ class SessionController extends Controller
             'session_date' => 'required',
             'session_time' => 'required',
         ]);
-        // dd($id);
 
         $client = Client::find($id);
 
-        // dd($client->sessions());
         $session = $client->sessions()->create([
             'client_id' => $id, 
             'session_date' => $request->session_date,
             'session_time' => $request->session_time,
         ]);
+
+        /**
+         * TODO: 
+         * Create Session
+         * Create SessionGoal foreach active Goal
+         */
 
         return response($session, 200);
     }

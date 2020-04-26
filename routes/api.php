@@ -55,6 +55,7 @@ Route::group(['middleware' => ['json.response']], function () {
             'clients.pocs' => 'Api\PocController',
             'clients.goals' => 'Api\GoalController',
             'clients.sessions' => 'Api\SessionController',
+            'sessions.sessionGoals' => 'Api\SessionGoalController',
         ]);//->shallow();
 
     });

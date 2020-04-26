@@ -5,7 +5,7 @@ import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form, Input, Label
 } from 'reactstrap';
-import Pill from '../utilities/Pill';
+import SessionGoal from './SessionGoal';
 
 class AddSession extends Component {
     constructor(props) {
@@ -14,8 +14,6 @@ class AddSession extends Component {
         this.state = {
             client: null,
         }
-
-        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     componentDidMount() {
@@ -29,22 +27,6 @@ class AddSession extends Component {
             });
 
             console.log(this.state);
-        })
-    }
-
-    toggleEdit(e) {
-        e.preventDefault();
-        const key = e.target.getAttribute('data-goal_index');
-
-        const goals = this.state.goals;
-        goals.map((goal) => {
-            goal.editing = false;
-        })
-        goals[key].editing = true;
-
-        this.setState({
-            ...this.state,
-            goals,
         })
     }
 
@@ -77,45 +59,7 @@ class AddSession extends Component {
                             <Card className="p-4">
                                 {this.state.goals.length > 0 ? 
                                     this.state.goals.map((goal, index) => (
-                                        <React.Fragment key={index}>
-                                            <Row>
-                                                <Col>
-                                                    <h3>Goal:</h3>
-                                                    <p>{goal.goal}</p>
-                                                    <h3>Objective:</h3>
-                                                    <p>{goal.objective}</p>
-                                                </Col>
-                                                <Col className="flex-end">
-                                                    <Button color='success' data-goal_index={index} onClick={this.toggleEdit}>Add Note</Button>
-                                                </Col>
-                                            </Row>
-                                            {goal.editing && 
-                                            // TODO: turn into component
-                                                <React.Fragment>
-                                                    <Row className="mt-2">
-                                                        <Col className="col-9">
-                                                            <Input type="textarea"></Input>
-                                                        </Col>
-                                                        <Col>
-                                                            <Button color="danger">-</Button>
-                                                            <Button color="success">+</Button>
-                                                            <br />
-                                                            <span>{goal.count || 0}</span>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <Label>Did not meet objective</Label>
-                                                            <Input type="checkbox" />
-                                                        </Col>
-                                                        <Col>
-                                                            <Label>Met objective</Label>
-                                                            <Input type="checkbox" />
-                                                        </Col>
-                                                    </Row>
-                                                </React.Fragment>
-                                            }
-                                        </React.Fragment>
+                                        <SessionGoal key={index} goal={goal} />
                                     ))
                                 :
                                 <React.Fragment>
