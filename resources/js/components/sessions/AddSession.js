@@ -20,7 +20,7 @@ class AddSession extends Component {
         const id = this.props.match.params.id;
         console.log(id);
 
-        axios.get(`/api/clients/${id}/goals`).then((response) => {
+        axios.post(`/api/clients/${id}/sessions`).then((response) => {
             this.setState({
                 client: response.data.client,
                 goals: response.data.goals,

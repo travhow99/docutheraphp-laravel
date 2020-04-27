@@ -34,16 +34,16 @@ class SessionController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
-            'session_date' => 'required',
-            'session_time' => 'required',
+            // 'session_date' => 'required',
+            // 'session_time' => 'required',
         ]);
 
         $client = Client::find($id);
 
         $session = $client->sessions()->create([
             'client_id' => $id, 
-            'session_date' => $request->session_date,
-            'session_time' => $request->session_time,
+            'session_date' => $client->nextSession() + '00:00:0000',
+            'session_time' => $request->session_time || now(),
         ]);
 
         /**
@@ -52,7 +52,37 @@ class SessionController extends Controller
          * Create SessionGoal foreach active Goal
          */
 
-        return response($session, 200);
+        $sessionGoals = $this->createSessionGoals($client, $session);
+
+        return response([
+            'session' => $session,
+            'goals' => $sessionGoals]
+        , 200);
+    }
+
+    /**
+     * Create the SessionGoals for the session.
+     * 
+     * @param App\Client $client
+     * @param App\Session $session
+     * @return \Illuminate\Http\Response
+     */
+    public function createSessionGoals(Client $client, Session $session)
+    {
+        $goals = $client->goals->get();
+
+        $sessionGoals = [];
+
+        foreach ($goals as $goal) {
+            array_push(
+                $sessionGoals, 
+                $session->sessionGoals()->create([
+                    'goal_id' => $goal->id,
+                ])
+            );
+        }
+
+        return $sessionGoals;
     }
 
     /**
