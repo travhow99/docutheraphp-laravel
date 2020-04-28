@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Session;
+use App\SessionGoal;
 
 class SessionGoalController extends Controller
 {
@@ -64,9 +65,14 @@ class SessionGoalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $sessionGoalId)
     {
-        //
+        $sessionGoal = SessionGoal::find($sessionGoalId);
+        $sessionGoal->fill($request->all());
+        dd($request->all());
+        $sessionGoal->save();
+
+        return response($sessionGoal, 200);
     }
 
     /**

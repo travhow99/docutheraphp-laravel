@@ -7,20 +7,23 @@ import {
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 
-class AddSession extends Component {
+class EditSession extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             client: null,
+            goals: [],
         }
     }
 
     componentDidMount() {
         const id = this.props.match.params.id;
         console.log(id);
+        const session_id = this.props.match.params.session_id;
+        console.log(session_id);
 
-        axios.post(`/api/clients/${id}/sessions`).then((response) => {
+        axios.get(`/api/clients/${id}/sessions/${session_id}`).then((response) => {
             this.setState({
                 client: response.data.client,
                 session: response.data.session,
@@ -57,10 +60,16 @@ class AddSession extends Component {
                     {this.state.client && 
                         <Col>
                             <h2>{this.state.client.name}</h2>
+                            <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
+                            {/* 
+                                TODO:
+                                Format AM vs PM time
+                            */}
+                            <h5>{this.state.session.session_time}</h5>
                             <Card className="p-4">
                                 {this.state.goals.length > 0 ? 
                                     this.state.goals.map((goal, index) => (
-                                        <SessionGoal key={index} goal={goal} />
+                                        <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
                                     ))
                                 :
                                 <React.Fragment>
@@ -91,4 +100,4 @@ class AddSession extends Component {
     }
 }
 
-export default withRouter(AddSession);
+export default withRouter(EditSession);

@@ -42,8 +42,8 @@ class SessionController extends Controller
 
         $session = $client->sessions()->create([
             'client_id' => $id, 
-            'session_date' => $client->nextSession() + '00:00:0000',
-            'session_time' => $request->session_time || now(),
+            'session_date' => $client->nextSessionFormatted(),// . ' 00:00:00',
+            'session_time' => $client->session_time,
         ]);
 
         /**
@@ -55,9 +55,10 @@ class SessionController extends Controller
         $sessionGoals = $this->createSessionGoals($client, $session);
 
         return response([
+            'client' => $client,
             'session' => $session,
-            'goals' => $sessionGoals]
-        , 200);
+            'goals' => $sessionGoals,
+        ], 200);
     }
 
     /**
@@ -69,7 +70,7 @@ class SessionController extends Controller
      */
     public function createSessionGoals(Client $client, Session $session)
     {
-        $goals = $client->goals->get();
+        $goals = $client->goals()->get();
 
         $sessionGoals = [];
 
@@ -77,7 +78,8 @@ class SessionController extends Controller
             array_push(
                 $sessionGoals, 
                 $session->sessionGoals()->create([
-                    'goal_id' => $goal->id,
+                    'goal' => $goal->goal,
+                    'objective' => $goal->objective,
                 ])
             );
         }
@@ -91,11 +93,17 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($client_id, $session_id)
     {
-        $session = Session::find($id);
+        $client = Client::find($client_id);
+        $session = Session::find($session_id);
+        $goals = $session->sessionGoals()->get();
 
-        return response($session, 200);
+        return response([
+            'client' => $client,
+            'session' => $session,
+            'goals' => $goals,
+        ], 200);
     }
 
     /**

@@ -74,6 +74,16 @@ class Client extends Model
     }
 
     /**
+     * Get the client's next session formatted for a DB entry YYYY-MM-DD
+     */
+    public function nextSessionFormatted()
+    {
+        $date = new DateTime();
+        $date->modify("next " . $this->session_day);
+        return $date->format('Y-m-d');
+    }
+
+    /**
      * Set the next session attribute.
      */
     public function getNextSessionAttribute()

@@ -16,11 +16,12 @@ class CreateSessionGoalsTable extends Migration
         Schema::create('session_goals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->smallInteger('session_id')->index();
-            $table->smallInteger('goal_id')->index();
+            $table->string('goal');
+            $table->string('objective');
             $table->smallInteger('count')->default(0);
             $table->boolean('addressed')->default(1);
             $table->boolean('met_objective')->default(0);
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
 
             $table->timestamps();
         });

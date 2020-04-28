@@ -61,14 +61,16 @@ class Sessions extends Component {
                                 <h5>Past</h5>
                                 {this.state.sessions.length >= 1 ? 
                                     this.state.sessions.map((session, key) => (
-                                        <div key={key} className="session-date">
-                                            <div className="flex-grow-1">
-                                                {session.date}
-                                            </div>
-                                            <div>
-                                                <input type="checkbox" />
-                                            </div>
-                                        </div>
+                                        <Pill
+                                            key={key}
+                                            target={`/clients/${this.state.client.id}/sessions/${session.id}`} 
+                                            main={[
+                                                this.state.client.session_day,
+                                                session.session_date,
+                                                session.session_time,
+                                            ]}
+                                            status={session.complete}
+                                        /> 
                                     )) : (
                                         <p>Not currently available</p>
                                     )}

@@ -12,6 +12,7 @@ import Goals from './goals/Goals';
 import AddGoal from './goals/AddGoal';
 import Sessions from './sessions/Sessions';
 import AddSession from './sessions/AddSession';
+import EditSession from './sessions/EditSession';
 
 
 class App extends Component {
@@ -54,10 +55,11 @@ class App extends Component {
 
                         {/* Session Paths */}
                         <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} />
+                        <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} />
                         <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
 
-                        <PrivateRoute path="/clients/:id" component={EditClient} />
-                        <PrivateRoute path="/sessions/edit/:id" component={AddSession} />
+                        {/* <PrivateRoute path="/clients/:id" component={EditClient} /> */}
+                        <PrivateRoute path="/sessions/:id/edit" component={EditSession} />
 
                         {/* <PrivateRoute path="/clients" component={Clients} /> */}
                     </Switch>
