@@ -58,7 +58,7 @@ class App extends Component {
                         <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} />
                         <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
 
-                        {/* <PrivateRoute path="/clients/:id" component={EditClient} /> */}
+                        <PrivateRoute path="/clients/:id" component={EditClient} />
                         <PrivateRoute path="/sessions/:id/edit" component={EditSession} />
 
                         {/* <PrivateRoute path="/clients" component={Clients} /> */}

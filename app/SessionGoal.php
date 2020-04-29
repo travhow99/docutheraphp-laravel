@@ -11,7 +11,7 @@ class SessionGoal extends Model
      * 
      * @var array
      */
-    protected $fillable = ['session_id', 'goal', 'objective', 'count', 'addressed', 'met_objective', 'fillable'];
+    protected $fillable = ['session_id', 'goal', 'objective', 'count', 'addressed', 'met_objective', 'notes'];
 
     /**
      * Get the session the sessionGoal belongs to.

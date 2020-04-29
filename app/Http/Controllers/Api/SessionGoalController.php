@@ -69,7 +69,6 @@ class SessionGoalController extends Controller
     {
         $sessionGoal = SessionGoal::find($sessionGoalId);
         $sessionGoal->fill($request->all());
-        dd($request->all());
         $sessionGoal->save();
 
         return response($sessionGoal, 200);

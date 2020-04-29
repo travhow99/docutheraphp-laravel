@@ -13,6 +13,7 @@ class SessionGoal extends Component {
 
         console.log(this.props, this.state);
         this.toggleEdit = this.toggleEdit.bind(this);
+        this.saveNote = this.saveNote.bind(this);
         this.adjustCount = this.adjustCount.bind(this);
     }
 
@@ -26,28 +27,40 @@ class SessionGoal extends Component {
         this.setState({editing: !this.state.editing});
     }
 
-    adjustCount(e) {
-        switch(e.target.name) {
-            case 'minus':
-                this.setState({goal: {...this.state.goal, count: this.state.goal.count - 1}});
-                break;
-            case 'plus':
-                this.setState({goal: {...this.state.goal, count: this.state.goal.count + 1}});
-                break;
-            default:
-                break;
-        }
-        console.log(this.state.goal);
+    saveNote(e) {
+        e.preventDefault();
 
+        console.log(e.target.value);
         axios.put(`/api/sessions/${this.state.goal.session_id}/sessionGoals/${this.state.goal.id}`, {
-            goal: this.state.goal,
+            notes: e.target.value,
         })
         .then((response) => {
-            console.log(response);
+            this.setState({goal: response.data})
         })
-        .catch((error) => {
-            console.log(error);
-        });
+        .catch((err) => console.log(err));
+    }
+
+    adjustCount(e) {
+        let count = this.state.goal.count;
+
+        switch(e.target.name) {
+            case 'minus':
+                count = count - 1;
+                break;
+            case 'plus':
+                count = count + 1;
+                break;
+            default:
+                return;
+        }
+
+        axios.put(`/api/sessions/${this.state.goal.session_id}/sessionGoals/${this.state.goal.id}`, {
+            count: count,
+        })
+        .then((response) => {
+            this.setState({goal: response.data})
+        })
+        .catch((err) => console.log(err));
     }
 
     render() {
@@ -72,11 +85,12 @@ class SessionGoal extends Component {
                 <React.Fragment>
                     <Row className="mt-2">
                         <Col className="col-9">
-                            <Input type="textarea"></Input>
+                            {/* TODO: use value & onChange? */}
+                            <Input type="textarea" onBlur={this.saveNote} defaultValue={this.state.goal.notes}></Input>
                         </Col>
                         <Col>
                             <div>
-                                <Button color="danger" name="minus" onClick={this.adjustCount}>-</Button>
+                                <Button color="danger" name="minus" onClick={this.adjustCount} disabled={this.state.goal.count === 0}>-</Button>
                                 <span>
                                     {this.state.goal.count || 0}
                                 </span>                                
