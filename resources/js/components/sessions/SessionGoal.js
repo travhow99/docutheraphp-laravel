@@ -76,7 +76,6 @@ class SessionGoal extends Component {
                         <p>{this.state.goal.objective}</p>
                     </Col>
                     <Col className="flex-end">
-
                         <Button color='success' onClick={this.toggleEdit}>{this.state.editing ? 'Close Note' : 'Add Note'}</Button>
                     </Col>
                 </Row>

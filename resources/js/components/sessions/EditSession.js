@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form, Input, Label
@@ -14,7 +14,10 @@ class EditSession extends Component {
         this.state = {
             client: null,
             goals: [],
+            deleted: false,
         }
+
+        this.deleteSession = this.deleteSession.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +35,20 @@ class EditSession extends Component {
 
             console.log(this.state);
         })
+    }
+
+    deleteSession(e) {
+        e.preventDefault();
+
+        axios.delete(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    this.setState({
+                        session: response.data,
+                        deleted: true,
+                    });
+                }
+            })
     }
 
     handleSubmit(e) {
@@ -54,10 +71,13 @@ class EditSession extends Component {
     }
 
     render() {
+        if (this.state.deleted) {
+            return <Redirect to={`/clients/${this.state.client.id}/sessions`} />
+        }
         return(
             <Container>
                 <Row className="mt-4">
-                    {this.state.client && 
+                    {this.state.session && 
                         <Col>
                             <h2>{this.state.client.name}</h2>
                             <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
@@ -95,6 +115,13 @@ class EditSession extends Component {
                         </Col>
                     }
                 </Row>
+                {this.state.session && 
+                <Row className="mt-3">
+                    <Col>
+                        <Button color="danger" onClick={this.deleteSession} block>Delete Session</Button>
+                    </Col>
+                </Row>
+                }
             </Container>
         )
     }

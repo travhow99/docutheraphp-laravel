@@ -130,11 +130,9 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($client_id, $session_id)
     {
-        $session = Session::find($id);
-
-        $session->delete();
+        Session::destroy($session_id);
 
         return response('success', 200);
     }
