@@ -6,6 +6,9 @@ import {
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form, Input, Label
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class EditSession extends Component {
     constructor(props) {
@@ -81,6 +84,13 @@ class EditSession extends Component {
                         <Col>
                             <h2>{this.state.client.name}</h2>
                             <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
+                            <DatePicker
+                                selected={this.state.date}
+                                onChange={this.handleChange}
+                                showTimeSelect
+                                dateFormat="Pp"
+                            />
+
                             {/* 
                                 TODO:
                                 Format AM vs PM time
