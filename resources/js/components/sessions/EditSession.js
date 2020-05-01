@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 import DatePicker from "react-datepicker";
+import { GoGear } from 'react-icons/go';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,9 +18,12 @@ class EditSession extends Component {
         this.state = {
             client: null,
             goals: [],
+            editingDate: false,
             deleted: false,
         }
 
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.toggleEditDate = this.toggleEditDate.bind(this);
         this.deleteSession = this.deleteSession.bind(this);
     }
 
@@ -40,6 +44,10 @@ class EditSession extends Component {
         })
     }
 
+    toggleEditDate() {
+        this.setState({editingDate: !this.state.editingDate});
+    }
+
     deleteSession(e) {
         e.preventDefault();
 
@@ -52,6 +60,12 @@ class EditSession extends Component {
                     });
                 }
             })
+    }
+
+    handleTimeChange(e) {
+        // e.preventDefault();
+
+        console.log(e)//.target.value);
     }
 
     handleSubmit(e) {
@@ -74,6 +88,11 @@ class EditSession extends Component {
     }
 
     render() {
+        const time = this.state.session ? this.state.session.session_date + " " + this.state.session.session_time : null;
+        console.log(time);
+        const datepicker = new Date(time);
+        console.log(datepicker);
+
         if (this.state.deleted) {
             return <Redirect to={`/clients/${this.state.client.id}/sessions`} />
         }
@@ -81,48 +100,54 @@ class EditSession extends Component {
             <Container>
                 <Row className="mt-4">
                     {this.state.session && 
-                        <Col>
+                        <Col xs="6">
                             <h2>{this.state.client.name}</h2>
-                            <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
-                            <DatePicker
-                                selected={this.state.date}
-                                onChange={this.handleChange}
-                                showTimeSelect
-                                dateFormat="Pp"
-                            />
-
-                            {/* 
-                                TODO:
-                                Format AM vs PM time
-                            */}
-                            <h5>{this.state.session.session_time}</h5>
-                            <Card className="p-4">
-                                {this.state.goals.length > 0 ? 
-                                    this.state.goals.map((goal, index) => (
-                                        <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
-                                    ))
-                                :
-                                <React.Fragment>
-                                    <div>No Goals</div>
-                                    <Link to={`/clients/${this.state.client.id}/goals/new`}>
-                                        <Button color="primary">Add One?</Button>
-                                    </Link>
-                                </React.Fragment>
+                            <div className="d-flex justify-content-around mb-4">
+                                {!this.state.editingDate ? 
+                                (
+                                    <div>
+                                        <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
+                                        <h5>{this.state.session.session_time}</h5>
+                                    </div>
+                                ) : (
+                                    <DatePicker
+                                        selected={datepicker}
+                                        onChange={this.handleTimeChange}
+                                        showTimeSelect
+                                        dateFormat="Pp"
+                                    />
+                                )
                                 }
-                                {/* 
-                                    map(g&o {
-                                        Goals:
-                                        Objectives:
-                                                    -> add note
-                                                        -> textarea Notes
-                                                        -> - / + to tally (times met)
-                                                        -> Met / Did not meet objective
-                                    }
 
-                                */}
-                                {/* Add Notes */}
-                            </Card>
+                                {/* <div className="flex-0"> */}
+                                {/* <Button color="success">Edit</Button> */}
+                                <GoGear 
+                                    className="flex-0 ml-2" 
+                                    onClick={this.toggleEditDate} />
+                            </div>
                         </Col>
+                    }
+                </Row>
+                <Row>
+                    {this.state.client &&
+                    <Col>
+                        {this.state.goals.length > 0 ? (
+                            this.state.goals.map((goal, index) => (
+                                <Card key={index} className="p-4">
+                                    <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
+                                </Card>
+                                )
+                            )
+                        ) : (
+                            <React.Fragment>
+                                <div>No Goals</div>
+                                <Link to={`/clients/${this.state.client.id}/goals/new`}>
+                                    <Button color="primary">Add One?</Button>
+                                </Link>
+                            </React.Fragment>
+                        )
+                        }
+                    </Col>
                     }
                 </Row>
                 {this.state.session && 
