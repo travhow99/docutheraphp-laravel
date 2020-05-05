@@ -63,9 +63,32 @@ class EditSession extends Component {
     }
 
     handleTimeChange(e) {
-        // e.preventDefault();
+        const date = new Date(e);
 
-        console.log(e)//.target.value);
+        const session_date = date.toISOString().split('T')[0];
+        const session_time = date.toTimeString().split(' ')[0];
+
+        console.log(date, session_time);
+
+        axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
+            session_date,
+            session_time,
+        }).
+        then((response) => response)
+        .then((json) => {
+            if (json.status === 200) {
+                console.log(json.data);
+
+                this.setState({
+                    session: {
+                        ...this.state.session,
+                        session_date: session_date,
+                        session_time: session_time,
+                    },
+                    editingDate: false,
+                });
+            }
+        })
     }
 
     handleSubmit(e) {
@@ -89,13 +112,14 @@ class EditSession extends Component {
 
     render() {
         const time = this.state.session ? this.state.session.session_date + " " + this.state.session.session_time : null;
-        console.log(time);
+        
         const datepicker = new Date(time);
-        console.log(datepicker);
+        console.log('datepicker:',datepicker);
 
         if (this.state.deleted) {
             return <Redirect to={`/clients/${this.state.client.id}/sessions`} />
         }
+        
         return(
             <Container>
                 <Row className="mt-4">

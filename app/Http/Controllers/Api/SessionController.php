@@ -62,32 +62,6 @@ class SessionController extends Controller
     }
 
     /**
-     * Create the SessionGoals for the session.
-     * 
-     * @param App\Client $client
-     * @param App\Session $session
-     * @return \Illuminate\Http\Response
-     */
-    public function createSessionGoals(Client $client, Session $session)
-    {
-        $goals = $client->goals()->get();
-
-        $sessionGoals = [];
-
-        foreach ($goals as $goal) {
-            array_push(
-                $sessionGoals, 
-                $session->sessionGoals()->create([
-                    'goal' => $goal->goal,
-                    'objective' => $goal->objective,
-                ])
-            );
-        }
-
-        return $sessionGoals;
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -113,15 +87,17 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $client_id, $session_id)
     {
         $data = Request()->all();
 
-        $session = Session::find($id);
+        $session = Session::find($session_id);
+
+        $session->fill($data);
 
         $session->save();
 
-        return response('success', 201);
+        return response('success', 200);
     }
 
     /**
@@ -135,5 +111,32 @@ class SessionController extends Controller
         Session::destroy($session_id);
 
         return response('success', 200);
+    }
+
+
+    /**
+     * Create the SessionGoals for the session.
+     * 
+     * @param App\Client $client
+     * @param App\Session $session
+     * @return \Illuminate\Http\Response
+     */
+    public function createSessionGoals(Client $client, Session $session)
+    {
+        $goals = $client->goals()->get();
+
+        $sessionGoals = [];
+
+        foreach ($goals as $goal) {
+            array_push(
+                $sessionGoals, 
+                $session->sessionGoals()->create([
+                    'goal' => $goal->goal,
+                    'objective' => $goal->objective,
+                ])
+            );
+        }
+
+        return $sessionGoals;
     }
 }
