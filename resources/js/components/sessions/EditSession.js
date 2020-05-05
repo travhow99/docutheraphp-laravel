@@ -8,6 +8,7 @@ import {
 import SessionGoal from './SessionGoal';
 import DatePicker from "react-datepicker";
 import { GoGear } from 'react-icons/go';
+import { toLocalTime } from '../helpers/functions';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -131,7 +132,7 @@ class EditSession extends Component {
                                 (
                                     <div>
                                         <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
-                                        <h5>{this.state.session.session_time}</h5>
+                                        <h5>{toLocalTime(this.state.session.session_time)}</h5>
                                     </div>
                                 ) : (
                                     <DatePicker

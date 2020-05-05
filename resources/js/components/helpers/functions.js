@@ -1,4 +1,8 @@
 export const toLocalTime = (time) => {
-    const min = time.substr(3, 2);
-    return parseInt(time) >= 12 ?  : ;
+    let [hr, min, sec] = time.split(':');
+    const am_pm = hr >= 12 ? 'PM' : 'AM';
+
+    hr = hr >= 13 ? hr - 12 : hr;
+
+    return `${hr}:${min} ${am_pm}`;
 }
