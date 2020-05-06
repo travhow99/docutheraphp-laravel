@@ -6,6 +6,7 @@ import {
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form
 } from 'reactstrap';
 import Pill from '../utilities/Pill';
+import SessionGoal from '../sessions/SessionGoal';
 
 class Goals extends Component {
     constructor(props) {
@@ -19,10 +20,10 @@ class Goals extends Component {
     componentDidMount() {
         const id = this.props.match.params.id;
 
-        axios.get(`/api/clients/${id}/sessions`).then((response) => {
+        axios.get(`/api/clients/${id}/goals`).then((response) => {
             this.setState({
                 client: response.data.client,
-                sessions: response.data.sessions,
+                goals: response.data.goals,
             });
 
             console.log(this.state);
@@ -37,7 +38,7 @@ class Goals extends Component {
         console.log(clientData);
 
         // TODO: 
-        axios.put(`/api/clients/${this.state.client.id}/sessions`, clientData).then((response) => {
+        axios.put(`/api/clients/${this.state.client.id}/goals`, clientData).then((response) => {
             console.log(response);
             return response;
         }).then((json) => {
@@ -56,27 +57,22 @@ class Goals extends Component {
                 <Row className="mt-4">
                     {this.state.client && 
                         <Col>
-                            <h3>Sessions With {this.state.client.name}</h3>
+                            <h3>Goals for {this.state.client.name}</h3>
                             <div className="mt-4">
-                                <h5>Past</h5>
-                                {this.state.sessions.length >= 1 ? 
-                                    this.state.sessions.map((session, key) => (
-                                        <div key={key} className="session-date">
-                                            <div className="flex-grow-1">
-                                                {session.date}
-                                            </div>
-                                            <div>
-                                                <input type="checkbox" />
-                                            </div>
-                                        </div>
+                                <h5>Current Goals</h5>
+                                {this.state.goals.length >= 1 ? 
+                                    this.state.goals.map((goal, key) => (
+                                        <Card key={key} className="p-4">
+                                            <SessionGoal goal={goal} client_id={this.state.client.id} />
+                                        </Card>
                                     )) : (
                                         <p>Not currently available</p>
                                     )}
                             </div>
                             <div className="mt-4">
-                                <h5>Upcoming</h5>
+                                <h5>Past Goals</h5>
                                 <Pill
-                                    target={`/clients/${this.state.client.id}/sessions/new`} 
+                                    target={`/clients/${this.state.client.id}/goals/new`} 
                                     main={[
                                         this.state.client.session_day,
                                         this.state.client.next_session,
@@ -86,13 +82,6 @@ class Goals extends Component {
                             </div>
                         </Col>
                     }
-                    <Col>
-                        <h3>&nbsp;</h3>
-                        <div className="mt-4">
-                            <h5>Add Session</h5>
-                            + {/* Add expander */}
-                        </div>
-                    </Col>
                 </Row>
             </Container>
         )
