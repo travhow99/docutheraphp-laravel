@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 import Pill from '../utilities/Pill';
 import SessionGoal from '../sessions/SessionGoal';
+import AddGoal from './AddGoal';
 
 class Goals extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ class Goals extends Component {
         this.state = {
             
         }
+
+        this.addGoal = this.addGoal.bind(this);
     }
 
     componentDidMount() {
@@ -51,39 +54,74 @@ class Goals extends Component {
 
     }
 
+    addGoal() {
+        axios.get(`/api/clients/${this.state.client.id}/goals`).then((response) => {
+            this.setState({
+                client: response.data.client,
+                goals: response.data.goals,
+            });
+
+            console.log(this.state);
+        })
+    }
+
     render() {
         return(
             <Container>
-                <Row className="mt-4">
-                    {this.state.client && 
+            {this.state.client ? (
+                <React.Fragment>
+                    <Row className="mt-4">
                         <Col>
                             <h3>Goals for {this.state.client.name}</h3>
                             <div className="mt-4">
                                 <h5>Current Goals</h5>
                                 {this.state.goals.length >= 1 ? 
                                     this.state.goals.map((goal, key) => (
-                                        <Card key={key} className="p-4">
-                                            <SessionGoal goal={goal} client_id={this.state.client.id} />
+                                        <Card key={key} className="p-4 mt-2">
+                                            <SessionGoal 
+                                                goal={goal} 
+                                                client_id={this.state.client.id}
+                                                />
                                         </Card>
                                     )) : (
                                         <p>Not currently available</p>
                                     )}
                             </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <AddGoal 
+                                client={this.state.client}
+                                return={this.addGoal} 
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <div className="mt-4">
                                 <h5>Past Goals</h5>
-                                <Pill
+                                {/* <Pill
                                     target={`/clients/${this.state.client.id}/goals/new`} 
                                     main={[
                                         this.state.client.session_day,
                                         this.state.client.next_session,
                                         this.state.client.session_time,
                                     ]} 
-                                    status={0} />
+                                    status={0} /> */}
                             </div>
                         </Col>
-                    }
+                    </Row>
+                </React.Fragment>
+            ) : (
+                <Row>
+                    <Col>
+                        <h3>Loading</h3>
+                    </Col>
                 </Row>
-            </Container>
+            )
+        }
+        </Container>
         )
     }
 }

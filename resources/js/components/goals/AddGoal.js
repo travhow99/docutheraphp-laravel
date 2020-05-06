@@ -20,16 +20,24 @@ class AddGoal extends Component {
     }
 
     componentDidMount() {
-        const id = this.props.match.params.id;
-        console.log(id);
-
-        axios.get(`/api/clients/${id}`).then((response) => {
+        if (this.props.client) {
             this.setState({
-                client: response.data,
+                client: this.props.client,
             });
 
             console.log(this.state);
-        })
+        } else {
+            const id = this.props.match.params.id;
+            console.log(id);
+    
+            axios.get(`/api/clients/${id}`).then((response) => {
+                this.setState({
+                    client: response.data,
+                });
+    
+                console.log(this.state);
+            })
+        }
     }
 
     handleChange(e) {
@@ -54,7 +62,7 @@ class AddGoal extends Component {
             objective: this.state.objective,
         }).then((json) => {
             if (json.status === 201) {
-                // this.props.return();
+                this.props.return();
             }
         })
 
