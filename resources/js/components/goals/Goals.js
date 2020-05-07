@@ -81,10 +81,11 @@ class Goals extends Component {
                                             <SessionGoal 
                                                 goal={goal} 
                                                 client_id={this.state.client.id}
-                                                />
+                                                master
+                                            />
                                         </Card>
                                     )) : (
-                                        <p>Not currently available</p>
+                                        <p>Add a goal below!</p>
                                     )}
                             </div>
                         </Col>
