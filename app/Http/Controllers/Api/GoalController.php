@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Goal;
 
 class GoalController extends Controller
 {
@@ -68,9 +69,14 @@ class GoalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $client_id, $goal_id)
     {
-        //
+        $data = Request()->all();
+        $goal = Goal::find($goal_id);
+        $goal->fill($data);
+        $goal->save();
+
+        return response($goal, 200);
     }
 
     /**

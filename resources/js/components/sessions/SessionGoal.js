@@ -10,12 +10,16 @@ class SessionGoal extends Component {
         this.state = {
             goal: {},
             editing: false,
+            takingNote: false,
         }
 
         console.log(this.props, this.state);
         this.toggleEdit = this.toggleEdit.bind(this);
+        this.toggleNote = this.toggleNote.bind(this);
         this.saveNote = this.saveNote.bind(this);
         this.adjustCount = this.adjustCount.bind(this);
+        this.updateGoalInput = this.updateGoalInput.bind(this);
+        this.updateGoal = this.updateGoal.bind(this);
     }
 
     componentDidMount() {
@@ -26,6 +30,10 @@ class SessionGoal extends Component {
 
     toggleEdit() {
         this.setState({editing: !this.state.editing});
+    }
+
+    toggleNote() {
+        this.setState({takingNote: !this.state.takingNote})
     }
 
     saveNote(e) {
@@ -64,6 +72,21 @@ class SessionGoal extends Component {
         .catch((err) => console.log(err));
     }
 
+    updateGoalInput(e) {
+        let value = e.target.value;
+        let name = e.target.name;
+
+        this.setState({goal: {...this.state.goal, [name]: value}});
+    }
+
+    updateGoal(e) {
+        axios.put(`/api/clients/${this.props.client_id}/goals/${this.state.goal.id}`, this.state.goal)
+            .then((response) => {
+                this.setState({goal: response.data})
+            })
+            .catch((err) => console.log(err));
+    }
+
     render() {
         console.log(this.state);
 
@@ -72,25 +95,45 @@ class SessionGoal extends Component {
                 <Row>
                     <Col>
                         <h3>Goal:</h3>
-                        <p>{this.state.goal.goal}</p>
+                        {this.props.master && this.state.editing ? (
+                            <Input 
+                                type="textarea" 
+                                name="goal"
+                                onChange={this.updateGoalInput}
+                                onBlur={this.updateGoal}
+                                value={this.state.goal.goal} 
+                                placeholder={this.state.goal.goal} />
+                        ) : (
+                            <p>{this.state.goal.goal}</p>
+                        )}
                         <h3>Objective:</h3>
-                        <p>{this.state.goal.objective}</p>
+                        {this.props.master && this.state.editing ? (
+                            <Input 
+                                type="textarea" 
+                                name="objective"
+                                onChange={this.updateGoalInput}
+                                onBlur={this.updateGoal}
+                                value={this.state.goal.objective}
+                                placeholder={this.state.goal.objective} />
+                        ) : (        
+                            <p>{this.state.goal.objective}</p>
+                        )}
                     </Col>
                     <Col className="flex-end">
                         {this.props.master ? (
-                            <Button color="success">
-                                Edit
+                            <Button color={this.state.editing ? 'primary' : 'success'} onClick={this.toggleEdit}>
+                                {this.state.editing ? 'Save' : 'Edit'}
                             </Button>
                         ) : (
-                            <Button color='success' onClick={this.toggleEdit}>
-                                {this.state.editing ? 'Close Note' : 'Add Note'}
+                            <Button color='success' onClick={this.toggleNote}>
+                                {this.state.takingNote ? 'Close Note' : 'Add Note'}
                             </Button>
                         )}
                     </Col>
                 </Row>
                 {!this.props.master &&
                     <React.Fragment>
-                        {this.state.editing &&
+                        {this.state.takingNote &&
                             <GoalNote 
                                 save={this.saveNote} 
                                 goal={this.state.goal}
