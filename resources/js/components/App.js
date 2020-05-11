@@ -13,6 +13,7 @@ import AddGoal from './goals/AddGoal';
 import Sessions from './sessions/Sessions';
 import AddSession from './sessions/AddSession';
 import EditSession from './sessions/EditSession';
+import Sidebar from './Sidebar';
 
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} />
+                    <Sidebar />
                     <Switch>
                         {/* User might login */}
                         {/* <Route exact path="/" component={Home} /> */}

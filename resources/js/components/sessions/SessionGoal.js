@@ -104,7 +104,7 @@ class SessionGoal extends Component {
                                 value={this.state.goal.goal} 
                                 placeholder={this.state.goal.goal} />
                         ) : (
-                            <p>{this.state.goal.goal}</p>
+                            <p style={{whiteSpace: "pre-line",}}>{this.state.goal.goal}</p>
                         )}
                         <h3>Objective:</h3>
                         {this.props.master && this.state.editing ? (
@@ -116,7 +116,7 @@ class SessionGoal extends Component {
                                 value={this.state.goal.objective}
                                 placeholder={this.state.goal.objective} />
                         ) : (        
-                            <p>{this.state.goal.objective}</p>
+                            <p style={{whiteSpace: "pre-line",}}>{this.state.goal.objective}</p>
                         )}
                     </Col>
                     <Col className="flex-end">
