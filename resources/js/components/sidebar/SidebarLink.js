@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 const SidebarLink = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggle = () => setIsOpen(!isOpen);
+    const toggle = () => {
+        if (!props.expanded) return;
+
+        setIsOpen(!isOpen);
+    }
 
     return (
         <React.Fragment>
@@ -20,13 +24,15 @@ const SidebarLink = (props) => {
                     )}
                 </div>
             </div>
-            <Collapse isOpen={isOpen} className="sidebar-menu">
-                {props.subs.map((sub, key) => (
-                    <Link key={key} to={sub.link}>
-                        {sub.name}
-                    </Link>
-                ))}
-            </Collapse>
+            {props.subs && props.expanded &&
+                <Collapse isOpen={isOpen} className="sidebar-menu">
+                    {props.subs.map((sub, key) => (
+                        <Link key={key} to={sub.link} className="list-group-item list-group-item-action text-dark">
+                            {sub.name}
+                        </Link>
+                    ))}
+                </Collapse>
+            }
         </React.Fragment>
     )
 }

@@ -52,7 +52,7 @@ class Header extends Component {
         };
 
         return (
-            <div>
+            <React.Fragment>
                 <Navbar color="dark" dark expand="md">
                     <NavbarBrand tag={RRNavLink} to="/">Docutherapy</NavbarBrand>
                     <NavbarToggler onClick={toggle} />
@@ -91,7 +91,7 @@ class Header extends Component {
                         }
                     </Collapse>
                 </Navbar>
-            </div>
+            </React.Fragment>
         )
     }
 }

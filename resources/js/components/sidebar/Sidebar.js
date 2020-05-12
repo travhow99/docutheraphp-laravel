@@ -15,8 +15,8 @@ const Sidebar = (props) => {
     const links = [
         {
             page: 'Dashboard',
-            icon: <GoDashboard className="mr-3 fa-fw" />,
-            subs: [
+            icon: <GoDashboard className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
+            /* subs: [
                 {
                     link: '/clients',
                     name: 'Client',
@@ -29,11 +29,11 @@ const Sidebar = (props) => {
                     link: '/clients',
                     name: 'Goals',
                 },
-            ],
+            ], */
         },
         {
             page: 'Clients',
-            icon: <FaUsers className="mr-3 fa-fw" />,
+            icon: <FaUsers className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             subs: [
                 {
                     link: '/clients',
@@ -51,7 +51,7 @@ const Sidebar = (props) => {
         },
         {
             page: 'Documentation',
-            icon: <TiDocumentAdd className="mr-3 fa-fw" />,
+            icon: <TiDocumentAdd className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             subs: [
                 {
                     link: '/clients',
@@ -75,7 +75,7 @@ const Sidebar = (props) => {
                 <ul className="list-group">
                     {/* <!-- Separator with title --> */}
                     <li className="list-group-item sidebar-separator-title text-muted d-flex align-items-center justify-content-flex-start menu-collapsed">
-                        <GoThreeBars onClick={toggle} />
+                        <GoThreeBars onClick={toggle} style={{cursor:"pointer"}} />
                         {isOpen && <small>MAIN MENU</small>}
                     </li>
 

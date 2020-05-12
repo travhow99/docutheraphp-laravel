@@ -22,8 +22,11 @@
 }
 
 /** Sidebar */
+/**
+@todo var(--nav-height)
+*/
 #sidebarContainer {
-  min-height: 100vh;
+  min-height: calc(100vh - 55px);
   padding: 0;
   background-color: var(--indigo);
 }
@@ -41,4 +44,7 @@
 }
 .sidebar-submenu {
   font-size: 0.9rem;
+}
+.list-group-item-action {
+  cursor: pointer;
 }
