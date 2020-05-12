@@ -34,3 +34,11 @@
 .sidebar-collapsed {
   width: 60px;
 }
+/* Submenu item*/
+#sidebar-container .list-group .sidebar-submenu a {
+  height: 45px;
+  padding-left: 30px;
+}
+.sidebar-submenu {
+  font-size: 0.9rem;
+}

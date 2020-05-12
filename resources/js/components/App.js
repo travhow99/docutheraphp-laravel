@@ -13,7 +13,7 @@ import AddGoal from './goals/AddGoal';
 import Sessions from './sessions/Sessions';
 import AddSession from './sessions/AddSession';
 import EditSession from './sessions/EditSession';
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar/Sidebar';
 
 
 class App extends Component {
