@@ -48,3 +48,26 @@
 .list-group-item-action {
   cursor: pointer;
 }
+
+/** Client management */
+.manage-row {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+.client-header-top {
+  height: 90px;
+  background: var(--blue);
+}
+.client-name-circle {
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}

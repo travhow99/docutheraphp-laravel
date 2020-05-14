@@ -5,6 +5,7 @@ import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText
 } from 'reactstrap';
+import { toLocalTime } from './helpers/functions';
 
 class Home extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class Home extends Component {
                                         <CardText>
                                             {days[new Date(client.next_session).getDay()]}
                                             <br />
-                                            {client.session_time}
+                                            {toLocalTime(client.session_time)}
                                         </CardText>
                                         <Link to="/clients">Manage Client</Link>
                                     </CardBody>

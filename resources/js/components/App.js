@@ -42,7 +42,7 @@ class App extends Component {
                     <Row className="mx-0">
                         <Sidebar />
                         <Col>
-                            <Container>
+                            <Container fluid={true}>
                                 <Switch>
                                     {/* User might login */}
                                     {/* <Route exact path="/" component={Home} /> */}

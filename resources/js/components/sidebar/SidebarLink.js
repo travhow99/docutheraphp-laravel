@@ -11,19 +11,23 @@ const SidebarLink = (props) => {
         setIsOpen(!isOpen);
     }
 
+    console.log(props.to);
+
     return (
         <React.Fragment>
-            <div onClick={toggle} className="list-group-item list-group-item-action flex-column align-items-start">
+            <Link to={props.to ? props.to : props.expanded ? '#' : props.subs[0].link} onClick={toggle} className="list-group-item list-group-item-action flex-column align-items-start">
                 <div className="d-flex w-100 justify-content-start align-items-center text-dark">
                     {props.icon}
                     {props.expanded && (
                         <React.Fragment>
-                            <span className="menu-collapsed">{props.page}</span>
-                            <span className="submenu-icon ml-auto"></span>
+                            <span className="menu-collapsed">
+                                {props.page}
+                            </span>
+                            <span className="submenu-icon ml-auto" />
                         </React.Fragment>
                     )}
                 </div>
-            </div>
+            </Link>
             {props.subs && props.expanded &&
                 <Collapse isOpen={isOpen} className="sidebar-menu">
                     {props.subs.map((sub, key) => (
