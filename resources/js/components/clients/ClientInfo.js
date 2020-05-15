@@ -4,7 +4,7 @@ import ClientNameCircle from '../utilities/ClientNameCircle';
 
 const ClientInfo = (props) => {
     return(
-        <div className="vh-100 border-right position-relative">
+        <div className="h-100 border-right position-relative">
             <div className="client-header">
                 <div className="client-header-top">
                     

@@ -169,7 +169,7 @@ class Clients extends Component {
                     {!this.state.currentClient && <AddClient return={this.return.bind(this)} />}
                     </Row>
                 ) : (
-                    <ManageClient client={this.state.manage} />
+                    <ManageClient className="h-100" client={this.state.manage} />
                 )}
             </React.Fragment>
         )

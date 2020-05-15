@@ -1,3 +1,7 @@
+.dash-body > div {
+  height: 100%;
+}
+
 /* Helpers */
 .flex-end {
   display: flex;
@@ -6,6 +10,12 @@
 }
 .flex-grow-1 {
   flex-grow: 1;
+}
+.flex-half {
+  flex-basis: 50%;
+}
+.flex-full {
+  flex-basis: 100%;
 }
 .anti-row {
   margin-right: -30px;

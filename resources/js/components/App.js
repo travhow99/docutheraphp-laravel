@@ -42,7 +42,7 @@ class App extends Component {
                     <Row className="mx-0">
                         <Sidebar />
                         <Col>
-                            <Container fluid={true}>
+                            <Container fluid={true} className="h-100 dash-body">
                                 <Switch>
                                     {/* User might login */}
                                     {/* <Route exact path="/" component={Home} /> */}
