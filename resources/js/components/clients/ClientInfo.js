@@ -3,8 +3,9 @@ import { Card } from 'reactstrap';
 import ClientNameCircle from '../utilities/ClientNameCircle';
 
 const ClientInfo = (props) => {
+    console.log(props);
     return(
-        <div className="h-100 border-right position-relative">
+        <div className="h-100 w-100 border-right position-relative">
             <div className="client-header">
                 <div className="client-header-top">
                     

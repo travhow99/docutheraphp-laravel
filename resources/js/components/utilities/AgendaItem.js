@@ -1,8 +1,19 @@
 import React from 'react';
 import { Card } from 'reactstrap';
 import { FaCalendar } from 'react-icons/fa';
+import { getMonthAbbrev } from '../helpers/functions';
+
+const formatDate = (str) => {
+    // "05-19-2020"
+    const date = new Date(str);
+    
+    const month = getMonthAbbrev(date.getMonth());
+    console.log(month);
+    return month;
+}
 
 const AgendaItem = (props) => {
+    const formattedDate = formatDate(props.date);
     return (
         <Card className="p-4 mb-2 flex-grow-1">
             <div className="d-flex align-items-baseline">
@@ -11,7 +22,7 @@ const AgendaItem = (props) => {
             </div>
             <div className="flex-grow-1 align-items-center d-flex p-2">
                 <div className="flex-grow-1">
-                    {props.date}
+                    {formattedDate || ''}
                 </div>
                 <div className="flex-grow-1">
                     {props.detail}

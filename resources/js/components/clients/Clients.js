@@ -7,7 +7,6 @@ import {
 } from 'reactstrap';
 import AddClient from './AddClient';
 import EditClient from './EditClients';
-import ManageClient from './ManageClient';
 
 class Clients extends Component {
     constructor(props) {
@@ -97,7 +96,6 @@ class Clients extends Component {
 
         return (
             <React.Fragment>
-                {!this.state.manage ? (
                     <Row className="mt-4">
                         {!this.state.currentClient ? 
                         clients.map((client, index) => (
@@ -124,9 +122,11 @@ class Clients extends Component {
                                     <CardFooter>
                                         <Row>
                                             <Col>
-                                                <Button color="success" block onClick={(e) => this.setManage(e, index)}>
-                                                    Manage
-                                                </Button>
+                                                <Link to={`/clients/${client.id}`} style={{textDecoration: 'none'}}>
+                                                    <Button color="success" block>
+                                                        Manage
+                                                    </Button>
+                                                </Link>
                                             </Col>
                                             <Col>
                                                 <Button color="danger" block onClick={(e) => this.handleDelete(e, client.id)}>
@@ -168,9 +168,6 @@ class Clients extends Component {
                     }
                     {!this.state.currentClient && <AddClient return={this.return.bind(this)} />}
                     </Row>
-                ) : (
-                    <ManageClient className="h-100" client={this.state.manage} />
-                )}
             </React.Fragment>
         )
     }

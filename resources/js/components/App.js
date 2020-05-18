@@ -8,6 +8,7 @@ import Home from './Home';
 import Clients from './clients/Clients';
 import PrivateRoute from './helpers/PrivateRoute';
 import EditClient from './clients/EditClients';
+import ManageClient from './clients/ManageClient';
 import Goals from './goals/Goals';
 import AddGoal from './goals/AddGoal';
 import Sessions from './sessions/Sessions';
@@ -64,7 +65,7 @@ class App extends Component {
                                     <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} />
                                     <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
 
-                                    <PrivateRoute path="/clients/:id" component={EditClient} />
+                                    <PrivateRoute path="/clients/:id" component={ManageClient} />
                                     <PrivateRoute path="/sessions/:id/edit" component={EditSession} />
 
                                     {/* <PrivateRoute path="/clients" component={Clients} /> */}
