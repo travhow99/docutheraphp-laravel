@@ -1,8 +1,8 @@
+const dayAbbervs = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const monthAbbrevs = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-export const getMonthAbbrev = (int) => {
-  return monthAbbrevs[int];
-}
+export const getDayAbbrev = (int) => dayAbbervs[int];
+export const getMonthAbbrev = (int) => monthAbbrevs[int];
 
 export const toLocalTime = (time) => {
   let [hr, min, sec] = time.split(':');

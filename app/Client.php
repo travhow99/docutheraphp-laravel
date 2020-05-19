@@ -19,7 +19,7 @@ class Client extends Model
      *
      * @var array
      */
-    protected $appends = ['next_session'];
+    protected $appends = ['next_session', 'last_session'];
 
     /**
      * Get the user that owns the client.
@@ -91,4 +91,19 @@ class Client extends Model
         return $this->nextSession();
     }
 
+    /**
+     * Get the client's most recent session.
+     */
+    public function lastSession()
+    {
+        return $this->sessions()->orderBy('session_date', 'DESC')->first();
+    }
+
+    /**
+     * Set the last session attribute.
+     */
+    public function getLastSessionAttribute()
+    {
+        return $this->lastSession();
+    }
 }

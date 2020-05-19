@@ -21,6 +21,15 @@
   margin-right: -30px;
   margin-left: -30px;
 }
+.border-indigo {
+  border-color: var(--indigo) !important;
+}
+.border-2 {
+  border-width: 2px !important;
+}
+.border-3 {
+  border-width:3px !important;
+}
 /* Specific */
 .session-date {
   display: flex;
