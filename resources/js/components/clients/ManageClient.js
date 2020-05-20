@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import ClientInfo from './ClientInfo';
-import { Card } from 'reactstrap';
+import { Card, Button } from 'reactstrap';
 import AgendaItem from '../utilities/AgendaItem';
-import { useParams } from 'react-router-dom';
+import ListItem from "../utilities/ListItem";
+import { Link, useParams } from 'react-router-dom';
 
 const ManageClient = (props) => {
     const params = useParams();
     const id = params.id;
     const [client, setClient] = useState(false);
+    const [goals, setGoals] = useState(false);
     const [page, setPage] = useState(false);
 
     useEffect(() => {
         const fetchClient = async () => {
-            const result = await axios(
-                `/api/clients/${id}`,
-            );
 
-            axios.get(`/api/clients/${id}`)
-                .then((res) => {
-                    console.log(res);
-                    setClient(res.data);
-                })
-                .catch((err) => console.log(err));
+            axios.all([
+                // axios.get(`/api/clients/${id}`),
+                axios.get(`/api/clients/${id}/goals`)
+            ])
+            .then(axios.spread((/* clientDataRes,  */goalDataRes) => {
+                setClient(goalDataRes.data.client);
+                setGoals(goalDataRes.data.goals);
+            }))
+            .catch((err) => console.log(err))
         }
 
     fetchClient();
@@ -30,6 +32,7 @@ const ManageClient = (props) => {
 
     return (
         <React.Fragment>
+            {console.log('goal: ', goals, 'CLIENT:', client)}
             {client ? (
             <div className="d-flex h-100 anti-row">
                 <div className="d-flex h-100" style={{minWidth: 280}}>
@@ -38,8 +41,24 @@ const ManageClient = (props) => {
                 <div className="flex-grow-1 p-4 mx-4 d-flex flex-column">
                     <div className="flex-grow-1 flex-half d-flex">
                         <div className="d-flex flex-half px-1">
-                            <Card className="flex-full mb-2">
-                                Sessions
+                            <Card className="mb-2">
+                                <div className="p-4 flex-full d-flex flex-column">
+                                    <div>
+                                        <h5>Goal Areas</h5>
+                                    </div>
+                                    {goals && 
+                                        (
+                                            <div className="d-flex flex-column flex-grow-1 px-1">
+                                                {goals.slice(0, 3).map((goal, key) => ( // Limited count
+                                                    <ListItem key={key} goal={goal} />
+                                                ))}
+                                            </div>
+                                        )
+                                    }
+                                    <div className="d-flex flex-end">
+                                        <Link to={`/clients/${client.id}/goals`}>View Goals</Link>
+                                    </div>
+                                </div>
                             </Card>
                         </div>
                         <div className="d-flex flex-column flex-half px-1">
@@ -48,12 +67,15 @@ const ManageClient = (props) => {
                                 date={client.next_session}
                                 time={client.session_time}
                                 detail={"Therapy Session"}
+                                // TODO: determine if session exists already
+                                href={`/clients/${client.id}/sessions/new`} 
                             />
                             <AgendaItem 
                                 title={"Last Session"}
                                 date={client.last_session.session_date}
                                 time={client.last_session.session_time}
                                 detail={"Therapy Session"}
+                                href={`/clients/${client.id}/sessions/${client.last_session.id}`}
                             />
                         </div>
                     </div>

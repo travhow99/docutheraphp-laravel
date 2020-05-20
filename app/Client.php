@@ -55,7 +55,7 @@ class Client extends Model
 
     /**
      * Get the client's next session.
-     * 
+     * @todo Determine if session exists already
      */
     public function nextSession()
     {

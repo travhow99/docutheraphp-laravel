@@ -3,6 +3,9 @@
 }
 
 /* Helpers */
+.c-pointer {
+  cursor: pointer !important;
+}
 .flex-end {
   display: flex;
   justify-content: flex-end;

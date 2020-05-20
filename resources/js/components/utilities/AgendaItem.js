@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'reactstrap';
 import { FaCalendar } from 'react-icons/fa';
 import { getDayAbbrev, getMonthAbbrev, toLocalTime } from '../helpers/functions';
+import { Link } from 'react-router-dom';
 
 const FormatDate = (props) => {
     // "05-19-2020" || "2020-05-15"
@@ -41,7 +42,9 @@ const AgendaItem = (props) => {
                 </div>
             </div>
             <div className="d-flex flex-end text-primary">
-                View
+                <Link to={props.href}>
+                    View
+                </Link>
             </div>
         </Card>
     )
