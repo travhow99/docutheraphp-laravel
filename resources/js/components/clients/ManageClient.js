@@ -3,6 +3,7 @@ import ClientInfo from './ClientInfo';
 import { Card, Button } from 'reactstrap';
 import AgendaItem from '../utilities/AgendaItem';
 import ListItem from "../utilities/ListItem";
+import Doughnut from '../charts/Doughnut';
 import { Link, useParams } from 'react-router-dom';
 
 const ManageClient = (props) => {
@@ -82,7 +83,14 @@ const ManageClient = (props) => {
                     <div className="flex-grow-1 flex-half d-flex">
                         <div className="flex-grow-1 px-1">
                             <Card className="flex-full h-100">
-                                TEST
+                                <div className="p-4 flex-full d-flex flex-column">
+                                    <div>
+                                        <h5>Sessions</h5>
+                                    </div>
+                                    <div>
+                                        <Doughnut />
+                                    </div>
+                                </div>
                             </Card>
                         </div>
                     </div>
