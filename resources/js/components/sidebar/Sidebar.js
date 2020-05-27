@@ -71,21 +71,19 @@ const Sidebar = (props) => {
     ]
 
     return(
-        <div>
-            <div id="sidebarContainer" className={isOpen ? 'sidebar-expanded' : 'sidebar-collapsed'}>
-                <ul className="list-group">
-                    {links.map((link, key) => (
-                        <SidebarLink
-                            key={key}
-                            expanded={isOpen}
-                            page={link.page}
-                            icon={link.icon}
-                            subs={link.subs}
-                            to={link.to}
-                        />
-                    ))}
-                </ul>
-            </div>
+        <div id="sidebarContainer" className={isOpen ? 'sidebar-expanded' : 'sidebar-collapsed'}>
+            <ul className="list-group">
+                {links.map((link, key) => (
+                    <SidebarLink
+                        key={key}
+                        expanded={isOpen}
+                        page={link.page}
+                        icon={link.icon}
+                        subs={link.subs}
+                        to={link.to}
+                    />
+                ))}
+            </ul>
         </div>
     )
 }

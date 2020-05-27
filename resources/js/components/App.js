@@ -40,9 +40,9 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} />
-                    <Row className="mx-0">
+                    <div className="d-flex mx-0">
                         <Sidebar />
-                        <Col>
+                        <div className="flex-grow-1">
                             <Container fluid={true} className="h-100 dash-body">
                                 <Switch>
                                     {/* User might login */}
@@ -71,8 +71,8 @@ class App extends Component {
                                     {/* <PrivateRoute path="/clients" component={Clients} /> */}
                                 </Switch>
                             </Container>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
             </BrowserRouter>
         )

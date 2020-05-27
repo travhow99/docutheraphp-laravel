@@ -11,18 +11,21 @@ const ManageClient = (props) => {
     const id = params.id;
     const [client, setClient] = useState(false);
     const [goals, setGoals] = useState(false);
+    const [poc, setPoc] = useState(false);
     const [page, setPage] = useState(false);
 
     useEffect(() => {
         const fetchClient = async () => {
 
             axios.all([
-                // axios.get(`/api/clients/${id}`),
-                axios.get(`/api/clients/${id}/goals`)
+                axios.get(`/api/clients/${id}`),
+                axios.get(`/api/clients/${id}/goals`),
+                axios.get(`/api/clients/${id}/pocs`),
             ])
-            .then(axios.spread((/* clientDataRes,  */goalDataRes) => {
+            .then(axios.spread((clientDataRes, goalDataRes, pocDataRes) => {
                 setClient(goalDataRes.data.client);
                 setGoals(goalDataRes.data.goals);
+                setPoc(pocDataRes.data);
             }))
             .catch((err) => console.log(err))
         }
@@ -33,14 +36,14 @@ const ManageClient = (props) => {
 
     return (
         <React.Fragment>
-            {console.log('goal: ', goals, 'CLIENT:', client)}
+            {console.log('POC', poc)}
             {client ? (
-            <div className="d-flex h-100 anti-row">
-                <div className="d-flex h-100" style={{minWidth: 280}}>
-                    <ClientInfo client={client} />
+            <div className="d-flex w-100 h-100">
+                <div className="d-flex h-100 client-sidebar">
+                    <ClientInfo client={client} poc={poc} />
                 </div>
-                <div className="flex-grow-1 p-4 mx-4 d-flex flex-column">
-                    <div className="flex-grow-1 flex-half d-flex">
+                <div className="flex-1 p-4 d-flex flex-column">
+                    <div className="flex-1 flex-half d-flex">
                         <div className="d-flex flex-half px-1">
                             <Card className="mb-2">
                                 <div className="p-4 flex-full d-flex flex-column">
@@ -49,7 +52,7 @@ const ManageClient = (props) => {
                                     </div>
                                     {goals && 
                                         (
-                                            <div className="d-flex flex-column flex-grow-1 px-1">
+                                            <div className="d-flex flex-column flex-1 px-1">
                                                 {goals.slice(0, 3).map((goal, key) => ( // Limited count
                                                     <ListItem key={key} goal={goal} />
                                                 ))}
@@ -80,8 +83,8 @@ const ManageClient = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="flex-grow-1 flex-half d-flex">
-                        <div className="flex-grow-1 px-1">
+                    <div className="flex-1 flex-half d-flex">
+                        <div className="flex-1 px-1">
                             <Card className="flex-full h-100">
                                 <div className="p-4 flex-full d-flex flex-column">
                                     <div>

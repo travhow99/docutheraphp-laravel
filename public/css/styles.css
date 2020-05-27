@@ -11,6 +11,9 @@
   justify-content: flex-end;
   align-items: flex-end;
 }
+.flex-1 {
+  flex: 1;
+}
 .flex-grow-1 {
   flex-grow: 1;
 }
@@ -64,7 +67,8 @@
   width: 230px;
 }
 .sidebar-collapsed {
-  width: 60px;
+  flex: 0 0 60px;
+  /* min-width: 60px; */
 }
 /* Submenu item*/
 #sidebar-container .list-group .sidebar-submenu a {
@@ -79,6 +83,9 @@
 }
 
 /** Client management */
+.client-sidebar {
+  flex: 0 0 280px;
+}
 .manage-row {
   margin-left: -30px;
   margin-right: -30px;
@@ -87,10 +94,13 @@
   height: 90px;
   background: var(--blue);
 }
+.client-header-bottom {
+  /* margin-top: 60px; */
+}
 .client-name-circle {
   color: white;
   position: absolute;
-  left: 50%;
+  left: 25%;
   transform: translate(-50%, -50%);
   width: 90px;
   height: 90px;

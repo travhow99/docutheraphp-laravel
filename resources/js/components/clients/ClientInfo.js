@@ -12,7 +12,15 @@ const ClientInfo = (props) => {
                 </div>
                 <ClientNameCircle name={props.client.name} />
                 <div className="client-header-bottom">
-                    BOTTOM
+                    <div className="d-flex justify-content-end">
+                        {props.poc.length ? (
+                            <h3>{props.poc.name}</h3>
+                        ) : (
+                            <div>
+                                <h3>Add POC</h3>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
