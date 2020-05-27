@@ -38,24 +38,34 @@ const ManageClient = (props) => {
         <React.Fragment>
             {console.log('POC', poc)}
             {client ? (
-            <div className="d-flex w-100 h-100">
+            <div className="d-flex h-100 anti-container">
                 <div className="d-flex h-100 client-sidebar">
                     <ClientInfo client={client} poc={poc} />
                 </div>
                 <div className="flex-1 p-4 d-flex flex-column">
                     <div className="flex-1 flex-half d-flex">
                         <div className="d-flex flex-half px-1">
-                            <Card className="mb-2">
+                            <Card className="mb-2 w-100">
                                 <div className="p-4 flex-full d-flex flex-column">
                                     <div>
                                         <h5>Goal Areas</h5>
                                     </div>
-                                    {goals && 
+                                    {goals.length ? 
                                         (
                                             <div className="d-flex flex-column flex-1 px-1">
-                                                {goals.slice(0, 3).map((goal, key) => ( // Limited count
-                                                    <ListItem key={key} goal={goal} />
+                                                {goals.slice(0, 3).map((goal) => ( // Limited count
+                                                    <ListItem key={goal.id} goal={goal} />
                                                 ))}
+                                            </div>
+                                        ) : (
+                                            <div className="d-flex flex-column flex-1 px-1">
+                                                <div>
+                                                    No goals for this client yet!&nbsp;
+                                                    <Link to={`/clients/${client.id}/goals`}>
+                                                        Add one
+                                                    </Link>
+                                                    ?
+                                                </div>
                                             </div>
                                         )
                                     }
@@ -89,6 +99,9 @@ const ManageClient = (props) => {
                                 <div className="p-4 flex-full d-flex flex-column">
                                     <div>
                                         <h5>Sessions</h5>
+                                        <p className="lead">
+                                            This is a fake graph demonstrating how your client is progressing.
+                                        </p>
                                     </div>
                                     <div>
                                         <Doughnut />

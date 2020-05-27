@@ -34,12 +34,12 @@ class Home extends Component {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         return (
-            <Container>
+            <React.Fragment>
                 <Row className="mt-4">
                     <Col md="4">
                         {this.state.clients.map((client, index) => (
                             (client.next_session !== 'Session not available') &&
-                                <Card key={index} className="text-center">
+                                <Card key={index} className="text-center mb-2">
                                     <CardBody>
                                         <CardTitle>
                                             <h3>{client.name}</h3>
@@ -49,13 +49,13 @@ class Home extends Component {
                                             <br />
                                             {toLocalTime(client.session_time)}
                                         </CardText>
-                                        <Link to="/clients">Manage Client</Link>
+                                        <Link to={`/clients/${client.id}`}>Manage Client</Link>
                                     </CardBody>
                                 </Card>
                         ))}
                     </Col>
                 </Row>
-            </Container>
+            </React.Fragment>
         )
     }
 }

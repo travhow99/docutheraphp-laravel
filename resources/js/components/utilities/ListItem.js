@@ -11,7 +11,7 @@ const ListItem = (props) => {
                 </div>
                 <div>
                     <Link to={`/clients//goals/${props.goal.id}`} />
-                    <GoGear className="c-pointer" />
+                    {/* <GoGear className="c-pointer" /> */}
                 </div>
             </div>
         </div>

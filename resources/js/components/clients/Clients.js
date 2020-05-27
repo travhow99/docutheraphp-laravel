@@ -6,7 +6,7 @@ import {
     Card, CardBody, CardTitle, CardFooter, Button
 } from 'reactstrap';
 import AddClient from './AddClient';
-import EditClient from './EditClients';
+import EditClient from './EditClient';
 
 class Clients extends Component {
     constructor(props) {
@@ -98,8 +98,8 @@ class Clients extends Component {
             <React.Fragment>
                     <Row className="mt-4">
                         {!this.state.currentClient ? 
-                        clients.map((client, index) => (
-                            <Col md="6" key={index}>
+                        clients.map((client) => (
+                            <Col md="6" key={client.id}>
                                 <Card className="mb-3">
                                     <CardBody>
                                         <CardTitle className="text-center">
@@ -122,7 +122,12 @@ class Clients extends Component {
                                     <CardFooter>
                                         <Row>
                                             <Col>
-                                                <Link to={`/clients/${client.id}`} style={{textDecoration: 'none'}}>
+                                                <Link to={
+                                                    (client.session_time && client.session_day && client.start_date) ?
+                                                    `/clients/${client.id}` :
+                                                    `/clients/${client.id}/manage`
+                                                    } 
+                                                    style={{textDecoration: 'none'}}>
                                                     <Button color="success" block>
                                                         Manage
                                                     </Button>
@@ -147,8 +152,8 @@ class Clients extends Component {
                                             :
                                             <Row>
                                                 <Col className="mt-2">
-                                                    <Link to="/clients/sessions" style={{ textDecoration: 'none' }}>
-                                                        <Button color="danger" outline block disabled>
+                                                    <Link to={`/clients/${client.id}/manage`} style={{ textDecoration: 'none' }}>
+                                                        <Button color="danger" outline block>
                                                             Setup Session Time
                                                         </Button>
                                                     </Link>

@@ -59,7 +59,7 @@ class Header extends Component {
                     <Collapse isOpen={this.state.navIsOpen} navbar>
                         {this.state.isLoggedIn ? (
                             <React.Fragment>
-                                <Nav className="mr-auto" navbar>
+                                <Nav className="ml-auto" navbar>
                                     <NavItem>
                                         <NavLink tag={RRNavLink} to='/clients'>Clients</NavLink>
                                     </NavItem>
@@ -79,7 +79,7 @@ class Header extends Component {
                                 <NavLink onClick={this.logOut}>Log Out</NavLink>
                             </React.Fragment>
                             ) : (
-                            <Nav className="mr-auto" navbar>
+                            <Nav className="ml-auto" navbar>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to='/login'>Login</NavLink>
                                 </NavItem>
