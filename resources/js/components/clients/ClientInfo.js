@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'reactstrap';
+import ClientSidebar from './ClientSidebar';
 import ClientNameCircle from '../utilities/ClientNameCircle';
 
 const ClientInfo = (props) => {
@@ -12,13 +12,13 @@ const ClientInfo = (props) => {
                 </div>
                 <ClientNameCircle name={props.client.name} />
                 <div className="client-header-bottom">
-                    <div className="d-flex flex-column justify-content-end">
-                        <div className="p-2">
+                    <div className="d-flex flex-column">
+                        <div className="w-100 py-4 px-2 text-right border-bottom">
                             {props.poc.length ? (
                                 <h3>{props.poc.name}</h3>
                             ) : (
-                                    <h3>Add POC</h3>
-                                )}
+                                <h3>Add POC</h3>
+                            )}
                             {props.client &&
                                 <div>
                                     <div>{props.client.session_day}</div>
@@ -27,13 +27,7 @@ const ClientInfo = (props) => {
                             }
                         </div>
                         <div>
-                            <ul>
-                                <li>Overview</li>
-                                <li>Client Detials</li>
-                                <li>Sessions</li>
-                                <li>Forms & Documentation</li>
-                                <li>Notes</li>
-                            </ul>
+                            <ClientSidebar />
                         </div>
                     </div>
                 </div>

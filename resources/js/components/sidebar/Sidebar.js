@@ -15,58 +15,16 @@ const Sidebar = (props) => {
             page: 'Dashboard',
             icon: <GoDashboard className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             to: '/',
-            /* subs: [
-                {
-                    link: '/clients',
-                    name: 'Client',
-                },
-                {
-                    link: '/clients',
-                    name: 'Sessions',
-                },
-                {
-                    link: '/clients',
-                    name: 'Goals',
-                },
-            ], */
         },
         {
             page: 'Clients',
             icon: <FaUsers className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             to: '/clients',
-            /* subs: [
-                {
-                    link: '/clients',
-                    name: 'Client',
-                },
-                {
-                    link: '/clients',
-                    name: 'Sessions',
-                },
-                {
-                    link: '/clients',
-                    name: 'Goals',
-                },
-            ], */
         },
         {
             page: 'Documentation',
             icon: <TiDocumentAdd className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             to: '/documentation',
-            /* subs: [
-                {
-                    link: '/clients',
-                    name: 'Client',
-                },
-                {
-                    link: '/clients',
-                    name: 'Sessions',
-                },
-                {
-                    link: '/clients',
-                    name: 'Goals',
-                },
-            ], */
         },
     ]
 

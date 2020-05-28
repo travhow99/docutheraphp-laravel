@@ -114,3 +114,7 @@
   align-items: center;
   font-size: 2rem;
 }
+.client-link-active {
+  background: var(--indigo-10) !important;
+  color: var(--indigo) !important;
+}
