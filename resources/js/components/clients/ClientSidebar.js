@@ -8,35 +8,34 @@ import ClientLink from './ClientLink';
 
 
 const ClientSidebar = (props) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [showDashboard, setshowDashboard] = useState(false);
-    const [active, setActive] = useState('Overview');
+    // const [active, setActive] = useState('Overview');
 
+    console.log('sidebar:',props);
     const links = [
         {
             page: 'Overview',
             icon: <MdDashboard className="mr-3 fa-fw" />,
-            to: '/',
+            to: `/clients/${props.id}`,
         },
         {
             page: 'Client Details',
             icon: <FaUserAlt className="mr-3 fa-fw" />,
-            to: '/clients',
+            to: `/clients/${props.id}/details`,
         },
         {
             page: 'Sessions',
             icon: <FaCalendarDay className="mr-3 fa-fw" />,
-            to: '/clients',
+            to: `/clients/${props.id}/sessions`,
         },
         {
             page: 'Forms & Documentation',
             icon: <GrDocumentText className="mr-3 fa-fw" />,
-            to: '/documentation',
+            to: `/clients/${props.id}/forms`,
         },
         {
             page: 'Notes',
             icon: <GrNotes className="mr-3 fa-fw" />,
-            to: '/documentation',
+            to: `/clients/${props.id}/notes`,
         },
     ];
 
@@ -46,7 +45,11 @@ const ClientSidebar = (props) => {
                 {links.map((link, key) => (
                     <ClientLink
                         key={key}
-                        active={active === link.page}
+                        onClick={() => {
+                            console.log('NEW:',link.page);
+                            props.setActive(link.page)
+                        }}
+                        active={props.active === link.page}
                         page={link.page}
                         icon={link.icon}
                         to={link.to}

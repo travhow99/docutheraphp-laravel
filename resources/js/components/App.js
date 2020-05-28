@@ -57,18 +57,18 @@ class App extends Component {
                                     <PrivateRoute exact path="/clients" component={Clients} />
 
                                     {/* Goal Paths */}
-                                    <PrivateRoute path="/clients/:id/goals/new" component={AddGoal} />
-                                    <PrivateRoute path="/clients/:id/goals" component={Goals} />
+                                    {/* <PrivateRoute path="/clients/:id/goals/new" component={AddGoal} /> */}
+                                    {/* <PrivateRoute path="/clients/:id/goals" component={Goals} /> */}
 
                                     {/* Session Paths */}
-                                    <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} />
-                                    <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} />
-                                    <PrivateRoute path="/clients/:id/sessions" component={Sessions} />
+                                    {/* <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} /> */}
+                                    {/* <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} /> */}
+                                    {/* <PrivateRoute path="/clients/:id/sessions" component={Sessions} /> */}
 
-                                    <PrivateRoute path="/clients/:id/manage" component={EditClient} />
+                                    {/* <PrivateRoute path="/clients/:id/manage" component={EditClient} /> */}
                                     <PrivateRoute path="/clients/:id" component={ManageClient} />
 
-                                    <PrivateRoute path="/sessions/:id/edit" component={EditSession} />
+                                    {/* <PrivateRoute path="/sessions/:id/edit" component={EditSession} /> */}
 
                                     {/* <PrivateRoute path="/clients" component={Clients} /> */}
                                 </Switch>

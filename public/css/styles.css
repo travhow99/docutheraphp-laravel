@@ -1,3 +1,11 @@
+:root {
+  --indigo-80: #7482d2;
+  --indigo-60: #8490d7;
+  --indigo-40: #939edc;
+  --indigo-20: #b2bae6;
+  --indigo-10: #e0e3f5;
+}
+
 .dash-body > div {
   height: 100%;
 }

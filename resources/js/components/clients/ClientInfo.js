@@ -27,7 +27,7 @@ const ClientInfo = (props) => {
                             }
                         </div>
                         <div>
-                            <ClientSidebar />
+                            <ClientSidebar id={props.client.id} active={props.active} setActive={props.setActive} />
                         </div>
                     </div>
                 </div>
