@@ -41,11 +41,12 @@ const ClientSidebar = (props) => {
 
     return(
         <div id="clientSidebar" className="w-100">
+            {console.log(props.setActive)}
             <ul className="list-group">
                 {links.map((link, key) => (
                     <ClientLink
                         key={key}
-                        onClick={() => {
+                        action={() => {
                             console.log('NEW:',link.page);
                             props.setActive(link.page)
                         }}
