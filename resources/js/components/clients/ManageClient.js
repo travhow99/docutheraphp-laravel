@@ -5,6 +5,7 @@ import ClientOverview from './ClientOverview';
 import EditClient from './EditClient';
 import Sessions from '../sessions/Sessions';
 import Goals from '../goals/Goals';
+import AddSession from '../sessions/AddSession';
 import EditSession from '../sessions/EditSession';
 
 const ManageClient = (props) => {
@@ -60,6 +61,11 @@ const ManageClient = (props) => {
                         exact
                         path="/clients/:id/sessions"
                         render={() => <Sessions client={client} poc={poc} />}
+                    />
+                    <Route
+                        exact
+                        path="/clients/:id/sessions/new"
+                        render={() => <AddSession client={client}/>}
                     />
                     <Route
                         path="/clients/:id/sessions/:session_id"

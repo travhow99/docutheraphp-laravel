@@ -6,6 +6,7 @@ import {
     Card, CardBody, CardTitle, CardFooter, Button, CardText, Form
 } from 'reactstrap';
 import Pill from '../utilities/Pill';
+import { getDay, getReadableDate, toLocalTime } from '../helpers/functions';
 
 class Sessions extends Component {
     constructor(props) {
@@ -65,9 +66,9 @@ class Sessions extends Component {
                                             key={key}
                                             target={`/clients/${this.state.client.id}/sessions/${session.id}`} 
                                             main={[
-                                                this.state.client.session_day,
-                                                session.session_date,
-                                                session.session_time,
+                                                getDay(new Date(session.session_date).getDay()),
+                                                getReadableDate(new Date(session.session_date)),
+                                                toLocalTime(session.session_time),
                                             ]}
                                             status={session.complete}
                                         /> 
@@ -81,8 +82,8 @@ class Sessions extends Component {
                                     target={`/clients/${this.state.client.id}/sessions/new`} 
                                     main={[
                                         this.state.client.session_day,
-                                        this.state.client.next_session,
-                                        this.state.client.session_time,
+                                        getReadableDate(new Date(this.state.client.next_session)),
+                                        toLocalTime(this.state.client.session_time),
                                     ]} 
                                     status={0} />
                             </div>

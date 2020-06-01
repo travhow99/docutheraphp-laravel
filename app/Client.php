@@ -62,6 +62,10 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
+        if (new DateTime($this->lastSession()->session_date) >= $date) {
+            return $this->lastSession();
+        }
+
         if ($this->session_day && $this->start_date) {
             // Modify the date it contains
             $date->modify("next " . $this->session_day);
