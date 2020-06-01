@@ -3,6 +3,9 @@ import ClientInfo from './ClientInfo';
 import { Link, useParams, Route } from 'react-router-dom';
 import ClientOverview from './ClientOverview';
 import EditClient from './EditClient';
+import Sessions from '../sessions/Sessions';
+import Goals from '../goals/Goals';
+import EditSession from '../sessions/EditSession';
 
 const ManageClient = (props) => {
     const params = useParams();
@@ -48,6 +51,19 @@ const ManageClient = (props) => {
                     <Route
                         path="/clients/:id/details"
                         render={() => <EditClient client={client} poc={poc} />}
+                    />
+                    <Route
+                        path="/clients/:id/goals"
+                        render={() => <Goals client={client} poc={poc} />}
+                    />
+                    <Route
+                        exact
+                        path="/clients/:id/sessions"
+                        render={() => <Sessions client={client} poc={poc} />}
+                    />
+                    <Route
+                        path="/clients/:id/sessions/:session_id"
+                        render={() => <EditSession client={client} poc={poc} />}
                     />
                 </div>
             ) : (

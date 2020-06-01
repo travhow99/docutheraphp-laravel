@@ -27,11 +27,8 @@ const ClientOverview = (props) => {
                                     <div className="d-flex flex-column flex-1 px-1">
                                         <div>
                                             No goals for this client yet!&nbsp;
-                                <Link to={`/clients/${props.client.id}/goals`}>
-                                                Add one
-                                </Link>
-                                ?
-                            </div>
+                                            <Link to={`/clients/${props.client.id}/goals`}>Add one</Link>?
+                                        </div>
                                     </div>
                                 )
                             }

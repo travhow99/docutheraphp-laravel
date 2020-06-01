@@ -1,9 +1,14 @@
 import React from 'react';
 import ClientSidebar from './ClientSidebar';
 import ClientNameCircle from '../utilities/ClientNameCircle';
+import { withRouter } from 'react-router-dom';
 
 const ClientInfo = (props) => {
-    console.log(props);
+    console.log('info',props);
+    const [domain, sub, id, active] = props.location.pathname.split('/'); //[props.location.pathname.length - 1];
+
+    console.log('active', active);
+
     return (
         <div className="h-100 w-100 border-right position-relative">
             <div className="client-header">
@@ -27,7 +32,7 @@ const ClientInfo = (props) => {
                             }
                         </div>
                         <div>
-                            <ClientSidebar id={props.client.id} active={props.active} setActive={props.setActive} />
+                            <ClientSidebar id={props.client.id} active={active} setActive={props.setActive} />
                         </div>
                     </div>
                 </div>
@@ -36,4 +41,4 @@ const ClientInfo = (props) => {
     )
 }
 
-export default ClientInfo;
+export default withRouter(ClientInfo);
