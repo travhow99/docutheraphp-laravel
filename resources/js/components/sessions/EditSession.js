@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
     Container, Row, Col,
@@ -67,10 +68,11 @@ class EditSession extends Component {
     }
 
     handleTimeChange(e) {
-        const date = new Date(e);
+        // const date = new Date(e);
+        const date = moment(e);
 
-        const session_date = date.toISOString().split('T')[0];
-        const session_time = date.toTimeString().split(' ')[0];
+        const session_date = date.format('YYYY-MM-D');
+        const session_time = date.format('HH:mm:SS');
 
         console.log(date, session_time);
 
@@ -115,9 +117,10 @@ class EditSession extends Component {
     }
 
     render() {
+        console.log('STATE:',this.state);
         const time = this.state.session ? this.state.session.session_date + " " + this.state.session.session_time : null;
         
-        const datepicker = new Date(time);
+        const datepicker = moment(time).toDate();
         console.log('datepicker:',datepicker);
 
         if (this.state.deleted) {
@@ -134,7 +137,7 @@ class EditSession extends Component {
                                 {!this.state.editingDate ? 
                                 (
                                     <div>
-                                        <h4>{new Date(this.state.session.session_date).toLocaleDateString()}</h4>
+                                        <h4>{moment(this.state.session.session_date).format('M/D/yyyy')}</h4>
                                         <h5>{toLocalTime(this.state.session.session_time)}</h5>
                                     </div>
                                 ) : (
@@ -161,7 +164,7 @@ class EditSession extends Component {
                     <Col>
                         {this.state.goals.length > 0 ? (
                             this.state.goals.map((goal, index) => (
-                                <Card key={index} className="p-4">
+                                <Card key={index} className="p-4 mb-3">
                                     <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
                                 </Card>
                                 )

@@ -83,48 +83,46 @@ class AddGoal extends Component {
 
     render() {
         return(
-            <Container>
-                <Row className="mt-4">
-                    {this.state.client && 
-                        <Col>
-                            <Card className="py-4">
-                                <CardTitle className="text-center"><h3>New Goal & Objective for {this.state.client.name}</h3></CardTitle>
-                                <CardBody>
-                                    <Form onSubmit={this.handleSubmit}>
-                                        <FormGroup>
-                                            <Label>Goal:</Label>
-                                            <Input type="textarea" name="goal" id="goal" onChange={this.handleChange}/>
-                                        </FormGroup>
-                                        <FormGroup>
-                                            <Label>Objective:</Label>
-                                            <Input type="textarea" name="objective" id="objective" onChange={this.handleChange}/>
-                                        </FormGroup>
-                                        <FormGroup row>
-                                            <Col>
-                                                <Button type="submit" color="primary" size="lg" block>
-                                                    Save
-                                                </Button>
-                                            </Col>
-                                        </FormGroup>
-                                    </Form>
-                                </CardBody>
-                                {/* 
-                                    map(g&o {
-                                        Goals:
-                                        Objectives:
-                                                    -> add note
-                                                        -> textarea Notes
-                                                        -> - / + to tally (times met)
-                                                        -> Met / Did not meet objective
-                                    }
+            <Row className="mt-4">
+                {this.state.client && 
+                    <Col>
+                        <Card className="py-4">
+                            <CardTitle className="text-center"><h3>New Goal & Objective for {this.state.client.name}</h3></CardTitle>
+                            <CardBody>
+                                <Form onSubmit={this.handleSubmit}>
+                                    <FormGroup>
+                                        <Label>Goal:</Label>
+                                        <Input type="textarea" name="goal" id="goal" onChange={this.handleChange}/>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Objective:</Label>
+                                        <Input type="textarea" name="objective" id="objective" onChange={this.handleChange}/>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col>
+                                            <Button type="submit" color="primary" size="lg" block>
+                                                Save
+                                            </Button>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </CardBody>
+                            {/* 
+                                map(g&o {
+                                    Goals:
+                                    Objectives:
+                                                -> add note
+                                                    -> textarea Notes
+                                                    -> - / + to tally (times met)
+                                                    -> Met / Did not meet objective
+                                }
 
-                                */}
-                                {/* Add Notes */}
-                            </Card>
-                        </Col>
-                    }
-                </Row>
-            </Container>
+                            */}
+                            {/* Add Notes */}
+                        </Card>
+                    </Col>
+                }
+            </Row>
         )
     }
 }

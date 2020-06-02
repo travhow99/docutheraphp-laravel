@@ -98,6 +98,8 @@ class Goals extends Component {
                             />
                         </Col>
                     </Row>
+                    {/* TODO: list past goals */}
+                    {false &&
                     <Row>
                         <Col>
                             <div className="mt-4">
@@ -113,6 +115,7 @@ class Goals extends Component {
                             </div>
                         </Col>
                     </Row>
+                    }
                 </React.Fragment>
             ) : (
                 <Row>

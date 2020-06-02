@@ -8,11 +8,6 @@ import { useParams } from 'react-router-dom';
 
 
 const ClientSidebar = (props) => {
-    console.log('pPPDFLKDJF',props);
-    console.log(useParams());
-    // const [active, setActive] = useState('Overview');
-
-    console.log('sidebar:',props);
     const links = [
         {
             page: 'Overview',

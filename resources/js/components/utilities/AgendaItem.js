@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Card } from 'reactstrap';
 import { FaCalendar } from 'react-icons/fa';
 import { getDayAbbrev, getMonthAbbrev, toLocalTime } from '../helpers/functions';
@@ -6,17 +7,17 @@ import { Link } from 'react-router-dom';
 
 const FormatDate = (props) => {
     // "05-19-2020" || "2020-05-15"
-    const date = new Date(props.date);
-    const month = getMonthAbbrev(date.getMonth());
+    const date = moment(props.date);
+    const month = getMonthAbbrev(date.get('month'));
 
     return (
         <div className="d-flex align-items-center">
             <div className="p-2 border-right border-2 border-indigo">
-                <div style={{fontSize: '1.5rem',}}>{getDayAbbrev(date.getDay())}</div>
+                <div style={{fontSize: '1.5rem',}}>{getDayAbbrev(date.get('day'))}</div>
             </div>
             <div className="d-flex flex-column p-2">
                 <div style={{fontWeight: 'bolder', fontSize: '1rem'}}>
-                    {month} {date.getDate()}, {date.getFullYear()}
+                    {month} {date.get('date')}, {date.get('year')}
                 </div>
                 <div>
                     {props.time && toLocalTime(props.time)}

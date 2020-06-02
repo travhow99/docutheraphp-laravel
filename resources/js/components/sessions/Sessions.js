@@ -66,12 +66,9 @@ class Sessions extends Component {
                                         <Pill
                                             key={key}
                                             target={`/clients/${this.state.client.id}/sessions/${session.id}`} 
-                                            /**
-                                             *  @todo Fix datetime timezone offset
-                                             * */
                                             main={[
                                                 getDay(moment(session.session_date).get('day')),
-                                                getReadableDate(session.session_date),
+                                                moment(session.session_date).format('M/D/YYYY'),
                                                 toLocalTime(session.session_time),
                                             ]}
                                             status={session.complete}
