@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import {
     Container, Row, Col,
@@ -65,9 +66,12 @@ class Sessions extends Component {
                                         <Pill
                                             key={key}
                                             target={`/clients/${this.state.client.id}/sessions/${session.id}`} 
+                                            /**
+                                             *  @todo Fix datetime timezone offset
+                                             * */
                                             main={[
-                                                getDay(new Date(session.session_date).getDay()),
-                                                getReadableDate(new Date(session.session_date)),
+                                                getDay(moment(session.session_date).get('day')),
+                                                getReadableDate(session.session_date),
                                                 toLocalTime(session.session_time),
                                             ]}
                                             status={session.complete}
@@ -76,17 +80,19 @@ class Sessions extends Component {
                                         <p>Not currently available</p>
                                     )}
                             </div>
-                            <div className="mt-4">
-                                <h5>Upcoming</h5>
-                                <Pill
-                                    target={`/clients/${this.state.client.id}/sessions/new`} 
-                                    main={[
-                                        this.state.client.session_day,
-                                        getReadableDate(new Date(this.state.client.next_session)),
-                                        toLocalTime(this.state.client.session_time),
-                                    ]} 
-                                    status={0} />
-                            </div>
+                            {typeof(this.state.client.next_session) === 'string' &&
+                                <div className="mt-4">
+                                    <h5>Upcoming</h5>
+                                    <Pill
+                                        target={`/clients/${this.state.client.id}/sessions/new`} 
+                                        main={[
+                                            this.state.client.session_day,
+                                            getReadableDate(this.state.client.next_session),
+                                            toLocalTime(this.state.client.session_time),
+                                        ]} 
+                                        status={0} />
+                                </div>
+                            }
                         </Col>
                     }
                     <Col>

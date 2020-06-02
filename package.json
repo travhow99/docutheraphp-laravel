@@ -25,6 +25,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "moment": "^2.26.0",
         "react-datepicker": "^2.14.1",
         "react-flash-message": "^1.0.2",
         "react-icons": "^3.10.0",

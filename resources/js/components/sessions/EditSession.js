@@ -28,6 +28,9 @@ class EditSession extends Component {
         this.deleteSession = this.deleteSession.bind(this);
     }
 
+    /**
+     * @todo if 'new', don't post
+     */
     componentDidMount() {
         const id = this.props.match.params.id;
         console.log(id);

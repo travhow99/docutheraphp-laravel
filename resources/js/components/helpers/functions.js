@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const dayAbbervs = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -17,8 +19,10 @@ export const toLocalTime = (time) => {
 }
 
 export function getReadableDate(date) {
-  console.log(date);
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  date = moment(date);
+  // console.log(date.getDate());
+  return `${date.get('month') + 1}/${date.get('date') + 1}/${date.get('year')}`;
+  // return `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}`;
 }
 
 export function getRandomColor() {

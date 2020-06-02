@@ -17,7 +17,7 @@ class SessionController extends Controller
     public function index($id)
     {
         $client = Client::find($id);
-        $sessions = $client->sessions()->get();
+        $sessions = $client->sessions()->orderBy('session_date', 'ASC')->get();
 
         return response([
             'client' => $client,
