@@ -79,6 +79,10 @@ class SessionGoal extends Component {
         this.setState({goal: {...this.state.goal, [name]: value}});
     }
 
+    updateGoalProgress(e) {
+        console.log(e.target.checked);
+    }
+
     updateGoal(e) {
         axios.put(`/api/clients/${this.props.client_id}/goals/${this.state.goal.id}`, this.state.goal)
             .then((response) => {
@@ -137,7 +141,8 @@ class SessionGoal extends Component {
                             <GoalNote 
                                 save={this.saveNote} 
                                 goal={this.state.goal}
-                                adjustCount={this.adjustCount} 
+                                adjustCount={this.adjustCount}
+                                updateStatus={this.updateGoalProgress}
                             />
                         }
                     </React.Fragment>

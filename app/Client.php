@@ -62,16 +62,14 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
-        if (new DateTime($this->lastSession()->session_date) >= $date) {
+        if ($this->lastSession() && new DateTime($this->lastSession()->session_date) >= $date) {
             return $this->lastSession();
-        }
-
-        if ($this->session_day && $this->start_date) {
+        } else if ($this->session_day && $this->start_date) {
             // Modify the date it contains
             $date->modify("next " . $this->session_day);
 
-            // Output
-            return $date->format('m-d-Y');
+            $nextSession = new Session(['session_date' => $date->format('m-d-Y')]);
+            return $nextSession;
         } else {
             return "Session not available";
         }
@@ -100,7 +98,15 @@ class Client extends Model
      */
     public function lastSession()
     {
-        return $this->sessions()->orderBy('session_date', 'DESC')->first();
+        $date = new DateTime();
+
+        // dd($date->format('H:m:s'));
+
+        // TODO: account for timezone
+
+        dd($this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first());
+
+        return $this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first();
     }
 
     /**

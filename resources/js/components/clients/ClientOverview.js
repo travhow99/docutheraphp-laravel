@@ -41,11 +41,11 @@ const ClientOverview = (props) => {
                 <div className="d-flex flex-column flex-half px-1">
                     <AgendaItem
                         title={"Next Session"}
-                        date={props.client.next_session}
+                        date={props.client.next_session.session_date}
                         time={props.client.session_time}
                         detail={"Therapy Session"}
                         // TODO: determine if session exists already
-                        href={`/clients/${props.client.id}/sessions/new`}
+                        href={`/clients/${props.client.id}/sessions/${props.client.next_session.session_id || 'new'}`}
                     />
                     <AgendaItem
                         title={"Last Session"}

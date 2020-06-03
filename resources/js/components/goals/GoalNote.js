@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row, Col, Input, Label, Button } from 'reactstrap';
 
+/**
+ * @todo  Functional checkboxes
+ */
 const GoalNote = (props) => {
     return (
         <React.Fragment>
@@ -21,11 +24,11 @@ const GoalNote = (props) => {
             </Row>
             <Row>
                 <Col className="form-check">
-                    <Input type="checkbox" />
+                    <Input type="checkbox" onChange={props.updateStatus} />
                     <Label className="form-check-label">Did not meet objective</Label>
                 </Col>
                 <Col className="form-check">
-                    <Input type="checkbox" />
+                    <Input type="checkbox" onChange={props.updateStatus} />
                     <Label className="form-check-label">Met objective</Label>
                 </Col>
             </Row>

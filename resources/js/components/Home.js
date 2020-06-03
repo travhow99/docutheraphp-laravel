@@ -45,7 +45,7 @@ class Home extends Component {
                                             <h3>{client.name}</h3>
                                         </CardTitle>
                                         <CardText>
-                                            {days[new Date(client.next_session).getDay()]}
+                                            {days[new Date(client.next_session).getDay()] || days[new Date(client.next_session.session_date).getDay()]}
                                             <br />
                                             {toLocalTime(client.session_time)}
                                         </CardText>
