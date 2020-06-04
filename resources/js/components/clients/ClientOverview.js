@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const ClientOverview = (props) => {
 
     return (
-        <div className="flex-1 p-4 d-flex flex-column">
+        <div className="client-container">
             <div className="flex-1 flex-half d-flex">
                 <div className="d-flex flex-half px-1">
                     <Card className="mb-2 w-100">

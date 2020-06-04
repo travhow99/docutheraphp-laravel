@@ -128,7 +128,7 @@ class EditSession extends Component {
         }
         
         return(
-            <Container>
+            <div className="client-container">
                 <Row className="mt-4">
                     {this.state.session && 
                         <Col xs="6">
@@ -188,7 +188,7 @@ class EditSession extends Component {
                     </Col>
                 </Row>
                 }
-            </Container>
+            </div>
         )
     }
 }

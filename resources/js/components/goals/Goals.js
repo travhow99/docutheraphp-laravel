@@ -67,7 +67,7 @@ class Goals extends Component {
 
     render() {
         return(
-            <Container>
+            <div className="client-container">
             {this.state.client ? (
                 <React.Fragment>
                     <Row className="mt-4">
@@ -125,7 +125,7 @@ class Goals extends Component {
                 </Row>
             )
         }
-        </Container>
+        </div>
         )
     }
 }

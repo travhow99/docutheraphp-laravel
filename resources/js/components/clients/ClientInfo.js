@@ -1,6 +1,7 @@
 import React from 'react';
 import ClientSidebar from './ClientSidebar';
 import ClientNameCircle from '../utilities/ClientNameCircle';
+import { toLocalTime } from '../helpers/functions';
 import { withRouter } from 'react-router-dom';
 
 const ClientInfo = (props) => {
@@ -27,7 +28,7 @@ const ClientInfo = (props) => {
                             {props.client &&
                                 <div>
                                     <div>{props.client.session_day}</div>
-                                    <div>{props.client.session_time}</div>
+                                    <div>{toLocalTime(props.client.session_time)}</div>
                                 </div>
                             }
                         </div>

@@ -52,7 +52,7 @@ class EditClient extends Component {
 
     render() {
         return (
-            <Container>
+            <div className="client-container">
                 <Row className="mt-4">
                     <Col>
                         <Card>
@@ -61,7 +61,7 @@ class EditClient extends Component {
                                 <h5>{this.props.client.name}</h5>
                                 <Form onSubmit={this.handleSubmit}>
                                     <FormGroup row>
-                                        <select id="sessionDay" name="session_day" className="form-control"
+                                        <select id="sessionDay" name="session_day" className={`form-control ${!this.props.client.session_time ? 'is-invalid' : ''}`}
                                         onChange={this.handleInput}
                                         defaultValue={this.props.client.session_day || 'default'}
                                         >
@@ -73,13 +73,13 @@ class EditClient extends Component {
                                         </select>
                                     </FormGroup>
                                     <FormGroup row>
-                                        <input id="session_time" type="time" name="session_time" placeholder="Session Time" className="form-control" onChange={this.handleInput} defaultValue={this.props.client.session_time} required />
+                                        <input id="session_time" type="time" name="session_time" placeholder="Session Time" className={`form-control ${!this.props.client.session_time ? 'is-invalid' : ''}`} onChange={this.handleInput} defaultValue={this.props.client.session_time} required />
                                     </FormGroup>
                                     <FormGroup row>
-                                        <input id="start_date" type="date" name="start_date" placeholder="Start Date" className="form-control" onChange={this.handleInput} defaultValue={this.props.client.start_date} required />
+                                        <input id="start_date" type="date" name="start_date" placeholder="Start Date" className={`form-control ${!this.props.client.start_date ? 'is-invalid' : ''}`} onChange={this.handleInput} defaultValue={this.props.client.start_date} required />
                                     </FormGroup>
                                     <FormGroup row>
-                                        <input id="agency" type="text" name="agency" placeholder="Agency" defaultValue={this.props.client.agency} className="form-control" onChange={this.handleInput} required />
+                                        <input id="agency" type="text" name="agency" placeholder="Agency" defaultValue={this.props.client.agency} className={`form-control ${!this.props.client.agency ? 'is-invalid' : ''}`} onChange={this.handleInput} required />
                                     </FormGroup>
 
                                     <FormGroup row>
@@ -95,9 +95,9 @@ class EditClient extends Component {
                         </Card>
                     </Col>
                 </Row>
-            </Container>
+            </div>
         )
     }
 }
 
-export default withRouter(EditClient);
+export default EditClient;

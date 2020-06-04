@@ -34,19 +34,27 @@ const AgendaItem = (props) => {
                 <FaCalendar />
                 <h5 className="ml-2">{props.title}</h5>
             </div>
-            <div className="flex-1 align-items-center d-flex p-2">
-                <div className="flex-1">
-                    <FormatDate date={props.date} time={props.time} />
+            {(props.date && props.time) ?     
+                <React.Fragment>
+                    <div className="flex-1 align-items-center d-flex p-2">
+                        <div className="flex-1">
+                            <FormatDate date={props.date} time={props.time} />
+                        </div>
+                        <div className="flex-1">
+                            {props.detail}
+                        </div>
+                    </div>
+                    <div className="d-flex flex-end text-primary">
+                        <Link to={props.href}>
+                            View
+                        </Link>
+                    </div>
+                </React.Fragment>
+                :
+                <div>
+                    Not Available
                 </div>
-                <div className="flex-1">
-                    {props.detail}
-                </div>
-            </div>
-            <div className="d-flex flex-end text-primary">
-                <Link to={props.href}>
-                    View
-                </Link>
-            </div>
+            }
         </Card>
     )
 }

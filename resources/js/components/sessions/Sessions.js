@@ -54,7 +54,7 @@ class Sessions extends Component {
 
     render() {
         return(
-            <Container>
+            <div className="client-container">
                 <Row className="mt-4">
                     {this.state.client && 
                         <Col>
@@ -100,7 +100,7 @@ class Sessions extends Component {
                         </div>
                     </Col>
                 </Row>
-            </Container>
+            </div>
         )
     }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use DateTime;
 
 class Client extends Model
@@ -62,7 +63,9 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
-        if ($this->lastSession() && new DateTime($this->lastSession()->session_date) >= $date) {
+        // dd($this->lastSession());
+
+        if ($this->lastSession()->session_date !== 'No sessions' && new DateTime($this->lastSession()->session_date) >= $date) {
             return $this->lastSession();
         } else if ($this->session_day && $this->start_date) {
             // Modify the date it contains
@@ -95,18 +98,21 @@ class Client extends Model
 
     /**
      * Get the client's most recent session.
+     * @todo account for timezone
      */
     public function lastSession()
     {
         $date = new DateTime();
 
-        // dd($date->format('H:m:s'));
+        $return = $this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first(); 
+        
+        if (!$return) {
+            $app = app();
+            $return = $app->make('stdClass');
+            $return ->session_date = 'No sessions';
+        }
 
-        // TODO: account for timezone
-
-        dd($this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first());
-
-        return $this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first();
+        return $return;
     }
 
     /**

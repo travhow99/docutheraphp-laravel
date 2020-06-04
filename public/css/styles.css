@@ -1,3 +1,4 @@
+/* Generated at https://maketintsandshades.com/#6574cd */
 :root {
   --indigo-80: #7482d2;
   --indigo-60: #8490d7;
@@ -97,6 +98,12 @@
 /** Client management */
 .client-sidebar {
   flex: 0 0 280px;
+}
+.client-container {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .manage-row {
   margin-left: -30px;

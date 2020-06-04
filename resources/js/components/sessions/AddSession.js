@@ -52,7 +52,7 @@ class AddSession extends Component {
 
     render() {
         return(
-            <Container>
+            <div className="client-container">
                 <Row className="mt-4">
                     {this.state.client && 
                         <Col>
@@ -86,7 +86,7 @@ class AddSession extends Component {
                         </Col>
                     }
                 </Row>
-            </Container>
+            </div>
         )
     }
 }
