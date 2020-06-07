@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaUserAlt, FaCalendarDay } from 'react-icons/fa';
 import { GrNotes, GrDocumentText } from 'react-icons/gr';
 import { AiOutlineRise } from 'react-icons/ai';

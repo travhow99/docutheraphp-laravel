@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClientInfo from './ClientInfo';
 import { Link, useParams, Route } from 'react-router-dom';
 import ClientOverview from './ClientOverview';
-import EditClient from './EditClient';
+import ClientDetails from './ClientDetails';
 import Sessions from '../sessions/Sessions';
 import Goals from '../goals/Goals';
 import AddSession from '../sessions/AddSession';
@@ -36,6 +36,29 @@ const ManageClient = (props) => {
         fetchClient();
     }, [id]);
     
+    const updateClient = (e) => {
+        const {name, value} = e.target;
+        console.log(name, value);
+
+        axios.put(`/api/clients/${id}`, {
+            [name]: value,
+        })
+        .then((res) => res)
+        .then((json) => {
+            if (json.status === 200) {
+                console.log(json.data);
+
+                alert('Client updated!')
+
+                setClient({
+                    ...client,
+                    [name]: value,
+                })
+            }
+        })
+    }
+
+    console.log('CLIENT MANGE', client);
 
     return (
         <React.Fragment>
@@ -51,7 +74,7 @@ const ManageClient = (props) => {
                     />
                     <Route
                         path="/clients/:id/details"
-                        render={() => <EditClient client={client} poc={poc} />}
+                        render={() => <ClientDetails client={client} poc={poc} updateClient={updateClient} />}
                     />
                     <Route
                         path="/clients/:id/goals"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Button } from 'reactstrap';
 import AgendaItem from '../utilities/AgendaItem';
 import ListItem from "../utilities/ListItem";

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link, Redirect, withRouter } from 'react-router-dom';
 import { 
     Container, Row, Col,
     Card, CardBody, Button,

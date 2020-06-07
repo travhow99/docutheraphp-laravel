@@ -79,8 +79,8 @@ class EditSession extends Component {
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             session_date,
             session_time,
-        }).
-        then((response) => response)
+        })
+        .then((response) => response)
         .then((json) => {
             if (json.status === 200) {
                 console.log(json.data);
