@@ -5,6 +5,8 @@
   --indigo-40: #939edc;
   --indigo-20: #b2bae6;
   --indigo-10: #e0e3f5;
+
+  --dark-60: #343a4085;
 }
 
 .dash-body > div {
@@ -98,6 +100,14 @@
 /** Client management */
 .client-sidebar {
   flex: 0 0 280px;
+}
+.client-link {
+  align-items: flex-start;
+  flex-direction: column;
+}
+.client-link-disabled {
+  cursor: not-allowed;
+  color: var(--dark-60) !important;
 }
 .client-container {
   flex: 1;

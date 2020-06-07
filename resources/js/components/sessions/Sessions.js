@@ -84,7 +84,7 @@ class Sessions extends Component {
                                         target={`/clients/${this.state.client.id}/sessions/new`} 
                                         main={[
                                             this.state.client.session_day,
-                                            getReadableDate(this.state.client.next_session),
+                                            getReadableDate(this.state.client.next_session.session_date),
                                             toLocalTime(this.state.client.session_time),
                                         ]} 
                                         status={0} />

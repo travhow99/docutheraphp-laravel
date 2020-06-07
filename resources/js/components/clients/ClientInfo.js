@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ClientSidebar from './ClientSidebar';
 import ClientNameCircle from '../utilities/ClientNameCircle';
 import { toLocalTime } from '../helpers/functions';
@@ -6,9 +6,13 @@ import { withRouter } from 'react-router-dom';
 
 const ClientInfo = (props) => {
     console.log('info',props);
-    const [domain, sub, id, active] = props.location.pathname.split('/'); //[props.location.pathname.length - 1];
+    const [domain, sub, id, active] = props.location.pathname.split('/');
 
-    console.log('active', active);
+    const exclusions = [];
+
+    if (props.client.next_session === 'Session not available') {
+        exclusions.push('Sessions');
+    }
 
     return (
         <div className="h-100 w-100 border-right position-relative">
@@ -33,7 +37,7 @@ const ClientInfo = (props) => {
                             }
                         </div>
                         <div>
-                            <ClientSidebar id={props.client.id} active={active} setActive={props.setActive} />
+                            <ClientSidebar id={props.client.id} active={active} setActive={props.setActive} exclude={exclusions} />
                         </div>
                     </div>
                 </div>
