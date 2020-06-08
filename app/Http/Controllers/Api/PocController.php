@@ -30,16 +30,11 @@ class PocController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'contact_name' => 'required',
-        ]);
-
         $client = Client::find($id);
         $poc = $client->pocs()->create([
-            'client_id' => $id, 
             'contact_name' => $request->contact_name, 
-            'email' => $request->email, 
-            'phone_number' => $request->phone_number,
+            'email' => $request->email || '', 
+            'phone_number' => $request->phone_number || '',
             'notes' => $request->notes,
         ]);
 

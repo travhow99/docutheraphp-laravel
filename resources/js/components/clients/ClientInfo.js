@@ -24,8 +24,8 @@ const ClientInfo = (props) => {
                 <div className="client-header-bottom">
                     <div className="d-flex flex-column">
                         <div className="w-100 py-4 px-2 text-right border-bottom">
-                            {props.poc.length ? (
-                                <h3>{props.poc.name}</h3>
+                            {props.pocs.length ? (
+                                <h3>{props.pocs.name}</h3>
                             ) : (
                                 <h3>Add POC</h3>
                             )}

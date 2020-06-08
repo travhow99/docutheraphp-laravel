@@ -3,8 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
-    Container, Row, Col,
-    Card, CardBody, CardTitle, CardFooter, Button, CardText, Form, Input, Label
+    Row, Col,
+    Card, Button
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 import DatePicker from "react-datepicker";

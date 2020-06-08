@@ -7,15 +7,18 @@ import Sessions from '../sessions/Sessions';
 import Goals from '../goals/Goals';
 import AddSession from '../sessions/AddSession';
 import EditSession from '../sessions/EditSession';
+import { useAlert } from 'react-alert'
 
 const ManageClient = (props) => {
     const params = useParams();
     const id = params.id;
     const [client, setClient] = useState(false);
     const [goals, setGoals] = useState(false);
-    const [poc, setPoc] = useState(false);
+    const [pocs, setPocs] = useState(false);
     const [page, setPage] = useState(false);
     const [active, setActive] = useState('Overview');
+
+    const alert = useAlert()
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -25,10 +28,10 @@ const ManageClient = (props) => {
                 axios.get(`/api/clients/${id}/goals`),
                 axios.get(`/api/clients/${id}/pocs`),
             ])
-            .then(axios.spread((clientDataRes, goalDataRes, pocDataRes) => {
+            .then(axios.spread((clientDataRes, goalDataRes, pocsDataRes) => {
                 setClient(goalDataRes.data.client);
                 setGoals(goalDataRes.data.goals);
-                setPoc(pocDataRes.data);
+                setPocs(pocsDataRes.data);
             }))
             .catch((err) => console.log(err))
         }
@@ -40,6 +43,8 @@ const ManageClient = (props) => {
         const {name, value} = e.target;
         console.log(name, value);
 
+        if (client[name] === value) return;
+
         axios.put(`/api/clients/${id}`, {
             [name]: value,
         })
@@ -48,7 +53,10 @@ const ManageClient = (props) => {
             if (json.status === 200) {
                 console.log(json.data);
 
-                alert('Client updated!')
+                alert.show('Client updated!', {
+                    timeout: 2000, // custom timeout just for this one alert
+                    type: 'success',
+                })
 
                 setClient({
                     ...client,
@@ -58,14 +66,14 @@ const ManageClient = (props) => {
         })
     }
 
-    console.log('CLIENT MANGE', client);
+    console.log('POCS:',pocs);
 
     return (
         <React.Fragment>
             {client ? (
                 <div className="d-flex h-100 anti-container">
                     <div className="d-flex h-100 client-sidebar">
-                        <ClientInfo active={active} setActive={setActive} client={client} poc={poc} />
+                        <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} />
                     </div>
                     <Route 
                         exact
@@ -74,16 +82,16 @@ const ManageClient = (props) => {
                     />
                     <Route
                         path="/clients/:id/details"
-                        render={() => <ClientDetails client={client} poc={poc} updateClient={updateClient} />}
+                        render={() => <ClientDetails client={client} pocs={pocs} updateClient={updateClient} />}
                     />
                     <Route
                         path="/clients/:id/goals"
-                        render={() => <Goals client={client} poc={poc} />}
+                        render={() => <Goals client={client} />}
                     />
                     <Route
                         exact
                         path="/clients/:id/sessions"
-                        render={() => <Sessions client={client} poc={poc} />}
+                        render={() => <Sessions client={client} />}
                     />
                     <Route
                         exact
@@ -92,7 +100,7 @@ const ManageClient = (props) => {
                     />
                     <Route
                         path="/clients/:id/sessions/:session_id"
-                        render={() => <EditSession client={client} poc={poc} />}
+                        render={() => <EditSession client={client} />}
                     />
                 </div>
             ) : (

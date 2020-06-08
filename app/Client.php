@@ -13,7 +13,7 @@ class Client extends Model
      * 
      * @var array
      */
-    protected $fillable = ['name', 'session_day', 'session_time', 'start_date', 'agency', 'active'];
+    protected $fillable = ['name', 'session_day', 'session_time', 'start_date', 'agency', 'active', 'address', 'diagnosis', 'approach'];
 
     /**
      * The accessors to append to the model's array form.

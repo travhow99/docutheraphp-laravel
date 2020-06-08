@@ -9,6 +9,10 @@
   --dark-60: #343a4085;
 }
 
+.text-main {
+  color: var(--indigo-80);
+}
+
 .dash-body > div {
   height: 100%;
 }

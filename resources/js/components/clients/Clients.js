@@ -71,7 +71,6 @@ class Clients extends Component {
     }
 
     return() {
-        console.log('return now1111!!!!');
         this.setState({
             currentClient: null,
         });

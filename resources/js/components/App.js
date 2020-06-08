@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 import Header from './Header';
 import Login from './login/Login';
 import Register from './register/Register';
@@ -17,6 +19,15 @@ import EditSession from './sessions/EditSession';
 import Sidebar from './sidebar/Sidebar';
 import { Row, Col, Container } from 'reactstrap';
 
+// optional configuration
+const options = {
+    // you can also just use 'bottom center'
+    position: positions.BOTTOM_CENTER,
+    timeout: 5000,
+    offset: '30px',
+    // you can also just use 'scale'
+    transition: transitions.SCALE
+}  
 
 class App extends Component {
     constructor() {
@@ -37,46 +48,34 @@ class App extends Component {
 
     render() {
         return (
-            <BrowserRouter>
-                <div>
-                    <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} />
-                    <div className="d-flex mx-0">
-                        <Sidebar />
-                        <div className="flex-grow-1">
-                            <Container fluid={true} className="h-100 dash-body">
-                                <Switch>
-                                    {/* User might login */}
-                                    {/* <Route exact path="/" component={Home} /> */}
+            <AlertProvider template={AlertTemplate} {...options}>
+                <BrowserRouter>
+                    <div>
+                        <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} />
+                        <div className="d-flex mx-0">
+                            <Sidebar />
+                            <div className="flex-grow-1">
+                                <Container fluid={true} className="h-100 dash-body">
+                                    <Switch>
+                                        {/* User might login */}
+                                        {/* <Route exact path="/" component={Home} /> */}
 
-                                    {/* User will login */}
-                                    <Route path="/login" component={Login} />
-                                    <Route path="/register" component={Register} />
+                                        {/* User will login */}
+                                        <Route path="/login" component={Login} />
+                                        <Route path="/register" component={Register} />
 
-                                    {/* Logged in */}
-                                    <PrivateRoute exact path="/" component={Home} />
-                                    <PrivateRoute exact path="/clients" component={Clients} />
+                                        {/* Logged in */}
+                                        <PrivateRoute exact path="/" component={Home} />
+                                        <PrivateRoute exact path="/clients" component={Clients} />
+                                        <PrivateRoute path="/clients/:id" component={ManageClient} />
 
-                                    {/* Goal Paths */}
-                                    {/* <PrivateRoute path="/clients/:id/goals/new" component={AddGoal} /> */}
-                                    {/* <PrivateRoute path="/clients/:id/goals" component={Goals} /> */}
-
-                                    {/* Session Paths */}
-                                    {/* <PrivateRoute path="/clients/:id/sessions/new" component={AddSession} /> */}
-                                    {/* <PrivateRoute path="/clients/:id/sessions/:session_id" component={EditSession} /> */}
-                                    {/* <PrivateRoute path="/clients/:id/sessions" component={Sessions} /> */}
-
-                                    {/* <PrivateRoute path="/clients/:id/manage" component={EditClient} /> */}
-                                    <PrivateRoute path="/clients/:id" component={ManageClient} />
-
-                                    {/* <PrivateRoute path="/sessions/:id/edit" component={EditSession} /> */}
-
-                                    {/* <PrivateRoute path="/clients" component={Clients} /> */}
-                                </Switch>
-                            </Container>
+                                    </Switch>
+                                </Container>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </BrowserRouter>
+                </BrowserRouter>
+            </AlertProvider>
         )
     }
 }

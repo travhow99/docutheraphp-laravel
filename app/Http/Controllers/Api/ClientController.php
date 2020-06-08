@@ -74,6 +74,7 @@ class ClientController extends Controller
 
         // Fill in updated values
         $client->fill($data);
+        // dd($data);
 
         $client->save();
 
