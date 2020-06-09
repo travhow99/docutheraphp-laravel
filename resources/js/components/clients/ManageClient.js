@@ -7,7 +7,7 @@ import Sessions from '../sessions/Sessions';
 import Goals from '../goals/Goals';
 import AddSession from '../sessions/AddSession';
 import EditSession from '../sessions/EditSession';
-import { useAlert } from 'react-alert'
+import { useAlert } from 'react-alert';
 
 const ManageClient = (props) => {
     const params = useParams();
@@ -18,7 +18,7 @@ const ManageClient = (props) => {
     const [page, setPage] = useState(false);
     const [active, setActive] = useState('Overview');
 
-    const alert = useAlert()
+    const alert = useAlert();
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -32,16 +32,21 @@ const ManageClient = (props) => {
                 setClient(goalDataRes.data.client);
                 setGoals(goalDataRes.data.goals);
                 setPocs(pocsDataRes.data);
+
+                console.log('POC:',pocs);
             }))
             .catch((err) => console.log(err))
         }
 
         fetchClient();
-    }, [id]);
+
+        
+    }, [id, setPocs]);
+
+
     
     const updateClient = (e) => {
         const {name, value} = e.target;
-        console.log(name, value);
 
         if (client[name] === value) return;
 
@@ -51,8 +56,6 @@ const ManageClient = (props) => {
         .then((res) => res)
         .then((json) => {
             if (json.status === 200) {
-                console.log(json.data);
-
                 alert.show('Client updated!', {
                     timeout: 2000, // custom timeout just for this one alert
                     type: 'success',
@@ -66,7 +69,6 @@ const ManageClient = (props) => {
         })
     }
 
-    console.log('POCS:',pocs);
 
     return (
         <React.Fragment>
@@ -82,7 +84,7 @@ const ManageClient = (props) => {
                     />
                     <Route
                         path="/clients/:id/details"
-                        render={() => <ClientDetails client={client} pocs={pocs} updateClient={updateClient} />}
+                        render={() => <ClientDetails client={client} pocs={pocs} updateClient={updateClient} updatePocs={setPocs} />}
                     />
                     <Route
                         path="/clients/:id/goals"

@@ -4,13 +4,10 @@ import { GrNotes, GrDocumentText } from 'react-icons/gr';
 import { AiOutlineRise } from 'react-icons/ai';
 import { MdDashboard } from 'react-icons/md';
 import ClientLink from './ClientLink';
-import { useParams } from 'react-router-dom';
 import ClientLinkDisabled from './ClientLinkDisabled';
 
 
 const ClientSidebar = (props) => {
-    console.log('props exc', props.exclude);
-
     let links = [
         {
             page: 'Overview',
@@ -58,7 +55,6 @@ const ClientSidebar = (props) => {
 
 
     links.map((link) => {
-        console.log(link.page);
         if (props.exclude.indexOf(link.page) >= 0) {
             link.disabled = true;
         }

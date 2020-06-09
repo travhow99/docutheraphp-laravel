@@ -33,12 +33,12 @@ class PocController extends Controller
         $client = Client::find($id);
         $poc = $client->pocs()->create([
             'contact_name' => $request->contact_name, 
-            'email' => $request->email || '', 
-            'phone_number' => $request->phone_number || '',
+            'email' => $request->email ?: '', 
+            'phone_number' => $request->phone_number ?: '',
             'notes' => $request->notes,
         ]);
 
-        return response($poc, 200);
+        return response($poc, 201);
     }
 
     /**
@@ -57,16 +57,23 @@ class PocController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @todo validate types
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $client_id, $poc_id)
     {
         $data = Request()->all();
+        /* 
+        TODO: validate
+        $request->validate([
+            ''
+        ]) */
         
-        $poc = Poc::find($id);
+        $poc = Poc::find($poc_id);
 
+        $poc->fill($data);
         $poc->save();
 
         return response('success', 200);
@@ -78,9 +85,9 @@ class PocController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($client_id, $poc_id)
     {
-        $poc = Poc::find($id);
+        $poc = Poc::find($poc_id);
 
         $poc->delete();
         

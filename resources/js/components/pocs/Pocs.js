@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Row, Col, Card, CardHeader, CardBody, Table, Form, FormGroup, Input, Button } from 'reactstrap';
 import { FaTimes } from 'react-icons/fa';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useAlert } from 'react-alert';
+import ContactRow from './ContactRow';
 
 const Pocs = (props) => {
     const [adding, setAdding] = useState(false);
@@ -8,9 +11,11 @@ const Pocs = (props) => {
     const [email, setEmail] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState(false);
 
+    const alert = useAlert();
+
     const addContact = (e) => {
         e.preventDefault();
-        
+
         axios.post(`/api/clients/${props.client_id}/pocs`, {
             contact_name: contactName,
             email: email,
@@ -18,10 +23,43 @@ const Pocs = (props) => {
         })
         .then((res) => res)
         .then((json) => {
-            if (json.status === 200) {
-                console.log(json);
+            if (json.status === 201) {
+                props.updatePocs([...props.pocs, json.data])
+
+                setAdding(false);
+                setContactName(false);
+                setEmail(false);
+                setPhoneNumber(false);
+
+                alert.show('Contact created!', {
+                    timeout: 2000, // custom timeout just for this one alert
+                    type: 'success',
+                })
             }
         });
+    }
+
+    const updateContact = (index, id, data) => {
+        const {name, value} = data;
+
+        axios.put(`/api/clients/${props.client_id}/pocs/${id}`, {
+            [name]: value
+        })
+        .then((res) => res)
+        .then((json) => {
+            if (json.status === 200) {
+                alert.show('Contact updated!', {
+                    timeout: 2000,
+                    type: 'success',
+                })
+
+                let newPocs = [...props.pocs];
+                newPocs[index] = {...newPocs[index], [name]: value};
+
+                console.log('NEW NEW',newPocs);
+                props.updatePocs(newPocs);
+            }
+        })
     }
 
     return (
@@ -36,8 +74,9 @@ const Pocs = (props) => {
                 :
                 <Col>
                     <Card>
-                        <CardHeader className="text-right">
-                            <FaTimes className="c-pointer" onClick={() => setAdding(false)} />
+                        <CardHeader>
+                            New Contact
+                            <FaTimes className="float-right c-pointer" onClick={() => setAdding(false)} />
                         </CardHeader>
                         <CardBody>
                             <Form inline onSubmit={addContact}>
@@ -92,17 +131,13 @@ const Pocs = (props) => {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Notes</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {props.pocs.map((poc) => (
-                                            <tr>
-                                                <td>{poc.contact_name}</td>
-                                                <td>{poc.email}</td>
-                                                <td>{poc.phone_number}</td>
-                                                <td>{poc.notes}</td>
-                                            </tr>
+                                        {console.log(props.pocs)}
+                                        {props.pocs.map((poc, index) => (
+                                            <ContactRow key={index} index={index} poc={poc} updateContact={updateContact} />
                                         ))}
                                     </tbody>
                                 </Table>

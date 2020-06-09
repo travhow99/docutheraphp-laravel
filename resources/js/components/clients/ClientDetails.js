@@ -115,7 +115,7 @@ const ClientDetails = (props) => {
                         </Card>
                     </Col>
                 </Row>
-                <Pocs client_id={props.client.id} pocs={props.pocs} />
+                <Pocs client_id={props.client.id} pocs={props.pocs} updatePocs={props.updatePocs} />
         </div>
     )
 }

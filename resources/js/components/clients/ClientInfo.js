@@ -5,7 +5,6 @@ import { toLocalTime } from '../helpers/functions';
 import { withRouter } from 'react-router-dom';
 
 const ClientInfo = (props) => {
-    console.log('info',props);
     const [domain, sub, id, active] = props.location.pathname.split('/');
 
     const exclusions = [];
