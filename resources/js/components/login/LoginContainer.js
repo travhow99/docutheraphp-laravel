@@ -35,7 +35,7 @@ class LoginContainer extends Component {
     componentDidMount() {
         console.log(this.state);
 
-        const { prevLocation } = this.state.redirect.state || { prevLocation: { pathname: '/clients' } };
+        const { prevLocation } = this.state.redirect.state || { prevLocation: { pathname: '/' } };
         if (prevLocation && this.state.isLoggedIn) {
             return this.props.history.push(prevLocation);
         }
@@ -65,6 +65,7 @@ class LoginContainer extends Component {
                 let appState = {
                     isLoggedIn: true,
                     user: userData,
+                    remember_me: this.state.user.remember_me,
                 }
 
                 localStorage['appState'] = JSON.stringify(appState);
@@ -134,7 +135,7 @@ class LoginContainer extends Component {
     }
 
     render() {
-          const { state = {} } = this.state.redirect;
+        console.log(this.state);
           const { error } = this.state.error;
         return (
             <div>
@@ -154,7 +155,7 @@ class LoginContainer extends Component {
                     </FormGroup>
                     <FormGroup row>
                         <Col md={6}>
-                            <input id="remember" type="checkbox" name="remember" checked={this.state.user.remember_me} onChange={this.handleRememberMe}></input>
+                            <input id="remember" type="checkbox" name="remember" checked={this.state.remember_me} onChange={this.handleRememberMe}></input>
                             <FormFeedback></FormFeedback>
                             <Label for="remember" className="ml-1">Remember Me</Label>
                         </Col>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink as RRNavLink } from 'react-router-dom'
+import { NavLink as RRNavLink, withRouter } from 'react-router-dom'
 import {
     Collapse,
     Navbar,
@@ -18,25 +18,14 @@ class Header extends Component {
             user: props.userData,
             isLoggedIn: props.userIsLoggedIn,
             navIsOpen: false,
+            remember_me: props.remember_me,
         };
 
-        this.logOut = this.logOut.bind(this);
         this.setIsOpen = this.setIsOpen.bind(this);
     }
 
     componentDidMount() {
         console.log(this.state);
-    }
-
-    logOut() {
-        let appState = {
-            isLoggedIn: false,
-            user: {},
-        };
-
-        localStorage["appState"] = JSON.stringify(appState);
-        this.setState(appState);
-        this.props.history.push('/login');
     }
 
     setIsOpen() {
@@ -76,7 +65,7 @@ class Header extends Component {
                                         <NavLink tag={RRNavLink} to='/templates'>Templates</NavLink>
                                     </NavItem>
                                 </Nav>
-                                <NavLink onClick={this.logOut}>Log Out</NavLink>
+                                <NavLink onClick={this.props.logOut}>Log Out</NavLink>
                             </React.Fragment>
                             ) : (
                             <Nav className="ml-auto" navbar>
@@ -96,4 +85,4 @@ class Header extends Component {
     }
 }
 
-export default Header
+export default withRouter(Header);

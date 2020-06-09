@@ -113,7 +113,7 @@ class Clients extends Component {
                                                     Session Time: <strong>{client.session_time}</strong>
                                                 </li>
                                                 <li>
-                                                    Next Session: <strong>{client.next_session}</strong>
+                                                    Next Session: <strong>{client.next_session.session_date}</strong>
                                                 </li>
                                             </ul>
                                         </div>

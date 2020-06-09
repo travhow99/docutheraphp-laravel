@@ -9,6 +9,7 @@ class Poc extends Model
     /**
      * Mass assignable attributes.
      * 
+     * @todo Add primary column
      * @var array
      */
     protected $fillable = ['client_id', 'contact_name', 'email', 'phone_number', 'notes'];

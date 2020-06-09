@@ -42,18 +42,38 @@ class App extends Component {
         this.state = {
             isLoggedIn: AppState.isLoggedIn || false,
             user: AppState.user || {},
+            remember_me: AppState.remember_me || false,
             clients: [],
         }
+
+        this.logOut = this.logOut.bind(this);
     }
+
+    componentDidMount() {
+        console.log('top state',this.state);
+    }
+
+    logOut() {
+        let appState = {
+            isLoggedIn: false,
+            user: {},
+            remember_me: this.state.remember_me || false,
+        };
+
+        localStorage["appState"] = JSON.stringify(appState);
+        this.setState(appState);
+        this.props.history.push('/login');
+    }
+
 
     render() {
         return (
-            <AlertProvider template={AlertTemplate} {...options}>
-                <BrowserRouter>
+            <BrowserRouter>
+                <AlertProvider template={AlertTemplate} {...options}>
                     <div>
-                        <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} />
+                        <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} logOut={this.logOut} />
                         <div className="d-flex mx-0">
-                            <Sidebar />
+                            {this.state.isLoggedIn && <Sidebar />}
                             <div className="flex-grow-1">
                                 <Container fluid={true} className="h-100 dash-body">
                                     <Switch>
@@ -74,8 +94,8 @@ class App extends Component {
                             </div>
                         </div>
                     </div>
-                </BrowserRouter>
-            </AlertProvider>
+                </AlertProvider>
+            </BrowserRouter>
         )
     }
 }

@@ -19,7 +19,7 @@ const ClientInfo = (props) => {
                 <div className="client-header-top">
 
                 </div>
-                <ClientNameCircle name={props.client.name} />
+                <ClientNameCircle name={props.client.name} randomColor={props.randomColor} />
                 <div className="client-header-bottom">
                     <div className="d-flex flex-column">
                         <div className="w-100 py-4 px-2 text-right border-bottom">

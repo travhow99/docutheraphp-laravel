@@ -21,6 +21,10 @@ const ContactRow = (props) => {
         // setExpanded(false);
     }
 
+    const deleteContact = () => {
+        props.deleteContact(props.index, props.poc.id);
+    }
+
     return(
         <React.Fragment>
             {!expanded ? 
@@ -39,7 +43,7 @@ const ContactRow = (props) => {
                             <Input type="text" onBlur={update} name="contact_name" defaultValue={props.poc.contact_name} />
                         </td>
                         <td>
-                            <Input type="text" onBlur={update} name="email" defaultValue={props.poc.email} />
+                            <Input type="email" onBlur={update} name="email" defaultValue={props.poc.email} />
                         </td>
                         <td>
                             <Input type="text" onBlur={update} name="phone_number" defaultValue={props.poc.phone_number} />
@@ -49,8 +53,11 @@ const ContactRow = (props) => {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan="4">
-                            <Button color="danger">Delete</Button>
+                        <td className="border-0" colSpan="3">
+                            <Input type="textarea" onBlur={update} name="notes" defaultValue={props.poc.notes} />
+                        </td>
+                        <td className="border-0">
+                            <Button color="danger" onClick={deleteContact}>Delete</Button>
                         </td>
                     </tr>
                 </React.Fragment>

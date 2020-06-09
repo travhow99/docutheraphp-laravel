@@ -56,10 +56,24 @@ const Pocs = (props) => {
                 let newPocs = [...props.pocs];
                 newPocs[index] = {...newPocs[index], [name]: value};
 
-                console.log('NEW NEW',newPocs);
                 props.updatePocs(newPocs);
             }
         })
+        .catch((err) => console.log(err))
+    }
+
+    const deleteContact = (index, id) => {
+        axios.delete(`/api/clients/${props.client_id}/pocs/${id}`)
+            .then((res) => res)
+            .then((json) => {
+                if (json.status === 200) {
+                    let newPocs = [...props.pocs];
+                    newPocs.splice(index, 1);
+                    
+                    props.updatePocs(newPocs);
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
     return (
@@ -137,7 +151,7 @@ const Pocs = (props) => {
                                     <tbody>
                                         {console.log(props.pocs)}
                                         {props.pocs.map((poc, index) => (
-                                            <ContactRow key={index} index={index} poc={poc} updateContact={updateContact} />
+                                            <ContactRow key={index} index={index} poc={poc} updateContact={updateContact} deleteContact={deleteContact} />
                                         ))}
                                     </tbody>
                                 </Table>

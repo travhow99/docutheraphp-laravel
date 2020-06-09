@@ -8,6 +8,7 @@ import Goals from '../goals/Goals';
 import AddSession from '../sessions/AddSession';
 import EditSession from '../sessions/EditSession';
 import { useAlert } from 'react-alert';
+import { getRandomColor } from '../helpers/functions';
 
 const ManageClient = (props) => {
     const params = useParams();
@@ -17,8 +18,10 @@ const ManageClient = (props) => {
     const [pocs, setPocs] = useState(false);
     const [page, setPage] = useState(false);
     const [active, setActive] = useState('Overview');
+    const [randomColor, setRandomColor] = useState(getRandomColor());
 
     const alert = useAlert();
+
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -75,7 +78,7 @@ const ManageClient = (props) => {
             {client ? (
                 <div className="d-flex h-100 anti-container">
                     <div className="d-flex h-100 client-sidebar">
-                        <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} />
+                        <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} />
                     </div>
                     <Route 
                         exact
