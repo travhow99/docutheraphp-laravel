@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { NavLink as RRNavLink, withRouter } from 'react-router-dom'
 import {
     Collapse,
@@ -10,79 +10,45 @@ import {
     NavLink,
 } from 'reactstrap';
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
+const Header = (props) => {
+    const [navOpen, setNavOpen] = useState(false);
 
-        this.state = {
-            user: props.userData,
-            isLoggedIn: props.userIsLoggedIn,
-            navIsOpen: false,
+    const logOut = () => {
+        let appState = {
+            isLoggedIn: false,
+            user: {},
             remember_me: props.remember_me,
-        };
+        }
 
-        this.setIsOpen = this.setIsOpen.bind(this);
+        localStorage['appState'] = JSON.stringify(appState);
+        props.history.push('/login');
+        props.update(appState);
     }
 
-    componentDidMount() {
-        console.log(this.state);
-    }
-
-    setIsOpen() {
-        this.setState({
-            navIsOpen: !this.state.navIsOpen,
-        });
-    }
-
-    render() {
-        const toggle = () => this.setIsOpen(!this.state.navIsOpen);
-        const aStyle = {
-            cursor: 'pointer',
-        };
-
-        return (
-            <React.Fragment>
-                <Navbar color="dark" dark expand="md">
-                    <NavbarBrand tag={RRNavLink} to="/">Docutherapy</NavbarBrand>
-                    <NavbarToggler onClick={toggle} />
-                    <Collapse isOpen={this.state.navIsOpen} navbar>
-                        {this.state.isLoggedIn ? (
-                            <React.Fragment>
-                                <Nav className="ml-auto" navbar>
-                                    <NavItem>
-                                        <NavLink tag={RRNavLink} to='/clients'>Clients</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink tag={RRNavLink} to='/contacts'>Contacts</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink tag={RRNavLink} to='/sessions'>Sessions</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink tag={RRNavLink} to='/documentation'>Documentation</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink tag={RRNavLink} to='/templates'>Templates</NavLink>
-                                    </NavItem>
-                                </Nav>
-                                <NavLink onClick={this.props.logOut}>Log Out</NavLink>
-                            </React.Fragment>
-                            ) : (
-                            <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/login'>Login</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to='/register'>Register</NavLink>
-                                </NavItem>
-                            </Nav>
-                            )
-                        }
-                    </Collapse>
-                </Navbar>
-            </React.Fragment>
-        )
-    }
+    console.log('remmember',props.remember_me);
+    return(
+        <Navbar color="dark" dark expand="md">
+            <NavbarBrand tag={RRNavLink} to="/">Docutherapy</NavbarBrand>
+            <NavbarToggler onClick={()=>setNavOpen(!navOpen)} />
+            <Collapse isOpen={navOpen} navbar className="justify-content-end">
+                {props.userIsLoggedIn ? (
+                    <React.Fragment>
+                        <NavLink className="c-pointer" onClick={logOut}>Log Out</NavLink>
+                    </React.Fragment>
+                    ) : (
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink tag={RRNavLink} to='/login'>Login</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={RRNavLink} to='/register'>Register</NavLink>
+                        </NavItem>
+                    </Nav>
+                    )
+                }
+            </Collapse>
+        </Navbar>
+    )
 }
 
 export default withRouter(Header);

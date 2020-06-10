@@ -25,6 +25,7 @@ class LoginContainer extends Component {
                 password: '',
                 remember_me: false,
             },
+            remember_me: AppState.remember_me || false,
             redirect: props.redirect,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,7 +66,7 @@ class LoginContainer extends Component {
                 let appState = {
                     isLoggedIn: true,
                     user: userData,
-                    remember_me: this.state.user.remember_me,
+                    remember_me: this.state.remember_me,
                 }
 
                 localStorage['appState'] = JSON.stringify(appState);
@@ -126,12 +127,7 @@ class LoginContainer extends Component {
     handleRememberMe(e) {
         let value = e.target.checked;
 
-        this.setState(prevState => ({
-            user: {
-                ...prevState.user,
-                remember_me: value,
-            }
-        }));
+        this.setState({remember_me: value});
     }
 
     render() {
@@ -148,7 +144,7 @@ class LoginContainer extends Component {
           <h5 className={"alert alert-danger"}>Error: {error}</h5></FlashMessage> : ''}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup row>
-                        <input id="email" type="email" name="email" placeholder="E-mail" className="form-control" required onChange={this.handleEmail} />
+                        <input id="email" type="email" name="email" placeholder="E-mail" className="form-control" required defaultValue={this.state.user.email} onChange={this.handleEmail} />
                     </FormGroup>
                     <FormGroup row>
                         <input id="password" type="password" name="password" placeholder="Password" className="form-control" required onChange={this.handlePassword} />

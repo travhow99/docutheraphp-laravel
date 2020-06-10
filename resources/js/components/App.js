@@ -9,15 +9,9 @@ import Register from './register/Register';
 import Home from './Home';
 import Clients from './clients/Clients';
 import PrivateRoute from './helpers/PrivateRoute';
-import EditClient from './clients/EditClient';
 import ManageClient from './clients/ManageClient';
-import Goals from './goals/Goals';
-import AddGoal from './goals/AddGoal';
-import Sessions from './sessions/Sessions';
-import AddSession from './sessions/AddSession';
-import EditSession from './sessions/EditSession';
 import Sidebar from './sidebar/Sidebar';
-import { Row, Col, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 // optional configuration
 const options = {
@@ -46,32 +40,29 @@ class App extends Component {
             clients: [],
         }
 
-        this.logOut = this.logOut.bind(this);
+        this.updateStorage = this.updateStorage.bind(this);
     }
 
     componentDidMount() {
         console.log('top state',this.state);
     }
 
-    logOut() {
-        let appState = {
-            isLoggedIn: false,
-            user: {},
-            remember_me: this.state.remember_me || false,
-        };
+    updateStorage(storage) {
+        if (storage.remember_me) {
+            storage.user.email = this.state.user.email;
+        }
 
-        localStorage["appState"] = JSON.stringify(appState);
-        this.setState(appState);
-        this.props.history.push('/login');
+        console.log(storage);
+        this.setState(storage);
     }
 
-
     render() {
+        console.log('render', this.state);
         return (
             <BrowserRouter>
                 <AlertProvider template={AlertTemplate} {...options}>
                     <div>
-                        <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} logOut={this.logOut} />
+                        <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} remember_me={this.state.remember_me} update={this.updateStorage} />
                         <div className="d-flex mx-0">
                             {this.state.isLoggedIn && <Sidebar />}
                             <div className="flex-grow-1">
