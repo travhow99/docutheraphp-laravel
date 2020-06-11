@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Input, Label } from 'reactstrap';
 import axios from 'axios';
+import { FaTimes } from 'react-icons/fa';
 import GoalNote from '../goals/GoalNote';
 
 class SessionGoal extends Component {
@@ -20,6 +21,7 @@ class SessionGoal extends Component {
         this.adjustCount = this.adjustCount.bind(this);
         this.updateGoalInput = this.updateGoalInput.bind(this);
         this.updateGoal = this.updateGoal.bind(this);
+        this.toggleMetObjective = this.toggleMetObjective.bind(this);
     }
 
     componentDidMount() {
@@ -80,10 +82,13 @@ class SessionGoal extends Component {
     }
 
     updateGoalProgress(e) {
+        e.preventDefault();
+
+        let [name, value] = e;
         console.log(e.target.checked);
     }
 
-    updateGoal(e) {
+    updateGoal() {
         axios.put(`/api/clients/${this.props.client_id}/goals/${this.state.goal.id}`, this.state.goal)
             .then((response) => {
                 this.setState({goal: response.data})
@@ -91,11 +96,31 @@ class SessionGoal extends Component {
             .catch((err) => console.log(err));
     }
 
+    toggleMetObjective(e) {
+        let goal = this.state.goal;
+        goal.met_objective = e.target.checked;
+
+        axios.put(`/api/sessions/${this.state.goal.session_id}/sessionGoals/${this.state.goal.id}`, goal)
+            .then((response) => {
+                this.setState({goal: response.data})
+            })
+            .catch((err) => console.log(err));
+
+        // let [name, value] = e;
+
+
+    }
+
     render() {
         console.log(this.state);
 
         return (
             <React.Fragment>
+                {this.state.goal.met_objective && 
+                    <div className="float-right">
+                        Objective Met!
+                    </div>
+                }
                 <Row>
                     <Col>
                         <h3>Goal:</h3>
@@ -129,8 +154,8 @@ class SessionGoal extends Component {
                                 {this.state.editing ? 'Save' : 'Edit'}
                             </Button>
                         ) : (
-                            <Button color='success' onClick={this.toggleNote}>
-                                {this.state.takingNote ? 'Close Note' : 'Add Note'}
+                            <Button color={this.state.takingNote ? 'danger' : 'success'} onClick={this.toggleNote}>
+                                {this.state.takingNote ? <FaTimes /> : 'Notes'}
                             </Button>
                         )}
                     </Col>
@@ -143,6 +168,7 @@ class SessionGoal extends Component {
                                 goal={this.state.goal}
                                 adjustCount={this.adjustCount}
                                 updateStatus={this.updateGoalProgress}
+                                toggleMetObjective={this.toggleMetObjective}
                             />
                         }
                     </React.Fragment>

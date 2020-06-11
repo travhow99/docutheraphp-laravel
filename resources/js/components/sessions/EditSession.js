@@ -7,6 +7,7 @@ import {
     Card, Button
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
+import ToggleSwitch from '../utilities/ToggleSwitch';
 import DatePicker from "react-datepicker";
 import { GoGear } from 'react-icons/go';
 import { toLocalTime } from '../helpers/functions';
@@ -129,8 +130,8 @@ class EditSession extends Component {
         
         return(
             <div className="client-container">
-                <Row className="mt-4">
-                    {this.state.session && 
+                {this.state.session && 
+                    <Row className="mt-4">
                         <Col xs="6">
                             <h2>{this.state.client.name}</h2>
                             <div className="d-flex justify-content-around mb-4">
@@ -149,16 +150,30 @@ class EditSession extends Component {
                                     />
                                 )
                                 }
-
-                                {/* <div className="flex-0"> */}
-                                {/* <Button color="success">Edit</Button> */}
                                 <GoGear 
-                                    className="flex-0 ml-2" 
+                                    className="flex-0 ml-2 c-pointer" 
                                     onClick={this.toggleEditDate} />
                             </div>
                         </Col>
-                    }
-                </Row>
+                        <Col className="d-flex">
+                            <div>
+                                <div className="mt-3">Completed?
+                                    <ToggleSwitch />
+                                </div>
+                            </div>
+                            <div>
+                                <div className="mt-3">Cancelled?
+                                    <ToggleSwitch />
+                                </div>
+                            </div>
+                            <div>
+                                <div className="mt-3">Billed?
+                                    <ToggleSwitch />
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                }
                 <Row>
                     {this.state.client &&
                     <Col>

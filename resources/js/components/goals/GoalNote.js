@@ -1,38 +1,37 @@
 import React from 'react';
-import { Row, Col, Input, Label, Button } from 'reactstrap';
+import { Row, Col, Input, Label, Button, ButtonGroup } from 'reactstrap';
+import ToggleSwitch from '../utilities/ToggleSwitch';
 
 /**
  * @todo  Functional checkboxes
  */
 const GoalNote = (props) => {
     return (
-        <React.Fragment>
-            <Row className="mt-2">
-                <Col className="col-9">
+        <div className="d-flex flex-column mt-4">
+            <div className="d-flex">
+                <div className="flex-1 pr-2">
                     {/* TODO: use value & onChange? */}
-                    <Input type="textarea" onBlur={props.save} defaultValue={props.goal.notes}></Input>
-                </Col>
-                <Col>
-                    <div>
-                        <Button color="danger" name="minus" onClick={props.adjustCount} disabled={props.goal.count === 0}>-</Button>
-                        <span>
-                            {props.goal.count || 0}
-                        </span>                                
-                        <Button color="success" name="plus" onClick={props.adjustCount}>+</Button> 
+                    <Input type="textarea" onBlur={props.save} defaultValue={props.goal.notes} />
+                </div>
+                <div className="d-flex">
+                    <ButtonGroup>
+                        <Button className="h-100" color="danger" name="minus" onClick={props.adjustCount} disabled={props.goal.count === 0}>-</Button>
+                        <div className="border-top border-bottom p-2 d-flex align-items-center">
+                            <div style={{fontSize: '1rem'}}>{props.goal.count || 0}</div>
+                        </div>                                
+                        <Button className="h-100" color="success" name="plus" onClick={props.adjustCount}>+</Button> 
+                    </ButtonGroup>
+                </div>
+            </div>
+            <div className="d-flex justify-content-between">
+                <div>
+                    <div className="mt-3">
+                        Met Objective?
+                        <ToggleSwitch isChecked={props.goal.met_objective} toggle={props.toggleMetObjective} />
                     </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col className="form-check">
-                    <Input type="checkbox" onChange={props.updateStatus} />
-                    <Label className="form-check-label">Did not meet objective</Label>
-                </Col>
-                <Col className="form-check">
-                    <Input type="checkbox" onChange={props.updateStatus} />
-                    <Label className="form-check-label">Met objective</Label>
-                </Col>
-            </Row>
-        </React.Fragment>
+                </div>
+            </div>
+        </div>
     );
 }
 
