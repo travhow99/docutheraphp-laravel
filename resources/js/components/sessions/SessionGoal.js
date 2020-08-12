@@ -25,9 +25,7 @@ class SessionGoal extends Component {
     }
 
     componentDidMount() {
-        console.log('props:',this.props);
         this.setState({goal: this.props.goal});
-        console.log('state',this.state);
     }
 
     toggleEdit() {
@@ -112,14 +110,14 @@ class SessionGoal extends Component {
     }
 
     render() {
-        console.log(this.state);
-
         return (
             <React.Fragment>
-                {this.state.goal.met_objective && 
-                    <div className="float-right">
+                {this.state.goal.met_objective ? 
+                    <div className="text-right">
                         Objective Met!
                     </div>
+                    :
+                    ''
                 }
                 <Row>
                     <Col>

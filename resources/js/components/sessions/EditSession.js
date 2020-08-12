@@ -27,6 +27,7 @@ class EditSession extends Component {
 
         this.handleTimeChange = this.handleTimeChange.bind(this);
         this.toggleEditDate = this.toggleEditDate.bind(this);
+        this.toggleAttribute = this.toggleAttribute.bind(this);
         this.deleteSession = this.deleteSession.bind(this);
     }
 
@@ -52,6 +53,31 @@ class EditSession extends Component {
 
     toggleEditDate() {
         this.setState({editingDate: !this.state.editingDate});
+    }
+
+    toggleAttribute(e) {
+        e.preventDefault();
+
+        const name = e.target.name;
+        const val = e.target.checked;
+       
+
+        axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
+            [name]: val,
+        })
+        .then((response) => response)
+        .then((json) => {
+            if (json.status === 200) {
+                console.log(json.data);
+
+                this.setState({
+                    session: {
+                        ...this.state.session,
+                        [name]: val,
+                    },
+                });
+            }
+        })
     }
 
     deleteSession(e) {
@@ -122,7 +148,6 @@ class EditSession extends Component {
         const time = this.state.session ? this.state.session.session_date + " " + this.state.session.session_time : null;
         
         const datepicker = moment(time).toDate();
-        console.log('datepicker:',datepicker);
 
         if (this.state.deleted) {
             return <Redirect to={`/clients/${this.state.client.id}/sessions`} />
@@ -158,17 +183,17 @@ class EditSession extends Component {
                         <Col className="d-flex">
                             <div>
                                 <div className="mt-3">Completed?
-                                    <ToggleSwitch />
+                                    <ToggleSwitch name="complete" isChecked={this.state.session.complete} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
                             <div>
                                 <div className="mt-3">Cancelled?
-                                    <ToggleSwitch />
+                                    <ToggleSwitch name="cancelled" isChecked={this.state.session.cancelled} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
                             <div>
                                 <div className="mt-3">Billed?
-                                    <ToggleSwitch />
+                                    <ToggleSwitch name="billed" isChecked={this.state.session.billed} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
                         </Col>
