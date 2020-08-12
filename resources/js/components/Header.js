@@ -27,7 +27,7 @@ const Header = (props) => {
 
     console.log('remmember',props.remember_me);
     return(
-        <Navbar color="dark" dark expand="md">
+        <Navbar style={{boxShadow: '0 0 3px', zIndex: 2}} color="light" light expand="md">
             <NavbarBrand tag={RRNavLink} to="/">Docutherapy</NavbarBrand>
             <NavbarToggler onClick={()=>setNavOpen(!navOpen)} />
             <Collapse isOpen={navOpen} navbar className="justify-content-end">
