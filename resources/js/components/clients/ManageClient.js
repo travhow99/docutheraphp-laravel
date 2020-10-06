@@ -35,18 +35,12 @@ const ManageClient = (props) => {
                 setClient(goalDataRes.data.client);
                 setGoals(goalDataRes.data.goals);
                 setPocs(pocsDataRes.data);
-
-                console.log('POC:',pocs);
             }))
             .catch((err) => console.log(err))
         }
 
-        fetchClient();
-
-        
+        fetchClient();        
     }, [id, setPocs]);
-
-
     
     const updateClient = (e) => {
         const {name, value} = e.target;
