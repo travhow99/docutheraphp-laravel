@@ -37,7 +37,7 @@ class Home extends Component {
             <React.Fragment>
                 <Row className="mt-4">
                     <Col md="4">
-                        {this.state.clients.map((client, index) => (
+                        {this.state.clients && this.state.clients.map((client, index) => (
                             (client.next_session !== 'Session not available') &&
                                 <Card key={index} className="text-center mb-2">
                                     <CardBody>

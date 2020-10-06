@@ -17,6 +17,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $clients = $request->user()->therapy_clients()->get();
+        // dd($clients);
         
         return response($clients, 200);
     }

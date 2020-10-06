@@ -182,17 +182,20 @@ class EditSession extends Component {
                         </Col>
                         <Col className="d-flex">
                             <div>
-                                <div className="mt-3">Completed?
+                                <div className="mt-3 mr-2">Completed?
+                                    <br />
                                     <ToggleSwitch name="complete" isChecked={this.state.session.complete} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
                             <div>
-                                <div className="mt-3">Cancelled?
+                                <div className="mt-3 mr-2">Cancelled?
+                                    <br />
                                     <ToggleSwitch name="cancelled" isChecked={this.state.session.cancelled} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
                             <div>
-                                <div className="mt-3">Billed?
+                                <div className="mt-3 mr-3">Billed?
+                                    <br />
                                     <ToggleSwitch name="billed" isChecked={this.state.session.billed} toggle={this.toggleAttribute} />
                                 </div>
                             </div>

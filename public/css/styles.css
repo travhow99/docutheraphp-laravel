@@ -154,6 +154,7 @@
   display: inline-block;
   width: 72px;
   height: 34px;
+  margin: 0 !important;
 }
 .toggle-switch-checkbox {
   opacity: 0;

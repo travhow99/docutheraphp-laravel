@@ -82,7 +82,7 @@ class SessionGoalController extends Controller
      */
     public function destroy($id, $sessionGoalId)
     {
-        dd(SessionGoal::find($sessionGoalId));
+        // dd(SessionGoal::find($sessionGoalId));
         SessionGoal::destroy($sessionGoalId);
     }
 }

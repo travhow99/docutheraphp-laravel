@@ -6,7 +6,7 @@ import Doughnut from '../charts/Doughnut';
 import { Link } from 'react-router-dom';
 
 const ClientOverview = (props) => {
-
+    console.log(props.client);
     return (
         <div className="client-container">
             <div className="flex-1 flex-half d-flex">
@@ -63,7 +63,7 @@ const ClientOverview = (props) => {
                             <div>
                                 <h5>Sessions</h5>
                                 <p className="lead">
-                                    This is a fake graph demonstrating how your client is progressing.
+                                    The chart below will update depending on the results of your sessions.
                                 </p>
                             </div>
                             <div>

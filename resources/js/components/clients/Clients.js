@@ -27,6 +27,8 @@ class Clients extends Component {
             currentClient: null,
         }
         
+        console.log(this.state);
+
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -92,6 +94,7 @@ class Clients extends Component {
 
     render() {
         const clients = this.state.clients;
+        console.log(clients);
 
         return (
             <React.Fragment>

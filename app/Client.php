@@ -63,7 +63,7 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
-        // dd($this->lastSession());
+        // dd($this->lastSession()->session_date);
 
         if ($this->lastSession()->session_date !== 'No sessions' && new DateTime($this->lastSession()->session_date) >= $date) {
             return $this->lastSession();
@@ -104,15 +104,28 @@ class Client extends Model
     {
         $date = new DateTime();
 
-        $return = $this->sessions()->where('session_date', '<=', $date->format('Y-m-d'))->where('session_time', '<=', $date->format('H:m:s'))->orderBy('session_date', 'DESC')->first(); 
-        
-        if (!$return) {
+        $data = $this->sessions()
+                        ->where('session_date', '<=', $date->format('Y-m-d'))
+                        ->orderBy('session_date', 'DESC')
+                        ->first(); 
+
+        if (!$data) {
             $app = app();
             $return = $app->make('stdClass');
-            $return ->session_date = 'No sessions';
+            $return->session_date = 'No sessions';
+
+            return $return;
         }
 
-        return $return;
+
+
+        /* $return = $data->filter(function($val, $key) use($date) {
+            return $val->session_date < $date->format('Y-m-d') || ($val->session_date === $date->format('Y-m-d') && $val->session_time <= $date->format('H:m:s'));
+        });
+
+        dd($return); */
+
+        return $data;
     }
 
     /**
