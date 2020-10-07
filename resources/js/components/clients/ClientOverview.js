@@ -6,7 +6,6 @@ import Doughnut from '../charts/Doughnut';
 import { Link } from 'react-router-dom';
 
 const ClientOverview = (props) => {
-    console.log(props.client);
     return (
         <div className="client-container">
             <div className="flex-1 flex-half d-flex">

@@ -63,8 +63,6 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
-        // dd($this->lastSession()->session_date);
-
         if ($this->lastSession()->session_date !== 'No sessions' && new DateTime($this->lastSession()->session_date) >= $date) {
             return $this->lastSession();
         } else if ($this->session_day && $this->start_date) {

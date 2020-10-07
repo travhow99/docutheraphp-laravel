@@ -66,9 +66,11 @@ const ClientSidebar = (props) => {
                 {links.map((link, key) => (
                     link.disabled ? (
                         <ClientLinkDisabled 
+                            key={key}
                             active={props.active === link.slug}
                             page={link.page}
                             icon={link.icon}
+                            disabled={true}
                         />
                     ) : (
                         <ClientLink

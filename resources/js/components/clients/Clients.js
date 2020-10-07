@@ -127,7 +127,7 @@ class Clients extends Component {
                                                 <Link to={
                                                     (client.session_time && client.session_day && client.start_date) ?
                                                     `/clients/${client.id}` :
-                                                    `/clients/${client.id}/manage`
+                                                    `/clients/${client.id}/details`
                                                     } 
                                                     style={{textDecoration: 'none'}}>
                                                     <Button color="success" block>
@@ -154,7 +154,7 @@ class Clients extends Component {
                                             :
                                             <Row>
                                                 <Col className="mt-2">
-                                                    <Link to={`/clients/${client.id}/manage`} style={{ textDecoration: 'none' }}>
+                                                    <Link to={`/clients/${client.id}/details`} style={{ textDecoration: 'none' }}>
                                                         <Button color="danger" outline block>
                                                             Setup Session Time
                                                         </Button>

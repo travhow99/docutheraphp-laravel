@@ -18,6 +18,9 @@ export const toLocalTime = (time) => {
   return `${hr}:${min} ${am_pm}`;
 }
 
+/**
+ * @todo wrong date, adjust for timezone
+ */
 export function getReadableDate(date) {
   date = moment(date);
   // console.log(date.getDate());

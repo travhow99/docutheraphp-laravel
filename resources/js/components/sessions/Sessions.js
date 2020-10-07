@@ -3,19 +3,22 @@ import axios from 'axios';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 import {
-    Container, Row, Col,
-    Card, CardBody, CardTitle, CardFooter, Button, CardText, Form
+    Row, Col,
+    Card, Button, CardText, Form, FormGroup, CardHeader, CardBody
 } from 'reactstrap';
 import Pill from '../utilities/Pill';
 import { getDay, getReadableDate, toLocalTime } from '../helpers/functions';
+import { FaTimesCircle } from 'react-icons/fa';
 
 class Sessions extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            
+            adding: false,
         }
+
+        this.addSession = this.addSession.bind(this);
     }
 
     componentDidMount() {
@@ -52,53 +55,96 @@ class Sessions extends Component {
 
     }
 
+    addSession(e) {
+        this.setState({adding: !this.state.adding});
+    }
+
     render() {
-        return(
+        return (
             <div className="client-container">
                 <Row className="mt-4">
-                    {this.state.client && 
-                        <Col>
-                            <h3>Sessions With {this.state.client.name}</h3>
-                            <div className="mt-4">
-                                <h5>Past</h5>
-                                {this.state.sessions.length >= 1 ? 
-                                    this.state.sessions.map((session, key) => (
-                                        <Pill
-                                            key={key}
-                                            target={`/clients/${this.state.client.id}/sessions/${session.id}`} 
-                                            main={[
-                                                getDay(moment(session.session_date).get('day')),
-                                                moment(session.session_date).format('M/D/YYYY'),
-                                                toLocalTime(session.session_time),
-                                            ]}
-                                            status={session.complete}
-                                        /> 
-                                    )) : (
-                                        <p>Not currently available</p>
-                                    )}
-                            </div>
-                            {typeof(this.state.client.next_session) === 'string' &&
-                                <div className="mt-4">
-                                    <h5>Upcoming</h5>
-                                    <Pill
-                                        target={`/clients/${this.state.client.id}/sessions/new`} 
-                                        main={[
-                                            this.state.client.session_day,
-                                            getReadableDate(this.state.client.next_session.session_date),
-                                            toLocalTime(this.state.client.session_time),
-                                        ]} 
-                                        status={0} />
-                                </div>
+                    {!this.state.adding ?
+                        <React.Fragment>
+                            {this.state.client &&
+                                <Col>
+                                    <h3>Sessions With {this.state.client.name}</h3>
+                                    <div className="mt-4">
+                                        <h5>Past</h5>
+                                        {this.state.sessions.length >= 1 ?
+                                            this.state.sessions.map((session, key) => (
+                                                <Pill
+                                                    key={key}
+                                                    target={`/clients/${this.state.client.id}/sessions/${session.id}`}
+                                                    main={[
+                                                        getDay(moment(session.session_date).get('day')),
+                                                        moment(session.session_date).format('M/D/YYYY'),
+                                                        toLocalTime(session.session_time),
+                                                    ]}
+                                                    status={session.complete}
+                                                />
+                                            )) : (
+                                                <p>Not currently available</p>
+                                            )}
+                                    </div>
+                                    {typeof (this.state.client.next_session) === 'string' &&
+                                        <div className="mt-4">
+                                            <h5>Upcoming</h5>
+                                            <Pill
+                                                target={`/clients/${this.state.client.id}/sessions/new`}
+                                                main={[
+                                                    this.state.client.session_day,
+                                                    getReadableDate(this.state.client.next_session.session_date),
+                                                    toLocalTime(this.state.client.session_time),
+                                                ]}
+                                                status={0} />
+                                        </div>
+                                    }
+                                </Col>
                             }
+                            <Col>
+                                <h3>&nbsp;</h3>
+                                <div className="mt-4">
+                                    {this.state.client &&
+                                        <React.Fragment>
+                                            <h5>Upcoming</h5>
+                                            <Pill
+                                                target={`/clients/${this.state.client.id}/sessions/new`}
+                                                main={[
+                                                    this.state.client.session_day,
+                                                    getReadableDate(this.state.client.next_session.session_date),
+                                                    toLocalTime(this.state.client.session_time),
+                                                ]}
+                                                status={0} />
+                                        </React.Fragment>
+                                    }
+                                    <Button onClick={this.addSession}>Add Session</Button>
+                                </div>
+                            </Col>
+                        </React.Fragment>
+                        :
+                        <Col>
+                            <Card>
+                                <CardHeader>
+                                    <FaTimesCircle className="float-right" onClick={this.addSession} />
+                                </CardHeader>
+                                <CardBody>
+                                    <Form onSubmit={this.handleSubmit}>
+                                        <FormGroup row>
+                                            <input
+                                                id="name"
+                                                type="text"
+                                                name="name"
+                                                placeholder="Client Name (4 Letter Abbreviation)"
+                                                className="form-control"
+                                                onChange={this.handleInput}
+                                                maxLength="4"
+                                                required />
+                                        </FormGroup>
+                                    </Form>
+                                </CardBody>
+                            </Card>
                         </Col>
                     }
-                    <Col>
-                        <h3>&nbsp;</h3>
-                        <div className="mt-4">
-                            <h5>Add Session</h5>
-                            + {/* Add expander */}
-                        </div>
-                    </Col>
                 </Row>
             </div>
         )
