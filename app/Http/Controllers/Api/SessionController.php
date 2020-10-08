@@ -17,11 +17,13 @@ class SessionController extends Controller
     public function index($id)
     {
         $client = Client::find($id);
-        $sessions = $client->sessions()->orderBy('session_date', 'ASC')->get();
+        $sessions = $client->sessions()->where('session_date', '<=', date('Y-m-d'))->orderBy('session_date', 'ASC')->get();
+        $upcomingSessions = $client->sessions()->where('session_date', '>=', date('Y-m-d'))->get();
 
         return response([
             'client' => $client,
             'sessions' => $sessions,
+            'upcoming_sessions' => $upcomingSessions,
         ], 200);
     }
 
@@ -71,7 +73,7 @@ class SessionController extends Controller
     {
         $client = Client::find($client_id);
         $session = Session::find($session_id);
-        $goals = $session->sessionGoals()->get();
+        $goals = $session ? $session->sessionGoals()->get() : [];
 
         return response([
             'client' => $client,

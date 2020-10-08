@@ -28,6 +28,7 @@ class Sessions extends Component {
             this.setState({
                 client: response.data.client,
                 sessions: response.data.sessions,
+                upcoming_sessions: response.data.upcoming_sessions
             });
 
             console.log(this.state);
@@ -86,19 +87,6 @@ class Sessions extends Component {
                                                 <p>Not currently available</p>
                                             )}
                                     </div>
-                                    {typeof (this.state.client.next_session) === 'string' &&
-                                        <div className="mt-4">
-                                            <h5>Upcoming</h5>
-                                            <Pill
-                                                target={`/clients/${this.state.client.id}/sessions/new`}
-                                                main={[
-                                                    this.state.client.session_day,
-                                                    getReadableDate(this.state.client.next_session.session_date),
-                                                    toLocalTime(this.state.client.session_time),
-                                                ]}
-                                                status={0} />
-                                        </div>
-                                    }
                                 </Col>
                             }
                             <Col>
@@ -107,14 +95,28 @@ class Sessions extends Component {
                                     {this.state.client &&
                                         <React.Fragment>
                                             <h5>Upcoming</h5>
+                                            {this.state.upcoming_sessions ? 
+                                                this.state.upcoming_sessions.map((session, key) => (
+                                                    <Pill
+                                                    key={key}
+                                                    target={`/clients/${this.state.client.id}/sessions/${session.id}`}
+                                                    main={[
+                                                        getDay(moment(session.session_date).get('day')),
+                                                        moment(session.session_date).format('M/D/YYYY'),
+                                                        toLocalTime(session.session_time),
+                                                    ]}
+                                                    status={session.complete}
+                                                />
+                                            )) : (
                                             <Pill
                                                 target={`/clients/${this.state.client.id}/sessions/new`}
                                                 main={[
                                                     this.state.client.session_day,
-                                                    getReadableDate(this.state.client.next_session.session_date),
+                                                    moment(this.state.client.next_session.session_date).format('M/D/YYYY'),
                                                     toLocalTime(this.state.client.session_time),
                                                 ]}
                                                 status={0} />
+                                            )}
                                         </React.Fragment>
                                     }
                                     <Button onClick={this.addSession}>Add Session</Button>

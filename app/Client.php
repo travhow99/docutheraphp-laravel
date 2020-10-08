@@ -63,11 +63,17 @@ class Client extends Model
         // Create a new DateTime object
         $date = new DateTime();
 
+        $next = $this->sessions()->where('session_date', '>=', date('Y-m-d'))->orderBy('session_date', 'ASC')->first();
+
+        if ($next) return $next;
+
         if ($this->lastSession()->session_date !== 'No sessions' && new DateTime($this->lastSession()->session_date) >= $date) {
             return $this->lastSession();
         } else if ($this->session_day && $this->start_date) {
-            // Modify the date it contains
             $date->modify($this->session_day);
+
+            // Find session after today
+
 
             $nextSession = new Session(['session_date' => $date->format('m-d-Y')]);
             return $nextSession;
