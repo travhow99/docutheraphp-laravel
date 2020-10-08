@@ -21,6 +21,8 @@ class AddSession extends Component {
         console.log(id);
 
         axios.post(`/api/clients/${id}/sessions`).then((response) => {
+            window.location.href = `/clients/${id}/sessions/${response.data.session.id}`;
+
             this.setState({
                 client: response.data.client,
                 session: response.data.session,

@@ -95,7 +95,7 @@ class Sessions extends Component {
                                     {this.state.client &&
                                         <React.Fragment>
                                             <h5>Upcoming</h5>
-                                            {this.state.upcoming_sessions ? 
+                                            {this.state.upcoming_sessions.length ? 
                                                 this.state.upcoming_sessions.map((session, key) => (
                                                     <Pill
                                                     key={key}
@@ -127,7 +127,8 @@ class Sessions extends Component {
                         <Col>
                             <Card>
                                 <CardHeader>
-                                    <FaTimesCircle className="float-right" onClick={this.addSession} />
+                                    New Session
+                                    <FaTimesCircle className="float-right c-pointer" onClick={this.addSession} />
                                 </CardHeader>
                                 <CardBody>
                                     <Form onSubmit={this.handleSubmit}>

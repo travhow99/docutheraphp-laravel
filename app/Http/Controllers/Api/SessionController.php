@@ -53,7 +53,6 @@ class SessionController extends Controller
          * Create Session
          * Create SessionGoal foreach active Goal
          */
-
         $sessionGoals = $this->createSessionGoals($client, $session);
 
         return response([

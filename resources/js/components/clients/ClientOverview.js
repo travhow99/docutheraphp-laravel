@@ -44,7 +44,7 @@ const ClientOverview = (props) => {
                         time={props.client.session_time}
                         detail={"Therapy Session"}
                         // TODO: determine if session exists already
-                        href={`/clients/${props.client.id}/sessions/${props.client.next_session.session_id || 'new'}`}
+                        href={`/clients/${props.client.id}/sessions/${props.client.next_session.id || 'new'}`}
                     />
                     <AgendaItem
                         title={"Last Session"}
