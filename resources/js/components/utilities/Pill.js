@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FaCog } from 'react-icons/fa';
+import { FaCog, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 class Pill extends Component {
@@ -7,6 +7,8 @@ class Pill extends Component {
         super(props);
     }
     render() {
+        const borderClass = this.props.status ? 'border border-success' : 'border border-danger';
+
         return (
             <div className="session-date">
                 {
@@ -27,10 +29,15 @@ class Pill extends Component {
                     }
                 </div>
                 <div className="align-self-center">
-                    <div className="border border-danger" style={{
+                    <div className={`${borderClass} d-flex`} style={{
                         width: '1rem',
                         height: '1rem',
-                    }}></div>
+                    }}>
+                        {console.log('status:', this.props.status)}
+                        {!!this.props.status && 
+                            <FaCheck className="text-success" />
+                        }
+                    </div>
                 </div>
             </div>
         )
