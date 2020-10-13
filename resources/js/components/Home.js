@@ -6,12 +6,11 @@ import {
     Card, CardBody, CardTitle, CardFooter, Button, CardText
 } from 'reactstrap';
 import { toLocalTime } from './helpers/functions';
+import Calendar from './utilities/Calendar';
 
 class Home extends Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props);
 
         this.state = {
             clients: [],
@@ -21,11 +20,9 @@ class Home extends Component {
 
     componentDidMount() {
         axios.post('/api/clients/upcoming').then((response) => {
-            console.log(response);
             this.setState({
                 clients: response.data,
             });
-            console.log('state:',this.state);
         });
 
     }
@@ -52,7 +49,11 @@ class Home extends Component {
                                         <Link to={`/clients/${client.id}`}>Manage Client</Link>
                                     </CardBody>
                                 </Card>
-                        ))}
+                            )
+                        )}
+                    </Col>
+                    <Col>
+                            <Calendar />
                     </Col>
                 </Row>
             </React.Fragment>
