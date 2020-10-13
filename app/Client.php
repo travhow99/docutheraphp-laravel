@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use DateTime;
@@ -106,7 +107,9 @@ class Client extends Model
      */
     public function lastSession()
     {
-        $date = new DateTime();
+        $date = Carbon::now();
+        // Handle Timezone
+        $date->timezone('America/Denver');
 
         $data = $this->sessions()
                         ->where('session_date', '<=', $date->format('Y-m-d'))
@@ -120,14 +123,6 @@ class Client extends Model
 
             return $return;
         }
-
-
-
-        /* $return = $data->filter(function($val, $key) use($date) {
-            return $val->session_date < $date->format('Y-m-d') || ($val->session_date === $date->format('Y-m-d') && $val->session_time <= $date->format('H:m:s'));
-        });
-
-        dd($return); */
 
         return $data;
     }

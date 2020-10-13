@@ -17,8 +17,12 @@ class SessionController extends Controller
     public function index($id)
     {
         $client = Client::find($id);
-        $sessions = $client->sessions()->where('session_date', '<=', date('Y-m-d'))->orderBy('session_date', 'ASC')->get();
+        $sessions = $client->sessions()->where('session_date', '<=', date('Y-m-d'))->orderBy('session_date', 'DESC')->get();
         $upcomingSessions = $client->sessions()->where('session_date', '>=', date('Y-m-d'))->get();
+
+        if ($upcomingSessions) {
+            $sessions->shift();
+        }
 
         return response([
             'client' => $client,
