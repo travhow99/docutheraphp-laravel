@@ -1,12 +1,14 @@
 import moment from 'moment';
 
 export const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 export const dayAbbervs = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 export const monthAbbrevs = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export const getDay = (int) => days[int];
 export const getDayAbbrev = (int) => dayAbbervs[int];
+export const getMonth = (int) => months[int];
 export const getMonthAbbrev = (int) => monthAbbrevs[int];
 
 export const toLocalTime = (time) => {

@@ -16,6 +16,8 @@ class Home extends Component {
             clients: [],
             upcomingSessions: [],
         }
+
+        this.expandCalendar = this.expandCalendar.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +27,10 @@ class Home extends Component {
             });
         });
 
+    }
+
+    expandCalendar(date) {
+        console.log(date);
     }
 
     render() {
@@ -53,7 +59,7 @@ class Home extends Component {
                         )}
                     </Col>
                     <Col>
-                            <Calendar />
+                        <Calendar onClick={this.expandCalendar} />
                     </Col>
                 </Row>
             </React.Fragment>

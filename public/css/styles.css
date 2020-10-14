@@ -207,7 +207,42 @@ input:checked + .toggle-switch-slider:after {
   left: 6px;
 }
 /** Calendar */
+.calendar {
+  padding: 0.5rem;
+}
+.calendar-header {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.calendar-header-month {
+  font-size: 1.5rem;
+}
 .calendar-week {
   display: flex;
   justify-content: space-around;
+}
+.calendar-week-header {
+  border-bottom: 1px solid var(--dark-60);
+}
+.calendar-day-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.calendar-day {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  text-align: center;
+  border: 1px solid transparent;
+}
+.calendar-day:hover {
+  background-color: var(--indigo);
+  color: var(--indigo-10);
+}
+.calendar-previous-date {
+  color: var(--dark-60);
 }
