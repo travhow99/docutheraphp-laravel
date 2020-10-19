@@ -23,7 +23,8 @@ class Home extends Component {
     componentDidMount() {
         axios.post('/api/clients/upcoming').then((response) => {
             this.setState({
-                clients: response.data,
+                clients: response.data.clients,
+                upcomingSessions: response.data.upcomingSessions,
             });
         });
 
@@ -59,7 +60,7 @@ class Home extends Component {
                         )}
                     </Col>
                     <Col>
-                        <Calendar onClick={this.expandCalendar} />
+                        <Calendar onClick={this.expandCalendar} data={this.state.upcomingSessions} />
                     </Col>
                 </Row>
             </React.Fragment>

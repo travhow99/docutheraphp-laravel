@@ -31,8 +31,12 @@ Route::group(['middleware' => ['json.response']], function () {
          */
         Route::apiResource('clients', 'Api\ClientController');
         Route::post('/clients/upcoming', function (Request $request) {
+            $upcoming = $request->user()->sessions()->whereMonth('session_date', '=', now()->month)->orderBy('session_date')->get()->groupBy('session_date');
             // TODO: Order by next_session day
-            return response($request->user()->therapy_clients()->get(), 200);
+            return response([
+                'clients' => $request->user()->therapy_clients()->get(),
+                'upcomingSessions' => $upcoming,
+            ], 200);
         });
 
         /**

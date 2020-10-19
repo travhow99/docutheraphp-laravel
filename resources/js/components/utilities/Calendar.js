@@ -5,7 +5,7 @@ import { Card, CardHeader } from 'reactstrap';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 const Calendar = (props) => {
-    console.log(props);
+    console.log(props.data);
 
     const currentDate = moment();
     const selectedDate = moment(currentDate).format('MM/DD/YYYY');
@@ -13,14 +13,14 @@ const Calendar = (props) => {
     const endWeek = moment().endOf('month').week();
 
     let calendar = []
-    for (var week = startWeek; week < endWeek; week++) {
+    for (var week = startWeek; week <= endWeek; week++) {
         calendar.push({
             week: week,
             days: Array(7).fill(0).map((n, i) => moment().week(week).startOf('week').clone().add(n + i, 'day'))
         })
     }
 
-    const dayClassName = (date) => {
+    const dateClassName = (date) => {
         let className = 'calendar-day-container';
 
         if (moment(currentDate).isSame(date, 'day')) {
@@ -34,8 +34,31 @@ const Calendar = (props) => {
         return className;
     }
 
-    const onClick = () => {
-        console.log('clicky');
+    /**
+     * Build day class name based on data number.
+     * @param {date} date 
+     */
+    const dayClassName = (date) => {
+        const search = date.format('YYYY-MM-D');
+        const count = props.data[search] ? props.data[search].length : 0;
+        let className = "calendar-day";
+
+        switch (count) {
+            case 0:
+                break;
+            case (1):
+            case (2):
+            case (3):
+            case (4):
+            case (5):
+                className += ` count-${count}`;
+                break;
+            default:
+                className += ` count-max`;
+                break;
+        }
+        
+        return className;
     }
 
     return (
@@ -58,8 +81,8 @@ const Calendar = (props) => {
             {calendar.map((week) => (
                 <div key={week.week} className="calendar-week">
                     {week.days.map((day, index) => (
-                        <div key={index} className={dayClassName(day)}>
-                            <div className="calendar-day" onClick={(() => props.onClick(day))}>
+                        <div key={index} className={dateClassName(day)}>
+                            <div className={dayClassName(day)} onClick={(() => props.onClick(day))}>
                                 {moment(day).format('D').toString()}
                             </div>
                         </div>

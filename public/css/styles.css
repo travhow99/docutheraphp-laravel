@@ -230,6 +230,7 @@ input:checked + .toggle-switch-slider:after {
   flex: 1;
   display: flex;
   justify-content: center;
+  margin-bottom: 0.5rem;
 }
 .calendar-day {
   cursor: pointer;
@@ -240,8 +241,29 @@ input:checked + .toggle-switch-slider:after {
   border: 1px solid transparent;
 }
 .calendar-day:hover {
-  background-color: var(--indigo);
+  background-color: var(--indigo-60);
   color: var(--indigo-10);
+}
+.calendar-current-date > .calendar-day {
+  border: 1px solid var(--indigo);
+}
+.calendar-day.count-1 {
+  background-color: var(--indigo-10);
+}
+.calendar-day.count-2 {
+  background-color: var(--indigo-20);
+}
+.calendar-day.count-3 {
+  background-color: var(--indigo-40);
+}
+.calendar-day.count-4 {
+  background-color: var(--indigo-60);
+}
+.calendar-day.count-5 {
+  background-color: var(--indigo-80);
+}
+.calendar-day.count-max {
+  background-color: var(--indigo);
 }
 .calendar-previous-date {
   color: var(--dark-60);

@@ -47,6 +47,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get a user's sessions.
+     */
+    public function sessions()
+    {
+        return $this->hasManyThrough('App\Session', 'App\Client');
+    }
+
+    /**
      * Get a user's client's pocs.
      */
     public function pocs()
