@@ -134,4 +134,14 @@ class Client extends Model
     {
         return $this->lastSession();
     }
+
+    /**
+     * Get a client's name by ID.
+     */
+    public static function clientNameFromId(Int $id)
+    {
+        $client = Client::find($id);
+
+        return $client->name;
+    }
 }

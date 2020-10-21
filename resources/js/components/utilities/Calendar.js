@@ -8,9 +8,14 @@ const Calendar = (props) => {
     console.log(props.data);
 
     const currentDate = moment();
-    const selectedDate = moment(currentDate).format('MM/DD/YYYY');
+    // const selectedDate = moment(currentDate).format('MM/DD/YYYY');
     const startWeek = moment().startOf('month').week();
     const endWeek = moment().endOf('month').week();
+
+    const [selectedDate, setDate] = useState(moment(currentDate).format('YYYY-MM-DD'));
+    const dateSessions = props.data[selectedDate];
+
+    console.log('date:', selectedDate);
 
     let calendar = []
     for (var week = startWeek; week <= endWeek; week++) {
@@ -46,11 +51,11 @@ const Calendar = (props) => {
         switch (count) {
             case 0:
                 break;
-            case (1):
-            case (2):
-            case (3):
-            case (4):
-            case (5):
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
                 className += ` count-${count}`;
                 break;
             default:
@@ -62,37 +67,49 @@ const Calendar = (props) => {
     }
 
     return (
-        <Card className="calendar">
-            <div className="calendar-header">
-                <div>
-                    <FaAngleLeft />
+        <React.Fragment>
+            <Card className="calendar">
+                <div className="calendar-header">
+                    <div>
+                        <FaAngleLeft />
+                    </div>
+                    <div className="calendar-header-month">
+                        {getMonth(currentDate.month())}
+                    </div>
+                    <div>
+                        <FaAngleRight />
+                    </div>
                 </div>
-                <div className="calendar-header-month">
-                    {getMonth(currentDate.month())}
+                <div className="calendar-week calendar-week-header">
+                    {dayAbbervs.map((d, index) => <div key={index}>{d}</div>)}
                 </div>
-                <div>
-                    <FaAngleRight />
-                </div>
-            </div>
-            <div className="calendar-week calendar-week-header">
-                {dayAbbervs.map((d, index) => <div key={index}>{d}</div>)}
-            </div>
-            {/* {Map through calendar weeks} */}
-            {calendar.map((week) => (
-                <div key={week.week} className="calendar-week">
-                    {week.days.map((day, index) => (
-                        <div key={index} className={dateClassName(day)}>
-                            <div className={dayClassName(day)} onClick={(() => props.onClick(day))}>
-                                {moment(day).format('D').toString()}
+                {/* {Map through calendar weeks} */}
+                {calendar.map((week) => (
+                    <div key={week.week} className="calendar-week">
+                        {week.days.map((day, index) => (
+                            <div key={index} className={dateClassName(day)}>
+                                <div className={dayClassName(day)} onClick={(() => setDate(day.format('YYYY-MM-DD')))}>
+                                    {moment(day).format('D').toString()}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            ))}
-            <div>
+                        ))}
+                    </div>
+                ))}
+            </Card>
+            <Card className="mt-2 p-2">
+                {dateSessions ? (
+                    dateSessions.map((d) => (
+                        <div>
 
-            </div>
-        </Card>
+                        </div>
+                    ))
+                ) : (
+                    <div>
+                        No sessions
+                    </div>
+                )}
+            </Card>
+        </React.Fragment>
     )
 }
 

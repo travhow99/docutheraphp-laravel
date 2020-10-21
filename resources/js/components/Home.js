@@ -5,7 +5,7 @@ import {
     Container, Row, Col,
     Card, CardBody, CardTitle, CardFooter, Button, CardText
 } from 'reactstrap';
-import { toLocalTime } from './helpers/functions';
+import { toLocalTime, days } from './helpers/functions';
 import Calendar from './utilities/Calendar';
 
 class Home extends Component {
@@ -16,8 +16,6 @@ class Home extends Component {
             clients: [],
             upcomingSessions: [],
         }
-
-        this.expandCalendar = this.expandCalendar.bind(this);
     }
 
     componentDidMount() {
@@ -30,12 +28,7 @@ class Home extends Component {
 
     }
 
-    expandCalendar(date) {
-        console.log(date);
-    }
-
     render() {
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         return (
             <React.Fragment>
@@ -60,7 +53,7 @@ class Home extends Component {
                         )}
                     </Col>
                     <Col>
-                        <Calendar onClick={this.expandCalendar} data={this.state.upcomingSessions} />
+                        <Calendar data={this.state.upcomingSessions} />
                     </Col>
                 </Row>
             </React.Fragment>

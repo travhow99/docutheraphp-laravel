@@ -1,5 +1,6 @@
 <?php
 
+use App\Client;
 use Illuminate\Http\Request;
 
 /*
@@ -31,10 +32,24 @@ Route::group(['middleware' => ['json.response']], function () {
          */
         Route::apiResource('clients', 'Api\ClientController');
         Route::post('/clients/upcoming', function (Request $request) {
+            $clients = $request->user()->therapy_clients()->get();
             $upcoming = $request->user()->sessions()->whereMonth('session_date', '=', now()->month)->orderBy('session_date')->get()->groupBy('session_date');
+
+            // Client::clientNameFromId(1);
+            $upcoming = $upcoming->map(function($item, $key) {
+                // TODO
+                // Add client name to collection
+                $item->put('client_name', Client::clientNameFromId($item->first()->client_id));
+
+                return $item;
+            });
+
+            dd($upcoming->all());
+
+
             // TODO: Order by next_session day
             return response([
-                'clients' => $request->user()->therapy_clients()->get(),
+                'clients' => $clients,
                 'upcomingSessions' => $upcoming,
             ], 200);
         });
