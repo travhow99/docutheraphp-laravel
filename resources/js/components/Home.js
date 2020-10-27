@@ -16,6 +16,8 @@ class Home extends Component {
             clients: [],
             upcomingSessions: [],
         }
+
+        this.dateSearch = this.dateSearch.bind(this);
     }
 
     componentDidMount() {
@@ -25,6 +27,10 @@ class Home extends Component {
                 upcomingSessions: response.data.upcomingSessions,
             });
         });
+    }
+
+    dateSearch(month) {
+        console.log(month);
 
     }
 
@@ -53,7 +59,7 @@ class Home extends Component {
                         )}
                     </Col>
                     <Col>
-                        <Calendar data={this.state.upcomingSessions} />
+                        <Calendar data={this.state.upcomingSessions} monthChange={this.dateSearch} />
                     </Col>
                 </Row>
             </React.Fragment>

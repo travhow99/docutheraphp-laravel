@@ -219,6 +219,15 @@ input:checked + .toggle-switch-slider:after {
 .calendar-header-month {
   font-size: 1.5rem;
 }
+.calendar-month-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.calendar-month-btn:hover {
+  background-color: var(--indigo-60);
+  color: var(--indigo-10);
+}
 .calendar-week {
   display: flex;
   justify-content: space-around;
@@ -268,4 +277,17 @@ input:checked + .toggle-switch-slider:after {
 }
 .calendar-previous-date {
   color: var(--dark-60);
+}
+.calendar-day.count-1:hover,
+.calendar-day.count-2:hover,
+.calendar-day.count-3:hover,
+.calendar-day.count-4:hover,
+.calendar-day.count-5:hover,
+.calendar-day.count-max:hover {
+  color: var(--indigo-60);
+  border: 1px solid var(--indigo);
+}
+.selected-date {
+  background: var(--indigo)!important;
+  color: var(--indigo-10);
 }

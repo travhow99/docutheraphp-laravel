@@ -7,6 +7,8 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 const Calendar = (props) => {
     console.log(props.data);
 
+    console.log(moment(currentDate));
+
     const currentDate = moment();
     // const selectedDate = moment(currentDate).format('MM/DD/YYYY');
     const startWeek = moment().startOf('month').week();
@@ -44,7 +46,7 @@ const Calendar = (props) => {
      * @param {date} date 
      */
     const dayClassName = (date) => {
-        const search = date.format('YYYY-MM-D');
+        const search = date.format('YYYY-MM-DD');
         const count = props.data[search] ? props.data[search].length : 0;
         let className = "calendar-day";
 
@@ -62,6 +64,10 @@ const Calendar = (props) => {
                 className += ` count-max`;
                 break;
         }
+
+        if (search === selectedDate) {
+            className += ' selected-date';
+        }
         
         return className;
     }
@@ -70,13 +76,13 @@ const Calendar = (props) => {
         <React.Fragment>
             <Card className="calendar">
                 <div className="calendar-header">
-                    <div>
+                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(selectedDate.subtract(1, 'months').format('YYYY-MM-DD')))}>
                         <FaAngleLeft />
                     </div>
                     <div className="calendar-header-month">
                         {getMonth(currentDate.month())}
                     </div>
-                    <div>
+                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(selectedDate.add(1, 'months').format('YYYY-MM-DD')))}>
                         <FaAngleRight />
                     </div>
                 </div>
