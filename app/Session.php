@@ -14,6 +14,13 @@ class Session extends Model
     protected $fillable = ['client_id', 'session_date', 'session_time', 'complete', 'cancelled', 'submitted', 'billed', 'notes'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['client_name'];
+
+    /**
      * Return the client who owns the session.
      */
     public function client()
@@ -29,4 +36,19 @@ class Session extends Model
         return $this->hasMany('App\SessionGoal');
     }
 
+    /**
+     * Get the session's client name.
+     */
+    public function clientName()
+    {
+        return $this->client_id ? Client::clientNameFromId($this->client_id) : null;// Client::clientNameFromId($this->first()->client_id);
+    }
+
+    /**
+     * Set the client name attribute.
+     */
+    public function getClientNameAttribute()
+    {
+        return $this->clientName();
+    }
 }

@@ -239,6 +239,7 @@ input:checked + .toggle-switch-slider:after {
   width: 50%;
   text-align: center;
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 .calendar-day:hover {
   background-color: var(--indigo-60);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { dayAbbervs, getMonth } from "../helpers/functions";
+import { dayAbbervs, getMonth, toLocalTime } from "../helpers/functions";
 import { Card, CardHeader } from 'reactstrap';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
@@ -98,9 +98,10 @@ const Calendar = (props) => {
             </Card>
             <Card className="mt-2 p-2">
                 {dateSessions ? (
-                    dateSessions.map((d) => (
-                        <div>
-
+                    dateSessions.map((session, index) => (
+                        <div key={index}>
+                            <h4>{session.client_name}</h4>
+                            <p>{toLocalTime(session.session_time)}</p>
                         </div>
                     ))
                 ) : (
