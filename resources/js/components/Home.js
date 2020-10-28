@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
     Container, Row, Col,
@@ -14,7 +15,8 @@ class Home extends Component {
 
         this.state = {
             clients: [],
-            upcomingSessions: [],
+            monthSessions: [],
+            month: null,
         }
 
         this.dateSearch = this.dateSearch.bind(this);
@@ -24,7 +26,8 @@ class Home extends Component {
         axios.post('/api/clients/upcoming').then((response) => {
             this.setState({
                 clients: response.data.clients,
-                upcomingSessions: response.data.upcomingSessions,
+                monthSessions: response.data.upcomingSessions,
+                month: moment(),
             });
         });
     }
@@ -32,6 +35,15 @@ class Home extends Component {
     dateSearch(month) {
         console.log(month);
 
+        let m = moment(month).month() + 1;
+        console.log(m);
+        axios.post(`/api/sessions/month/${m}`).then((response) => {
+            console.log(response);
+            this.setState({
+                monthSessions: response.data.sessions,
+                month: moment(month),
+            })
+        });
     }
 
     render() {
@@ -59,7 +71,7 @@ class Home extends Component {
                         )}
                     </Col>
                     <Col>
-                        <Calendar data={this.state.upcomingSessions} monthChange={this.dateSearch} />
+                        <Calendar data={this.state.monthSessions} date={this.state.month} monthChange={this.dateSearch} />
                     </Col>
                 </Row>
             </React.Fragment>

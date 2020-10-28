@@ -41,9 +41,19 @@ Route::group(['middleware' => ['json.response']], function () {
             ], 200);
         });
 
+
         /**
          * Session
          */
+        // Get sessions by month
+        Route::post('/sessions/month/{month}', function (Request $request, $month) {
+            $sessions = $request->user()->sessions()->whereMonth('session_date', '=', $month)->orderBy('session_date')->get()->groupBy('session_date');
+
+            return response([
+                'sessions' => $sessions,
+            ], 200);
+        });
+        
         // Route::get('/')
 
         // Route::get('/clients', 'Api\ClientController@index');

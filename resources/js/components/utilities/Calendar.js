@@ -9,13 +9,14 @@ const Calendar = (props) => {
 
     console.log(moment(currentDate));
 
-    const currentDate = moment();
+    const currentDate = props.date || moment();
     // const selectedDate = moment(currentDate).format('MM/DD/YYYY');
-    const startWeek = moment().startOf('month').week();
-    const endWeek = moment().endOf('month').week();
 
     const [selectedDate, setDate] = useState(moment(currentDate).format('YYYY-MM-DD'));
     const dateSessions = props.data[selectedDate];
+
+    const startWeek = currentDate.startOf('month').week();
+    const endWeek = currentDate.endOf('month').week();
 
     console.log('date:', selectedDate);
 
@@ -23,7 +24,7 @@ const Calendar = (props) => {
     for (var week = startWeek; week <= endWeek; week++) {
         calendar.push({
             week: week,
-            days: Array(7).fill(0).map((n, i) => moment().week(week).startOf('week').clone().add(n + i, 'day'))
+            days: Array(7).fill(0).map((n, i) => currentDate.week(week).startOf('week').clone().add(n + i, 'day'))
         })
     }
 
@@ -76,13 +77,13 @@ const Calendar = (props) => {
         <React.Fragment>
             <Card className="calendar">
                 <div className="calendar-header">
-                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(selectedDate.subtract(1, 'months').format('YYYY-MM-DD')))}>
+                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(currentDate.subtract(1, 'months').format('YYYY-MM-DD')))}>
                         <FaAngleLeft />
                     </div>
                     <div className="calendar-header-month">
                         {getMonth(currentDate.month())}
                     </div>
-                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(selectedDate.add(1, 'months').format('YYYY-MM-DD')))}>
+                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(currentDate.add(1, 'months').format('YYYY-MM-DD')))}>
                         <FaAngleRight />
                     </div>
                 </div>
