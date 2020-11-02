@@ -1,45 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { dayAbbervs, getMonth, toLocalTime } from "../helpers/functions";
 import { Card, CardHeader } from 'reactstrap';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 const Calendar = (props) => {
-    console.log(props.data);
+    const currentDate = moment();
 
-    console.log(moment(currentDate));
-
-    const currentDate = props.date || moment();
     // const selectedDate = moment(currentDate).format('MM/DD/YYYY');
+    const defaultDate = props.date ? props.date.format('YYYY-MM-DD') : moment(currentDate).format('YYYY-MM-DD');
 
-    const [selectedDate, setDate] = useState(moment(currentDate).format('YYYY-MM-DD'));
+    const [selectedDate, setDate] = useState(defaultDate);
+    
     const dateSessions = props.data[selectedDate];
-
-    const startWeek = currentDate.startOf('month').week();
-    const endWeek = currentDate.endOf('month').week();
-
-    console.log('date:', selectedDate);
+    const startWeek = moment(selectedDate).startOf('month').week();
+    const endWeek = moment(selectedDate).month() != 11 ? moment(selectedDate).endOf('month').week() : 53;
 
     let calendar = []
     for (var week = startWeek; week <= endWeek; week++) {
         calendar.push({
             week: week,
-            days: Array(7).fill(0).map((n, i) => currentDate.week(week).startOf('week').clone().add(n + i, 'day'))
+            days: Array(7).fill(0).map((n, i) => moment(selectedDate).week(week).startOf('week').clone().add(n + i, 'day'))
         })
     }
 
     const dateClassName = (date) => {
         let className = 'calendar-day-container';
 
-        if (moment(currentDate).isSame(date, 'day')) {
-            className += ' calendar-current-date';
-        } else if (moment(currentDate).isBefore(date, 'day')) {
-            className += ' calendar-future-date';
-        } else if (moment(currentDate).isAfter(date, 'day')) {
-            className += ' calendar-previous-date';
-        }
+        if (!moment(selectedDate).isSame(currentDate, 'month')) {
+            if (moment(selectedDate).isSame(date, 'month')) {
+                return className += ' calendar-future-date';
+            } else {
+                return className += ' calendar-previous-date';
+            }
+        } else {
+            if (!moment(selectedDate).isSame(date, 'month')) {
+                return className += ' calendar-previous-date';
+            }
 
-        return className;
+            if (moment(currentDate).isSame(date, 'day')) {
+                className += ' calendar-current-date';
+            } else if (moment(currentDate).isBefore(date, 'day')) {
+                className += ' calendar-future-date';
+            } else if (moment(currentDate).isAfter(date, 'day')) {
+                className += ' calendar-previous-date';
+            }
+    
+            return className;
+        }
     }
 
     /**
@@ -77,14 +85,34 @@ const Calendar = (props) => {
         <React.Fragment>
             <Card className="calendar">
                 <div className="calendar-header">
-                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(currentDate.subtract(1, 'months').format('YYYY-MM-DD')))}>
+                    <div className="calendar-month-btn" onClick={(()=>{
+                        const lastMonth = moment(selectedDate).subtract(1, 'month').format('YYYY-MM-DD');
+                        props.monthChange(lastMonth);
+                        setDate(lastMonth);
+                    })}>
                         <FaAngleLeft />
                     </div>
                     <div className="calendar-header-month">
-                        {getMonth(currentDate.month())}
+                        {getMonth(moment(selectedDate).month())}
                     </div>
-                    <div className="calendar-month-btn" onClick={(()=>props.monthChange(currentDate.add(1, 'months').format('YYYY-MM-DD')))}>
+                    <div className="calendar-month-btn" onClick={(()=>{
+                        const nextMonth = moment(selectedDate).add(1, 'month').format('YYYY-MM-DD');
+                        props.monthChange(nextMonth);
+                        setDate(nextMonth);
+                    })}>
                         <FaAngleRight />
+                    </div>
+                </div>
+                <div className="calendar-btn-container">
+                    <div className="calendar-today-btn" onClick={(()=>{
+                        moment(currentDate).isSame(selectedDate, 'month') ?
+                            setDate(moment().format('YYYY-MM-DD'))
+                        :
+                            props.monthChange(moment().format('YYYY-MM-DD'))
+                            setDate(moment().format('YYYY-MM-DD'))
+                        })}
+                    >
+                        Today
                     </div>
                 </div>
                 <div className="calendar-week calendar-week-header">

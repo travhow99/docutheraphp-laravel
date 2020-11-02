@@ -234,6 +234,7 @@ input:checked + .toggle-switch-slider:after {
 }
 .calendar-week-header {
   border-bottom: 1px solid var(--dark-60);
+  margin-bottom: 0.5rem;
 }
 .calendar-day-container {
   flex: 1;
@@ -277,6 +278,23 @@ input:checked + .toggle-switch-slider:after {
 }
 .calendar-previous-date {
   color: var(--dark-60);
+}
+.calendar-btn-container {
+  display: flex;
+  justify-content: center;
+}
+.calendar-today-btn {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: larger;
+  width: 50%;
+}
+.calendar-today-btn:hover {
+  color: var(--indigo-80);
+  text-decoration: underline;
 }
 .calendar-day.count-1:hover,
 .calendar-day.count-2:hover,
