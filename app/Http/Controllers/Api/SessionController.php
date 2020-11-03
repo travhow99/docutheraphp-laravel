@@ -20,7 +20,7 @@ class SessionController extends Controller
         $sessions = $client->sessions()->where('session_date', '<=', date('Y-m-d'))->orderBy('session_date', 'DESC')->get();
         $upcomingSessions = $client->sessions()->where('session_date', '>=', date('Y-m-d'))->get();
 
-        if ($upcomingSessions) {
+        if (!$upcomingSessions->isEmpty()) {
             $sessions->shift();
         }
 

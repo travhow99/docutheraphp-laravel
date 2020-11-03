@@ -93,7 +93,7 @@ const Calendar = (props) => {
                         <FaAngleLeft />
                     </div>
                     <div className="calendar-header-month">
-                        {getMonth(moment(selectedDate).month())}
+                        {getMonth(moment(selectedDate).month())}{moment(selectedDate).year() !== moment().year() && <span>&nbsp;{moment(selectedDate).year()}</span>}
                     </div>
                     <div className="calendar-month-btn" onClick={(()=>{
                         const nextMonth = moment(selectedDate).add(1, 'month').format('YYYY-MM-DD');
