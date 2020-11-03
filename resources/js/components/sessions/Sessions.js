@@ -6,9 +6,9 @@ import {
     Row, Col,
     Card, Button, CardText, Form, FormGroup, CardHeader, CardBody
 } from 'reactstrap';
+import NewSession from './NewSession';
 import Pill from '../utilities/Pill';
 import { getDay, getReadableDate, toLocalTime } from '../helpers/functions';
-import { FaTimesCircle } from 'react-icons/fa';
 
 class Sessions extends Component {
     constructor(props) {
@@ -57,7 +57,11 @@ class Sessions extends Component {
     }
 
     addSession(e) {
-        this.setState({adding: !this.state.adding});
+        this.setState({ adding: !this.state.adding });
+    }
+
+    handleTimeChange(time) {
+        console.log(time);
     }
 
     render() {
@@ -95,28 +99,28 @@ class Sessions extends Component {
                                     {this.state.client &&
                                         <React.Fragment>
                                             <h5>Upcoming</h5>
-                                            {this.state.upcoming_sessions.length ? 
+                                            {this.state.upcoming_sessions.length ?
                                                 this.state.upcoming_sessions.map((session, key) => (
                                                     <Pill
-                                                    key={key}
-                                                    target={`/clients/${this.state.client.id}/sessions/${session.id}`}
-                                                    main={[
-                                                        getDay(moment(session.session_date).get('day')),
-                                                        moment(session.session_date).format('M/D/YYYY'),
-                                                        toLocalTime(session.session_time),
-                                                    ]}
-                                                    status={session.complete}
-                                                />
-                                            )) : (
-                                            <Pill
-                                                target={`/clients/${this.state.client.id}/sessions/new`}
-                                                main={[
-                                                    this.state.client.session_day,
-                                                    moment(this.state.client.next_session.session_date).format('M/D/YYYY'),
-                                                    toLocalTime(this.state.client.session_time),
-                                                ]}
-                                                status={0} />
-                                            )}
+                                                        key={key}
+                                                        target={`/clients/${this.state.client.id}/sessions/${session.id}`}
+                                                        main={[
+                                                            getDay(moment(session.session_date).get('day')),
+                                                            moment(session.session_date).format('M/D/YYYY'),
+                                                            toLocalTime(session.session_time),
+                                                        ]}
+                                                        status={session.complete}
+                                                    />
+                                                )) : (
+                                                    <Pill
+                                                        target={`/clients/${this.state.client.id}/sessions/new`}
+                                                        main={[
+                                                            this.state.client.session_day,
+                                                            moment(this.state.client.next_session.session_date).format('M/D/YYYY'),
+                                                            toLocalTime(this.state.client.session_time),
+                                                        ]}
+                                                        status={0} />
+                                                )}
                                         </React.Fragment>
                                     }
                                     <Button onClick={this.addSession}>Add Session</Button>
@@ -124,29 +128,7 @@ class Sessions extends Component {
                             </Col>
                         </React.Fragment>
                         :
-                        <Col>
-                            <Card>
-                                <CardHeader>
-                                    New Session
-                                    <FaTimesCircle className="float-right c-pointer" onClick={this.addSession} />
-                                </CardHeader>
-                                <CardBody>
-                                    <Form onSubmit={this.handleSubmit}>
-                                        <FormGroup row>
-                                            <input
-                                                id="name"
-                                                type="text"
-                                                name="name"
-                                                placeholder="Client Name (4 Letter Abbreviation)"
-                                                className="form-control"
-                                                onChange={this.handleInput}
-                                                maxLength="4"
-                                                required />
-                                        </FormGroup>
-                                    </Form>
-                                </CardBody>
-                            </Card>
-                        </Col>
+                        <NewSession addSession={this.addSession} />
                     }
                 </Row>
             </div>
