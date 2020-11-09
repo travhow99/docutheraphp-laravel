@@ -47,10 +47,7 @@ class LoginContainer extends Component {
         this.setState({ formSubmitting: true });
         let userData = this.state.user;
         console.log(userData);
-        axios.post("/api/login", userData).then((response) => {
-            console.log(response);
-            return response;
-        }).then((json) => {
+        axios.post("/api/login", userData).then((response) => response).then((json) => {
             console.log(json);
             if (json.status === 200) {
                 console.log(json.data, json.data.token);
@@ -71,34 +68,15 @@ class LoginContainer extends Component {
 
                 localStorage['appState'] = JSON.stringify(appState);
 
-                // return;
-                // <Redirect to="/clients" />
-                location.reload()
+                <Redirect to="/clients" />
             } else {
                 alert(`Our System Failed To Register Your Account!`);
             }
-        }).catch(error => {
+        }).catch((error) => {
             if (error.response) {
-                // The request was made and the server responded with a status code that falls out of the range of 2xx
-                let err = error.response.data;
                 this.setState({
-                    error: err.message,
-                    errorMessage: err.errors,
-                    formSubmitting: false
-                })
-            }
-            else if (error.request) {
-                // The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-                let err = error.request;
-                this.setState({
-                    error: err,
-                    formSubmitting: false
-                })
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                let err = error.message;
-                this.setState({
-                    error: err,
+                    error: error.response.data.response,
+                    errorMessage: error.response.data.response,
                     formSubmitting: false
                 })
             }
@@ -132,14 +110,12 @@ class LoginContainer extends Component {
 
     render() {
         console.log(this.state);
-          const { error } = this.state.error;
+          const { error } = this.state;
         return (
             <div>
                 <h2 className="text-center mb-4">Log In To Your Account</h2>
                 {this.state.isLoggedIn ? <FlashMessage duration={60000} persistOnHover={true}>
           <h5 className={"alert alert-success"}>Login successful, redirecting...</h5></FlashMessage> : ''}
-          {this.state.error ? <FlashMessage duration={100000} persistOnHover={true}>
-          <h5 className={"alert alert-danger"}>Error: {this.state.error}</h5></FlashMessage> : ''}
           {error && !this.state.isLoggedIn ? <FlashMessage duration={100000} persistOnHover={true}>
           <h5 className={"alert alert-danger"}>Error: {error}</h5></FlashMessage> : ''}
                 <Form onSubmit={this.handleSubmit}>

@@ -3,6 +3,7 @@ import { Row, Col, Button, Input, Label } from 'reactstrap';
 import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import GoalNote from '../goals/GoalNote';
+import GoalAttribute from '../goals/GoalAttribute';
 
 class SessionGoal extends Component {
     constructor(props) {
@@ -120,7 +121,7 @@ class SessionGoal extends Component {
                     ''
                 }
                 <Row>
-                    <Col>
+                    <Col xs="auto">
                         <h3>Goal:</h3>
                         {this.props.master && this.state.editing ? (
                             <Input 
@@ -161,13 +162,18 @@ class SessionGoal extends Component {
                 {!this.props.master &&
                     <React.Fragment>
                         {this.state.takingNote &&
-                            <GoalNote 
-                                save={this.saveNote} 
-                                goal={this.state.goal}
-                                adjustCount={this.adjustCount}
-                                updateStatus={this.updateGoalProgress}
-                                toggleMetObjective={this.toggleMetObjective}
-                            />
+                            <React.Fragment>
+                                <GoalNote 
+                                    save={this.saveNote} 
+                                    goal={this.state.goal}
+                                    adjustCount={this.adjustCount}
+                                    updateStatus={this.updateGoalProgress}
+                                    toggleMetObjective={this.toggleMetObjective}
+                                />
+                                <GoalAttribute
+
+                                />
+                            </React.Fragment>
                         }
                     </React.Fragment>
                 }

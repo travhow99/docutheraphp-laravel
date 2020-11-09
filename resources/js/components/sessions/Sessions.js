@@ -60,9 +60,6 @@ class Sessions extends Component {
         this.setState({ adding: !this.state.adding });
     }
 
-    handleTimeChange(time) {
-        console.log(time);
-    }
 
     render() {
         return (

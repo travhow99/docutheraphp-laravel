@@ -4,7 +4,8 @@ import moment from 'moment';
 import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
     Row, Col,
-    Card, Button
+    Card, Button,
+    Input
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 import ToggleSwitch from '../utilities/ToggleSwitch';
@@ -52,7 +53,7 @@ class EditSession extends Component {
     }
 
     toggleEditDate() {
-        this.setState({editingDate: !this.state.editingDate});
+        this.setState({ editingDate: !this.state.editingDate });
     }
 
     toggleAttribute(e) {
@@ -60,24 +61,24 @@ class EditSession extends Component {
 
         const name = e.target.name;
         const val = e.target.checked;
-       
+
 
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             [name]: val,
         })
-        .then((response) => response)
-        .then((json) => {
-            if (json.status === 200) {
-                console.log(json.data);
+            .then((response) => response)
+            .then((json) => {
+                if (json.status === 200) {
+                    console.log(json.data);
 
-                this.setState({
-                    session: {
-                        ...this.state.session,
-                        [name]: val,
-                    },
-                });
-            }
-        })
+                    this.setState({
+                        session: {
+                            ...this.state.session,
+                            [name]: val,
+                        },
+                    });
+                }
+            })
     }
 
     deleteSession(e) {
@@ -107,21 +108,21 @@ class EditSession extends Component {
             session_date,
             session_time,
         })
-        .then((response) => response)
-        .then((json) => {
-            if (json.status === 200) {
-                console.log(json.data);
+            .then((response) => response)
+            .then((json) => {
+                if (json.status === 200) {
+                    console.log(json.data);
 
-                this.setState({
-                    session: {
-                        ...this.state.session,
-                        session_date: session_date,
-                        session_time: session_time,
-                    },
-                    editingDate: false,
-                });
-            }
-        })
+                    this.setState({
+                        session: {
+                            ...this.state.session,
+                            session_date: session_date,
+                            session_time: session_time,
+                        },
+                        editingDate: false,
+                    });
+                }
+            })
     }
 
     handleSubmit(e) {
@@ -144,39 +145,39 @@ class EditSession extends Component {
     }
 
     render() {
-        console.log('STATE:',this.state);
+        console.log('STATE:', this.state);
         const time = this.state.session ? this.state.session.session_date + " " + this.state.session.session_time : null;
-        
+
         const datepicker = moment(time).toDate();
 
         if (this.state.deleted) {
             return <Redirect to={`/clients/${this.state.client.id}/sessions`} />
         }
-        
-        return(
+
+        return (
             <div className="client-container">
-                {this.state.session && 
+                {this.state.session &&
                     <Row className="mt-4">
                         <Col xs="6">
                             <h2>{this.state.client.name}</h2>
                             <div className="d-flex justify-content-around mb-4">
-                                {!this.state.editingDate ? 
-                                (
-                                    <div>
-                                        <h4>{moment(this.state.session.session_date).format('M/D/yyyy')}</h4>
-                                        <h5>{toLocalTime(this.state.session.session_time)}</h5>
-                                    </div>
-                                ) : (
-                                    <DatePicker
-                                        selected={datepicker}
-                                        onChange={this.handleTimeChange}
-                                        showTimeSelect
-                                        dateFormat="Pp"
-                                    />
-                                )
+                                {!this.state.editingDate ?
+                                    (
+                                        <div>
+                                            <h4>{moment(this.state.session.session_date).format('M/D/yyyy')}</h4>
+                                            <h5>{toLocalTime(this.state.session.session_time)}</h5>
+                                        </div>
+                                    ) : (
+                                        <DatePicker
+                                            selected={datepicker}
+                                            onChange={this.handleTimeChange}
+                                            showTimeSelect
+                                            dateFormat="Pp"
+                                        />
+                                    )
                                 }
-                                <GoGear 
-                                    className="flex-0 ml-2 c-pointer" 
+                                <GoGear
+                                    className="flex-0 ml-2 c-pointer"
                                     onClick={this.toggleEditDate} />
                             </div>
                         </Col>
@@ -204,32 +205,47 @@ class EditSession extends Component {
                 }
                 <Row>
                     {this.state.client &&
-                    <Col>
-                        {this.state.goals.length > 0 ? (
-                            this.state.goals.map((goal, index) => (
-                                <Card key={index} className="p-4 mb-3">
-                                    <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
-                                </Card>
+                        <Col>
+                            {this.state.goals.length > 0 ? (
+                                this.state.goals.map((goal, index) => (
+                                    <Card key={index} className="p-4 mb-3">
+                                        <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
+                                    </Card>
                                 )
-                            )
-                        ) : (
-                            <React.Fragment>
-                                <div>No Goals</div>
-                                <Link to={`/clients/${this.state.client.id}/goals/new`}>
-                                    <Button color="primary">Add One?</Button>
-                                </Link>
-                            </React.Fragment>
-                        )
-                        }
-                    </Col>
+                                )
+                            ) : (
+                                    <React.Fragment>
+                                        <div>No Goals</div>
+                                        <Link to={`/clients/${this.state.client.id}/goals/new`}>
+                                            <Button color="primary">Add One?</Button>
+                                        </Link>
+                                    </React.Fragment>
+                                )
+                            }
+                        </Col>
                     }
                 </Row>
-                {this.state.session && 
                 <Row className="mt-3">
                     <Col>
-                        <Button color="danger" onClick={this.deleteSession} block>Delete Session</Button>
+                    {/* @todo Note for each sessions */}
+                        <Input
+                            type="textarea"
+                            name="goal"
+                            onChange={()=>console.log('c,b')}
+                            onBlur={()=>console.log('c,b')}
+                            // value={this.state.client.notes}
+                            // placeholder={this.state.client.notes} 
+                        />
+
                     </Col>
+                    {/* POC: continue poc, modify poc, discontinue poc */}
                 </Row>
+                {this.state.session &&
+                    <Row className="mt-3">
+                        <Col>
+                            <Button color="danger" onClick={this.deleteSession} block>Delete Session</Button>
+                        </Col>
+                    </Row>
                 }
             </div>
         )
