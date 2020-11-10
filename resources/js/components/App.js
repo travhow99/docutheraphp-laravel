@@ -23,6 +23,9 @@ const options = {
     transition: transitions.SCALE
 }  
 
+/**
+ * @todo Not updating when token set in LoginContainer
+ */
 class App extends Component {
     constructor() {
         super()

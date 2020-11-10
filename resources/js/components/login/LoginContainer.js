@@ -13,7 +13,7 @@ class LoginContainer extends Component {
         if (state) {
             AppState = JSON.parse(state);
         } else {
-            AppState = {user: []};
+            AppState = { user: [] };
         }
 
         this.state = {
@@ -43,7 +43,7 @@ class LoginContainer extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        
+
         this.setState({ formSubmitting: true });
         let userData = this.state.user;
         console.log(userData);
@@ -68,7 +68,12 @@ class LoginContainer extends Component {
 
                 localStorage['appState'] = JSON.stringify(appState);
 
-                <Redirect to="/clients" />
+                // <Redirect to="/clients" />
+
+                this.setState({ loggedIn: true });
+
+                props.history.push('/')
+
             } else {
                 alert(`Our System Failed To Register Your Account!`);
             }
@@ -105,19 +110,26 @@ class LoginContainer extends Component {
     handleRememberMe(e) {
         let value = e.target.checked;
 
-        this.setState({remember_me: value});
+        this.setState({ remember_me: value });
     }
 
     render() {
-        console.log(this.state);
-          const { error } = this.state;
+        const { error } = this.state;
+
+        if (this.state.loggedIn) {
+            // this.props.history.push('/')
+            console.log('logged in!');
+            // window.location.href = "/";
+            return <Redirect to="/" />
+        }
+
         return (
             <div>
                 <h2 className="text-center mb-4">Log In To Your Account</h2>
                 {this.state.isLoggedIn ? <FlashMessage duration={60000} persistOnHover={true}>
-          <h5 className={"alert alert-success"}>Login successful, redirecting...</h5></FlashMessage> : ''}
-          {error && !this.state.isLoggedIn ? <FlashMessage duration={100000} persistOnHover={true}>
-          <h5 className={"alert alert-danger"}>Error: {error}</h5></FlashMessage> : ''}
+                    <h5 className={"alert alert-success"}>Login successful, redirecting...</h5></FlashMessage> : ''}
+                {error && !this.state.isLoggedIn ? <FlashMessage duration={100000} persistOnHover={true}>
+                    <h5 className={"alert alert-danger"}>Error: {error}</h5></FlashMessage> : ''}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup row>
                         <input id="email" type="email" name="email" placeholder="E-mail" className="form-control" required defaultValue={this.state.user.email} onChange={this.handleEmail} />

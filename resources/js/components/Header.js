@@ -31,7 +31,7 @@ const Header = (props) => {
             <NavbarBrand tag={RRNavLink} to="/">Docutherapy</NavbarBrand>
             <NavbarToggler onClick={()=>setNavOpen(!navOpen)} />
             <Collapse isOpen={navOpen} navbar className="justify-content-end">
-                {props.userIsLoggedIn ? (
+                {(props.userIsLoggedIn || JSON.parse(localStorage['appState']).isLoggedIn) ? (
                     <React.Fragment>
                         <NavLink className="c-pointer" onClick={logOut}>Log Out</NavLink>
                     </React.Fragment>
