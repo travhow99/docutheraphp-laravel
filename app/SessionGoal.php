@@ -28,4 +28,12 @@ class SessionGoal extends Model
     {
         return $this->belongsTo('App\Goal');
     }
+
+    /**
+     * Get all of the session goal's attributes.
+     */
+    public function attributes()
+    {
+        return $this->morphMany('App\Models\SessionAttribute', 'attributable');
+    }
 }

@@ -19,10 +19,11 @@ const SessionPoc = (props) => {
 
     return (
         <React.Fragment>
-            <h3>Session Notes</h3>
+            <h3>Session POC</h3>
             <CheckboxGroup
-                options={options}
                 onChange={props.submit}
+                options={options}
+                max="1"
             />
         </React.Fragment>
     )

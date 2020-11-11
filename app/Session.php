@@ -51,4 +51,12 @@ class Session extends Model
     {
         return $this->clientName();
     }
+
+    /**
+     * Get all of the session's attributes.
+     */
+    public function attributes()
+    {
+        return $this->morphMany('App\Models\SessionAttribute', 'attributable');
+    }
 }
