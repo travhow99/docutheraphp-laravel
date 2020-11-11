@@ -12,6 +12,8 @@ import ToggleSwitch from '../utilities/ToggleSwitch';
 import DatePicker from "react-datepicker";
 import { GoGear } from 'react-icons/go';
 import { toLocalTime } from '../helpers/functions';
+import SessionNote from './SessionNote';
+import SessionPoc from './SessionPoc';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -27,6 +29,8 @@ class EditSession extends Component {
         }
 
         this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleNoteChange = this.handleNoteChange.bind(this);
+        this.submitNoteChange = this.submitNoteChange.bind(this);
         this.toggleEditDate = this.toggleEditDate.bind(this);
         this.toggleAttribute = this.toggleAttribute.bind(this);
         this.deleteSession = this.deleteSession.bind(this);
@@ -125,6 +129,24 @@ class EditSession extends Component {
             })
     }
 
+    handleNoteChange(e) {
+        let value = e.target.value;
+
+        this.setState({
+            session: {
+                ...this.state.session,
+                notes: value,
+            }
+        });
+    }
+
+    submitNoteChange() {
+        axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
+            notes: this.state.session.notes,
+        })
+        .catch((err) => console.log(err));
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
@@ -211,41 +233,47 @@ class EditSession extends Component {
                                     <Card key={index} className="p-4 mb-3">
                                         <SessionGoal key={index} goal={goal} client_id={this.state.client.id} />
                                     </Card>
-                                )
-                                )
+                                ))
                             ) : (
-                                    <React.Fragment>
-                                        <div>No Goals</div>
-                                        <Link to={`/clients/${this.state.client.id}/goals/new`}>
-                                            <Button color="primary">Add One?</Button>
-                                        </Link>
-                                    </React.Fragment>
-                                )
+                                <React.Fragment>
+                                    <div>No Goals</div>
+                                    <Link to={`/clients/${this.state.client.id}/goals/new`}>
+                                        <Button color="primary">Add One?</Button>
+                                    </Link>
+                                </React.Fragment>
+                            )
                             }
                         </Col>
                     }
                 </Row>
-                <Row className="mt-3">
-                    <Col>
-                    {/* @todo Note for each sessions */}
-                        <Input
-                            type="textarea"
-                            name="goal"
-                            onChange={()=>console.log('c,b')}
-                            onBlur={()=>console.log('c,b')}
-                            // value={this.state.client.notes}
-                            // placeholder={this.state.client.notes} 
-                        />
-
-                    </Col>
-                    {/* POC: continue poc, modify poc, discontinue poc */}
-                </Row>
                 {this.state.session &&
-                    <Row className="mt-3">
-                        <Col>
-                            <Button color="danger" onClick={this.deleteSession} block>Delete Session</Button>
-                        </Col>
-                    </Row>
+                    <React.Fragment>
+                        <Row className="mt-3">
+                            <Col>
+                                <Card className="p-4 mb-3">
+                                    <SessionNote
+                                        text={this.state.session.notes}
+                                        onChange={this.handleNoteChange}
+                                        submit={this.submitNoteChange}
+                                    />
+                                </Card>
+                            </Col>
+                        </Row>
+                        {/* POC: continue poc, modify poc, discontinue poc */}
+                        <Row className="mt-3">
+                            <Col className="p-4 mb-3">
+                                <SessionPoc 
+                                    // @todo
+                                    submit={this.submitNoteChange}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="mt-3">
+                            <Col>
+                                <Button color="danger" onClick={this.deleteSession} block>Delete Session</Button>
+                            </Col>
+                        </Row>
+                    </React.Fragment>
                 }
             </div>
         )

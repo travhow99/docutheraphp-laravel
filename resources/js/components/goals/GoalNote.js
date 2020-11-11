@@ -26,8 +26,8 @@ const GoalNote = (props) => {
             <div className="d-flex justify-content-between">
                 <div>
                     <div className="mt-3">
-                        Met Objective?
-                        <ToggleSwitch isChecked={props.goal.met_objective} toggle={props.toggleMetObjective} />
+                        Met Objective?&nbsp;
+                        <ToggleSwitch className="ml-2" isChecked={props.goal.met_objective} toggle={props.toggleMetObjective} />
                     </div>
                 </div>
             </div>

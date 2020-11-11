@@ -170,9 +170,10 @@ class SessionGoal extends Component {
                                     updateStatus={this.updateGoalProgress}
                                     toggleMetObjective={this.toggleMetObjective}
                                 />
-                                <GoalAttribute
+                                {/* @todo */}
+                                {/* <GoalAttribute
 
-                                />
+                                /> */}
                             </React.Fragment>
                         }
                     </React.Fragment>
