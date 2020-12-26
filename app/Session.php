@@ -57,6 +57,6 @@ class Session extends Model
      */
     public function attributes()
     {
-        return $this->morphMany('App\Models\SessionAttribute', 'attributable');
+        return $this->morphMany('App\SessionAttribute', 'attributable');
     }
 }

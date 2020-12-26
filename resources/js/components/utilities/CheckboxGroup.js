@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input, FormGroup, Label, Row, Col } from 'reactstrap';
 
 const CheckboxGroup = (props) => {
-    console.log(props.max);
+    const [checked, setChecked] = useState(props.selected);
+
     return (
         <React.Fragment>
             <FormGroup check inline className="w-100">
@@ -13,8 +14,12 @@ const CheckboxGroup = (props) => {
                             <Input
                                 type="checkbox"
                                 name="goal"
-                                onChange={props.onChange}
+                                onChange={() => {
+                                    props.onChange;
+                                    setChecked(opt.value);
+                                }}
                                 value={opt.value || ''}
+                                checked={checked === opt.value}
                                 placeholder={'Add a session note...'}
                             />
                             {opt.label}

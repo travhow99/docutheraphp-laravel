@@ -72,6 +72,7 @@ Route::group(['middleware' => ['json.response']], function () {
             'clients.goals' => 'Api\GoalController',
             'clients.sessions' => 'Api\SessionController',
             'sessions.sessionGoals' => 'Api\SessionGoalController',
+            'sessionAttributes' => 'Api\SessionAttributeController',
         ]);//->shallow();
 
     });

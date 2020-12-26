@@ -53,7 +53,6 @@ class SessionController extends Controller
         ]);
 
         /**
-         * TODO: 
          * Create Session
          * Create SessionGoal foreach active Goal
          */
@@ -82,6 +81,7 @@ class SessionController extends Controller
             'client' => $client,
             'session' => $session,
             'goals' => $goals,
+            'attributes' => $session->attributes,
         ], 200);
     }
 

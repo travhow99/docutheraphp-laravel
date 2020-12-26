@@ -34,6 +34,7 @@ class EditSession extends Component {
         this.toggleEditDate = this.toggleEditDate.bind(this);
         this.toggleAttribute = this.toggleAttribute.bind(this);
         this.deleteSession = this.deleteSession.bind(this);
+        this.submitSessionAttribute = this.submitSessionAttribute.bind(this);
     }
 
     /**
@@ -143,6 +144,17 @@ class EditSession extends Component {
     submitNoteChange() {
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             notes: this.state.session.notes,
+        })
+        .catch((err) => console.log(err));
+    }
+
+    submitSessionAttribute(e) {
+        let val = e.target.value;
+
+        axios.post(`/api/sessionAttributes`, {
+            name: 'POC',
+            attribute: val,
+            attributable_id: this.state.session.id,
         })
         .catch((err) => console.log(err));
     }
@@ -262,9 +274,11 @@ class EditSession extends Component {
                         {/* POC: continue poc, modify poc, discontinue poc */}
                         <Row className="mt-3">
                             <Col className="p-4 mb-3">
+                                {console.log('ATT:', this.state.session.attributes)}
                                 <SessionPoc 
                                     // @todo
-                                    submit={this.submitNoteChange}
+                                    submit={this.submitSessionAttribute}
+                                    selected={this.state.session.attributes ? this.state.session.attributes[0].attribute : null}
                                 />
                             </Col>
                         </Row>

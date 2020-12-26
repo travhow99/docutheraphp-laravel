@@ -34,6 +34,6 @@ class SessionGoal extends Model
      */
     public function attributes()
     {
-        return $this->morphMany('App\Models\SessionAttribute', 'attributable');
+        return $this->morphMany(SessionAttribute::class, 'attributable');
     }
 }
