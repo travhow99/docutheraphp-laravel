@@ -1,53 +1,67 @@
 import React, { useEffect, useState } from 'react';
+import { DateTime } from 'luxon';
 import moment from 'moment';
 import { dayAbbervs, getMonth, toLocalTime } from "../helpers/functions";
 import { Card, CardHeader } from 'reactstrap';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 const Calendar = (props) => {
-    const currentDate = moment();
+    const dt = DateTime.local();
 
-    // const selectedDate = moment(currentDate).format('MM/DD/YYYY');
-    const defaultDate = props.date ? props.date.format('YYYY-MM-DD') : moment(currentDate).format('YYYY-MM-DD');
+    const [selectedDay, setSelectedDay] = useState(dt);
 
-    const [selectedDate, setDate] = useState(defaultDate);
+    console.log('current selected...', selectedDay, selectedDay.toISODate(), selectedDay.year)
+
+    const dateSessions = props.data[selectedDay];
+
+    let firstWeekInMonth = selectedDay.startOf('month').weekNumber;
+    console.log(firstWeekInMonth);
+    if (firstWeekInMonth === 53 || firstWeekInMonth === 52) firstWeekInMonth = 0;
+
+    let lastWeekInMonth = selectedDay.endOf('month').weekNumber;
+    console.log(lastWeekInMonth);
+
+    if (lastWeekInMonth === 1) lastWeekInMonth = 53;
     
-    const dateSessions = props.data[selectedDate];
-    const startWeek = moment(selectedDate).startOf('month').week();
-    const endWeek = moment(selectedDate).month() != 11 ? moment(selectedDate).endOf('month').week() : 53;
+    let diff = lastWeekInMonth - firstWeekInMonth;
+    let current = 0;
+    let calendar = [];
 
-    let calendar = []
-    for (var week = startWeek; week <= endWeek; week++) {
+    while (current <= diff) {
+        let useWeek = selectedDay.startOf('month').plus({week: current}).startOf('week');
+
         calendar.push({
-            week: week,
-            days: Array(7).fill(0).map((n, i) => moment(selectedDate).week(week).startOf('week').clone().add(n + i, 'day'))
-        })
+            week: current,
+            days: Array(7).fill(0).map((n, i) => useWeek.set({ day: useWeek.day + i - 1})) 
+        });
+
+        if (useWeek.weekNumber === selectedDay.endOf('month').weekNumber && selectedDay.endOf('month').weekday === 7) diff++;
+
+        current++;
     }
 
-    const dateClassName = (date) => {
+    console.log('CAL:', calendar)
+
+    const dateClassName = (day) => {
         let className = 'calendar-day-container';
 
-        if (!moment(selectedDate).isSame(currentDate, 'month')) {
-            if (moment(selectedDate).isSame(date, 'month')) {
-                return className += ' calendar-future-date';
-            } else {
-                return className += ' calendar-previous-date';
-            }
-        } else {
-            if (!moment(selectedDate).isSame(date, 'month')) {
-                return className += ' calendar-previous-date';
-            }
+        console.log(day.toISODate(), selectedDay.toISODate())
 
-            if (moment(currentDate).isSame(date, 'day')) {
-                className += ' calendar-current-date';
-            } else if (moment(currentDate).isBefore(date, 'day')) {
-                className += ' calendar-future-date';
-            } else if (moment(currentDate).isAfter(date, 'day')) {
-                className += ' calendar-previous-date';
-            }
-    
-            return className;
-        }
+        let useDate = selectedDay.hasSame(dt, 'month') && selectedDay.hasSame(dt, 'year')
+                    ? dt
+                    : selectedDay;
+
+        let addition = day.hasSame(useDate, 'month') 
+                        ? day.hasSame(useDate, 'day')
+                            ? ' calendar-current-date'
+                            : ''
+                        : day.startOf('month') < useDate.startOf('month')
+                            ? ' calendar-previous-date'
+                            : ' calendar-future-date';
+
+        className += addition;
+
+        return className;
     }
 
     /**
@@ -55,7 +69,7 @@ const Calendar = (props) => {
      * @param {date} date 
      */
     const dayClassName = (date) => {
-        const search = date.format('YYYY-MM-DD');
+        const search = date.toISODate();
         const count = props.data[search] ? props.data[search].length : 0;
         let className = "calendar-day";
 
@@ -74,60 +88,57 @@ const Calendar = (props) => {
                 break;
         }
 
-        if (search === selectedDate) {
+        if (search === selectedDay.toISODate()) {
             className += ' selected-date';
         }
         
         return className;
     }
 
+    const is_today = (day1) => {
+        return day1.day === selectedDay.day && day1.month === selectedDay.month && day1.year === selectedDay.year;
+    }
+
+    const abbreviate = (str) => str.substring(0, 3);
+
     return (
         <React.Fragment>
             <Card className="calendar">
                 <div className="calendar-header">
-                    <div className="calendar-month-btn" onClick={(()=>{
-                        const lastMonth = moment(selectedDate).subtract(1, 'month').format('YYYY-MM-DD');
-                        props.monthChange(lastMonth);
-                        setDate(lastMonth);
+                    <div className="calendar-month-btn" onClick={(() => {
+                        setSelectedDay(selectedDay.set({month: selectedDay.month - 1}));
                     })}>
                         <FaAngleLeft />
                     </div>
                     <div className="calendar-header-month">
-                        {getMonth(moment(selectedDate).month())}{moment(selectedDate).year() !== moment().year() && <span>&nbsp;{moment(selectedDate).year()}</span>}
+                        {selectedDay.monthLong}{selectedDay.year !== dt.year && <span>&nbsp;{selectedDay.year}</span>}
                     </div>
-                    <div className="calendar-month-btn" onClick={(()=>{
-                        const nextMonth = moment(selectedDate).add(1, 'month').format('YYYY-MM-DD');
-                        props.monthChange(nextMonth);
-                        setDate(nextMonth);
+                    <div className="calendar-month-btn" onClick={(() => {
+                        setSelectedDay(selectedDay.set({month: selectedDay.month + 1}));
                     })}>
                         <FaAngleRight />
                     </div>
                 </div>
-                <div className="calendar-btn-container">
-                    <div className="calendar-today-btn" onClick={(()=>{
-                        moment(currentDate).isSame(selectedDate, 'month') ?
-                            setDate(moment().format('YYYY-MM-DD'))
-                        :
-                            props.monthChange(moment().format('YYYY-MM-DD'))
-                            setDate(moment().format('YYYY-MM-DD'))
-                        })}
-                    >
-                        Today
+                {!is_today(dt) &&
+                    <div className="calendar-btn-container">
+                        <div className="calendar-today-btn" onClick={(()=> setSelectedDay(dt))}>
+                            Today
+                        </div>
                     </div>
-                </div>
+                }
                 <div className="calendar-week calendar-week-header">
                     {dayAbbervs.map((d, index) => <div key={index}>{d}</div>)}
                 </div>
                 {/* {Map through calendar weeks} */}
                 {calendar.map((week) => (
                     <div key={week.week} className="calendar-week">
-                        {week.days.map((day, index) => (
-                            <div key={index} className={dateClassName(day)}>
-                                <div className={dayClassName(day)} onClick={(() => setDate(day.format('YYYY-MM-DD')))}>
-                                    {moment(day).format('D').toString()}
-                                </div>
+                    {week.days.map((day, index) => (
+                        <div key={index} className={dateClassName(day)}>
+                            <div className={dayClassName(day)} onClick={(() => setSelectedDay(day))}>
+                                {day.day}
                             </div>
-                        ))}
+                        </div>
+                    ))}
                     </div>
                 ))}
             </Card>

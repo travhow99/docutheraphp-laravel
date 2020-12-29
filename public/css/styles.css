@@ -279,7 +279,7 @@ input:checked + .toggle-switch-slider:after {
 .calendar-day.count-max {
   background-color: var(--indigo);
 }
-.calendar-previous-date {
+.calendar-future-date, .calendar-previous-date {
   color: var(--dark-60);
 }
 .calendar-btn-container {
