@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.10.4",
-        "axios": "^0.19",
+        "axios": "^0.21",
         "bootstrap": "^4.5.2",
         "cross-env": "^5.2.1",
         "eslint-plugin-react-hooks": "^4.0.8",
