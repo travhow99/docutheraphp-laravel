@@ -37,9 +37,6 @@ class EditSession extends Component {
         this.submitSessionAttribute = this.submitSessionAttribute.bind(this);
     }
 
-    /**
-     * @todo if 'new', don't post
-     */
     componentDidMount() {
         const id = this.props.match.params.id;
         console.log(id);
@@ -276,7 +273,6 @@ class EditSession extends Component {
                             <Col className="p-4 mb-3">
                                 {console.log('ATT:', this.state.session.attributes)}
                                 <SessionPoc 
-                                    // @todo
                                     submit={this.submitSessionAttribute}
                                     selected={this.state.session.attributes ? this.state.session.attributes[0].attribute : null}
                                 />

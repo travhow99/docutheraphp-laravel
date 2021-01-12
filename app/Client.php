@@ -56,6 +56,14 @@ class Client extends Model
     }
 
     /**
+     * Get the client's Invoices.
+     */
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
+
+    /**
      * Get the client's next session.
      * @todo Determine if session exists already
      */
