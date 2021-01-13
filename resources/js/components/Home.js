@@ -73,6 +73,7 @@ class Home extends Component {
                                 <CardBody>
                                         <CardTitle>
                                             <h3>No Clients!</h3>
+                                            <Link to={`/clients`}>Add one!</Link>
                                         </CardTitle>
                                 </CardBody>
                             </Card>

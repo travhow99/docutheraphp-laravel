@@ -95,8 +95,8 @@ const Calendar = (props) => {
         return className;
     }
 
-    const is_today = (day1) => {
-        return day1.day === selectedDay.day && day1.month === selectedDay.month && day1.year === selectedDay.year;
+    const is_today = (day) => {
+        return day.day === selectedDay.day && day.month === selectedDay.month && day.year === selectedDay.year;
     }
 
     const abbreviate = (str) => str.substring(0, 3);

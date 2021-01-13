@@ -5,7 +5,7 @@ import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
     Row, Col,
     Card, Button,
-    Input
+    Input, Select
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 import ToggleSwitch from '../utilities/ToggleSwitch';
@@ -24,6 +24,7 @@ class EditSession extends Component {
         this.state = {
             client: null,
             goals: [],
+            possible_goals: [],
             editingDate: false,
             deleted: false,
         }
@@ -39,18 +40,27 @@ class EditSession extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
-        console.log(id);
         const session_id = this.props.match.params.session_id;
-        console.log(session_id);
 
         axios.get(`/api/clients/${id}/sessions/${session_id}`).then((response) => {
+            console.log('mount response:', response)
             this.setState({
                 client: response.data.client,
                 session: response.data.session,
                 goals: response.data.goals,
             });
 
-            console.log(this.state);
+            // If session has no goals, check for existing client goals
+            if (!response.data.goals.length) {
+                console.log('no goals, find them!')
+                axios.get(`/api/clients/${id}/goals`).then((response) => {
+                    this.setState({
+                        possible_goals: response.data.goals,
+                    });
+        
+                    console.log(this.state);
+                })        
+            }
         })
     }
 
@@ -245,10 +255,17 @@ class EditSession extends Component {
                                 ))
                             ) : (
                                 <React.Fragment>
-                                    <div>No Goals</div>
+                                    <div>No goals for this session</div>
                                     <Link to={`/clients/${this.state.client.id}/goals/new`}>
                                         <Button color="primary">Add One?</Button>
                                     </Link>
+                                    {this.state.possible_goals.length && 
+                                        <Input type="select">
+                                            {this.state.possible_goals.map((goal, index) => (
+                                                <option key={index} value={goal.id}>{goal.goal}</option>
+                                            ))}
+                                        </Input>
+                                    }
                                 </React.Fragment>
                             )
                             }
@@ -271,10 +288,9 @@ class EditSession extends Component {
                         {/* POC: continue poc, modify poc, discontinue poc */}
                         <Row className="mt-3">
                             <Col className="p-4 mb-3">
-                                {console.log('ATT:', this.state.session.attributes)}
                                 <SessionPoc 
                                     submit={this.submitSessionAttribute}
-                                    selected={this.state.session.attributes ? this.state.session.attributes[0].attribute : null}
+                                    selected={this.state.session.attributes.length ? this.state.session.attributes[0].attribute : null}
                                 />
                             </Col>
                         </Row>

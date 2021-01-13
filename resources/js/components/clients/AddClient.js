@@ -58,11 +58,13 @@ class AddClient extends Component {
                     <CardBody>
                         <h3>New Client</h3>
                         <Form onSubmit={this.handleSubmit}>
-                            <FormGroup row>
+                            <FormGroup>
+                                <Label for="name">Client Name</Label>
                                 <input id="name" type="text" name="name" placeholder="Client Name (4 Letter Abbreviation)" className="form-control" onChange={this.handleInput} maxLength="4" required />
                             </FormGroup>
 
-                            <FormGroup row>
+                            <FormGroup>
+                                <Label for="session_day">Session Day</Label>
                                 <select id="sessionDay" name="session_day" className="form-control"
                                 onChange={this.handleInput}
                                 defaultValue=''
@@ -74,22 +76,23 @@ class AddClient extends Component {
                                     ))}
                                 </select>
                             </FormGroup>
-                            <FormGroup row>
+                            <FormGroup>
+                                <Label for="session_time">Session Time</Label>
                                 <input id="session_time" type="time" name="session_time" placeholder="Session Time" className="form-control" onChange={this.handleInput} />
                             </FormGroup>
-                            <FormGroup row>
+                            <FormGroup>
+                                <Label for="agency">Agency</Label>
                                 <input id="agency" type="text" name="agency" placeholder="Agency" className="form-control" onChange={this.handleInput} required />
                             </FormGroup>
-                            <FormGroup row>
+                            <FormGroup>
+                                <Label for="start_date">Start Date</Label>
                                 <input id="start_date" type="date" name="start_date" placeholder="Start Date" className="form-control" onChange={this.handleInput} />
                             </FormGroup>
 
-                            <FormGroup row>
-                                <Col>
-                                    <Button type="submit" color="primary" size="lg" block onSubmit={this.handleSubmit}>
-                                        Submit
-                                    </Button>
-                                </Col>
+                            <FormGroup>
+                                <Button type="submit" color="primary" size="lg" block onSubmit={this.handleSubmit}>
+                                    Submit
+                                </Button>
                             </FormGroup>
 
                         </Form>
