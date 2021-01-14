@@ -20,4 +20,12 @@ class Invoice extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    /**
+     * Get the InvoiceLineItems the Goal has.
+     */
+    public function invoiceLineItems()
+    {
+        return $this->hasMany('App\InvoiceLineItem');
+    }
 }
