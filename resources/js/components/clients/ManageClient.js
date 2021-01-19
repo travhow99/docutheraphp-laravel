@@ -9,6 +9,7 @@ import AddSession from '../sessions/AddSession';
 import EditSession from '../sessions/EditSession';
 import { useAlert } from 'react-alert';
 import { getRandomColor } from '../helpers/functions';
+import Invoices from '../invoices/Invoices';
 
 const ManageClient = (props) => {
     const params = useParams();
@@ -16,6 +17,7 @@ const ManageClient = (props) => {
     const [client, setClient] = useState(false);
     const [goals, setGoals] = useState(false);
     const [pocs, setPocs] = useState(false);
+    const [invoices, setInvoices] = useState([]);
     const [page, setPage] = useState(false);
     const [active, setActive] = useState('Overview');
     const [randomColor, setRandomColor] = useState(getRandomColor());
@@ -30,11 +32,13 @@ const ManageClient = (props) => {
                 axios.get(`/api/clients/${id}`),
                 axios.get(`/api/clients/${id}/goals`),
                 axios.get(`/api/clients/${id}/pocs`),
+                axios.get(`/api/clients/${id}/invoices`),
             ])
-            .then(axios.spread((clientDataRes, goalDataRes, pocsDataRes) => {
+            .then(axios.spread((clientDataRes, goalDataRes, pocsDataRes, invoicesDataRes) => {
                 setClient(goalDataRes.data.client);
                 setGoals(goalDataRes.data.goals);
                 setPocs(pocsDataRes.data);
+                setInvoices(invoicesDataRes.data);
             }))
             .catch((err) => console.log(err))
         }
@@ -100,6 +104,10 @@ const ManageClient = (props) => {
                     <Route
                         path="/clients/:id/sessions/:session_id"
                         render={() => <EditSession client={client} />}
+                    />
+                    <Route
+                        path="/clients/:id/invoices"
+                        render={() => <Invoices client={client} invoices={invoices} />}
                     />
                 </div>
             ) : (

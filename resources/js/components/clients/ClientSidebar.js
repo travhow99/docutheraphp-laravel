@@ -3,6 +3,7 @@ import { FaUserAlt, FaCalendarDay } from 'react-icons/fa';
 import { GrNotes, GrDocumentText } from 'react-icons/gr';
 import { AiOutlineRise } from 'react-icons/ai';
 import { MdDashboard } from 'react-icons/md';
+import { FaFileInvoiceDollar } from 'react-icons/fa';
 import ClientLink from './ClientLink';
 import ClientLinkDisabled from './ClientLinkDisabled';
 
@@ -35,6 +36,13 @@ const ClientSidebar = (props) => {
             icon: <FaCalendarDay className="mr-3 fa-fw" />,
             to: `/clients/${props.id}/sessions`,
             slug: 'sessions',
+            disabled: false,
+        },
+        {
+            page: 'Invoicing',
+            icon: <FaFileInvoiceDollar className="mr-3 fa-fw" />,
+            to: `/clients/${props.id}/invoices`,
+            slug: 'invoicing',
             disabled: false,
         },
         {

@@ -73,6 +73,8 @@ Route::group(['middleware' => ['json.response']], function () {
             'clients.sessions' => 'Api\SessionController',
             'sessions.sessionGoals' => 'Api\SessionGoalController',
             'sessionAttributes' => 'Api\SessionAttributeController',
+            'clients.invoices' => 'Api\InvoiceController',
+            'invoices.invoiceLineItems' => 'Api\InvoiceController',
         ]);//->shallow();
 
     });
