@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Client;
 use App\Invoice;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,9 +18,7 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::all();
 
-        return response([
-            'invoices' => $invoices,
-        ], 200);
+        return response($invoices, 200);
     }
 
     /**
