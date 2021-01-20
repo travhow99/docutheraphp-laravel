@@ -88,10 +88,11 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  int  $client_id
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($client_id, $id)
     {
         $invoice = Invoice::find($id);
 

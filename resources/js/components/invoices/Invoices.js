@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 import { withRouter } from 'react-router-dom';
 import {
     Row, Col,
     Card, Table, Button, CardText, Form, FormGroup, CardHeader, CardBody, CardFooter
 } from 'reactstrap';
+import DropdownMenu from '../utilities/DropdownMenu';
 import AddInvoice from './AddInvoice';
 
 const Invoices = (props) => {
     const [adding, setAdding] = useState(false);
+
+    const deleteInvoice = (index, id) => {
+        axios.delete(`/api/clients/${props.client.id}/invoices/${id}`)
+            .then((res) => res)
+            .then((json) => {
+                if (json.status === 200) {
+                    let newInvoices = [...props.invoices];
+                    newInvoices.splice(index, 1);
+                    
+                    props.updateInvoices(newInvoices);
+                }
+            })
+            .catch((err) => console.log(err))
+    }
 
     return (
         <div className="client-container">
@@ -44,8 +58,23 @@ const Invoices = (props) => {
                                                     <td>{invoice.invoice_details}</td>
                                                     <td>{invoice.invoice_line_items.length}</td>
                                                     <td>{invoice.amount_billed || 0}</td>
-                                                    <td>
-                                                        <BsThreeDotsVertical className="c-pointer" />
+                                                    <td className="position-relative">
+                                                        <DropdownMenu 
+                                                            items={[
+                                                                {
+                                                                    value: 'View',
+                                                                    onClick: () => console.log('click')
+                                                                },
+                                                                {
+                                                                    value: 'Update',
+                                                                    onClick: () => console.log('click')
+                                                                },
+                                                                {
+                                                                    value: 'Delete',
+                                                                    onClick: () => deleteInvoice(index, invoice.id)
+                                                                },
+                                                            ]}
+                                                        />
                                                     </td>
                                                 </tr>
                                             ))}
@@ -54,7 +83,7 @@ const Invoices = (props) => {
                                     :
                                     <div>
                                         No Invoices exist for this client. Create one below!
-                                        </div>
+                                    </div>
                                 }
 
                             </CardBody>
