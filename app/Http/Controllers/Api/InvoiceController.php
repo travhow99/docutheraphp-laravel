@@ -18,6 +18,11 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::all();
 
+        // Get the related line items
+        foreach ($invoices as $i) {
+            $i->invoice_line_items = $i->invoiceLineItems();
+        }
+
         return response($invoices, 200);
     }
 
@@ -41,6 +46,8 @@ class InvoiceController extends Controller
             'invoice_details' => $request->invoice_details,
             'agency' => $request->agency,
         ]);
+
+        $invoice->invoice_line_items = $invoice->invoiceLineItems();
 
         return response($invoice, 201);
     }

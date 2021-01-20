@@ -26,7 +26,7 @@ const Invoices = (props) => {
                                                 <th>Name</th>
                                                 <th>Description</th>
                                                 <th>Sessions</th>
-                                                <th>Units</th>
+                                                <th>Amount Billed</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -35,14 +35,15 @@ const Invoices = (props) => {
                                             {props.invoices.map((invoice, index) => (
                                                 <tr key={index} index={index}>
                                                     <td>
+                                                        {/* todo status */}
                                                         <span className="bg-danger px-2 py-1 rounded-pill text-white">
                                                             Unbilled
                                                         </span>
                                                     </td>
                                                     <td>{invoice.invoice_name}</td>
                                                     <td>{invoice.invoice_details}</td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{invoice.invoice_line_items.length}</td>
+                                                    <td>{invoice.amount_billed || 0}</td>
                                                     <td>
                                                         <BsThreeDotsVertical className="c-pointer" />
                                                     </td>
@@ -64,7 +65,7 @@ const Invoices = (props) => {
                             </CardFooter>
                         </Card>
                         :
-                        <AddInvoice setAdding={setAdding} agency={props.client.agency} client_id={props.client.id} />
+                        <AddInvoice setAdding={setAdding} agency={props.client.agency} client_id={props.client.id} invoices={props.invoices} updateInvoices={props.updateInvoices} />
                     }
                 </Col>
             </Row>

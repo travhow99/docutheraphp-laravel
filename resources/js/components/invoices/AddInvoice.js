@@ -23,14 +23,16 @@ const AddInvoice = (props) => {
         .then((res) => res)
         .then((json) => {
             if (json.status === 201) {
-                // props.updatePocs([...props.pocs, json.data])
+                console.log(json.data);
+                console.log([...props.invoices, json.data]);
+                props.updateInvoices([...props.invoices, json.data])
 
                 props.setAdding(false);
                 // setContactName(false);
                 // setEmail(false);
                 // setPhoneNumber(false);
 
-                alert.show('Contact created!', {
+                alert.show('Invoice created!', {
                     timeout: 2000, // custom timeout just for this one alert
                     type: 'success',
                 })

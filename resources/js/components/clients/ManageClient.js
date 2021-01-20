@@ -107,7 +107,7 @@ const ManageClient = (props) => {
                     />
                     <Route
                         path="/clients/:id/invoices"
-                        render={() => <Invoices client={client} invoices={invoices} />}
+                        render={() => <Invoices client={client} invoices={invoices} updateInvoices={setInvoices} />}
                     />
                 </div>
             ) : (

@@ -61,4 +61,12 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough('App\Poc', 'App\Client');
     }
+
+    /**
+     * Get a user's client's invoices.
+     */
+    public function invoices()
+    {
+        return $this->hasManyThrough('App\Invoice', 'App\Client');
+    }
 }
