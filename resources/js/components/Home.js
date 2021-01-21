@@ -33,8 +33,6 @@ class Home extends Component {
     }
 
     dateSearch(month) {
-        console.log(month);
-
         let m = moment(month).month() + 1;
         console.log(m);
         axios.post(`/api/sessions/month/${m}`).then((response) => {
@@ -81,6 +79,7 @@ class Home extends Component {
                     </Col>
                     <Col>
                         <Calendar data={this.state.monthSessions} date={this.state.month} monthChange={this.dateSearch} />
+                        {/* TODO: Add invoicing details here */}
                     </Col>
                 </Row>
             </React.Fragment>

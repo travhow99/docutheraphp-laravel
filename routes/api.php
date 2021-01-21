@@ -38,7 +38,7 @@ Route::group(['middleware' => ['json.response']], function () {
             return response([
                 'clients' => $clients,
                 'upcomingSessions' => $upcoming,
-            ], 200);
+            ], 201);
         });
 
 
@@ -51,6 +51,23 @@ Route::group(['middleware' => ['json.response']], function () {
 
             return response([
                 'sessions' => $sessions,
+            ], 201);
+        });
+
+        /**
+         * Invoices
+         */
+        Route::get('invoices', function (Request $request) {
+            $invoices = $request->user()->invoices()->get();
+
+            // Get the related line items
+            foreach ($invoices as $i) {
+                $i->invoice_line_items = $i->invoiceLineItems();
+                $i->client_name = Client::clientNameFromId($i->client_id);
+            }
+
+            return response([
+                'invoices' => $invoices,
             ], 200);
         });
         

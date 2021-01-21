@@ -12,6 +12,7 @@ import PrivateRoute from './helpers/PrivateRoute';
 import ManageClient from './clients/ManageClient';
 import Sidebar from './sidebar/Sidebar';
 import { Container } from 'reactstrap';
+import ManageInvoices from './invoices/ManageInvoices';
 
 // optional configuration
 const options = {
@@ -41,6 +42,7 @@ class App extends Component {
             user: AppState.user || {},
             remember_me: AppState.remember_me || false,
             clients: [],
+            invoices: [],
         }
 
         this.updateStorage = this.updateStorage.bind(this);
@@ -82,6 +84,7 @@ class App extends Component {
                                         <PrivateRoute exact path="/" component={Home} />
                                         <PrivateRoute exact path="/clients" component={Clients} />
                                         <PrivateRoute path="/clients/:id" component={ManageClient} />
+                                        <PrivateRoute path="/invoicing" component={ManageInvoices} />
 
                                     </Switch>
                                 </Container>

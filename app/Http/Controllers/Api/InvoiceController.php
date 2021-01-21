@@ -19,6 +19,7 @@ class InvoiceController extends Controller
         $invoices = Invoice::all();
 
         // Get the related line items
+        // TODO: Always include from the Model
         foreach ($invoices as $i) {
             $i->invoice_line_items = $i->invoiceLineItems();
         }

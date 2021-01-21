@@ -6,7 +6,11 @@ const DropdownMenu = (props) => {
 
     const node = useRef();
 
-    const handleClickOutside = e => {
+    /**
+     * Capture outside click of target via useRef()
+     * @param {*} e event
+     */
+    const handleClickOutside = (e) => {
         if (node.current.contains(e.target)) {
             // inside click
             return;

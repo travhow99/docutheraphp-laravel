@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import {
     Row, Col,
     Card, Table, Button, CardText, Form, FormGroup, CardHeader, CardBody, CardFooter
@@ -37,6 +37,7 @@ const Invoices = (props) => {
                                         <thead>
                                             <tr>
                                                 <th>Status</th>
+                                                {props.withClientName && <th>Client</th>}
                                                 <th>Name</th>
                                                 <th>Description</th>
                                                 <th>Sessions</th>
@@ -50,14 +51,23 @@ const Invoices = (props) => {
                                                 <tr key={index} index={index}>
                                                     <td>
                                                         {/* todo status */}
-                                                        <span className="bg-danger px-2 py-1 rounded-pill text-white">
-                                                            Unbilled
-                                                        </span>
+                                                        {invoice.date_sent ? (
+                                                            <span className="bg-success px-2 py-1 rounded-pill text-white">
+                                                                <FaCheckCircle className="mr-1" />
+                                                                Billed {invoice.date_sent}
+                                                            </span>
+                                                        ) : (
+                                                            <span className="bg-danger px-2 py-1 rounded-pill text-white">
+                                                                <FaExclamationCircle className="mr-1" />
+                                                                Unbilled
+                                                            </span>
+                                                        )}
                                                     </td>
+                                                    {props.withClientName && <td>{invoice.client_name}</td>}
                                                     <td>{invoice.invoice_name}</td>
                                                     <td>{invoice.invoice_details}</td>
-                                                    <td>{invoice.invoice_line_items.length}</td>
-                                                    <td>{invoice.amount_billed || 0}</td>
+                                                    <td>{invoice.invoice_line_items.length || 0}</td>
+                                                    <td>{invoice.amount_billed || '$0'}</td>
                                                     <td className="position-relative">
                                                         <DropdownMenu 
                                                             items={[
@@ -104,4 +114,4 @@ const Invoices = (props) => {
     )
 }
 
-export default withRouter(Invoices);
+export default Invoices;

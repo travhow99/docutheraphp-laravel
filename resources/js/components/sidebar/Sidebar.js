@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GoThreeBars, GoDashboard } from 'react-icons/go';
-import { FaUsers } from 'react-icons/fa';
+import { FaDollarSign, FaUsers } from 'react-icons/fa';
 import { TiDocumentAdd } from 'react-icons/ti';
 import SidebarLink from './SidebarLink';
 
@@ -25,6 +25,11 @@ const Sidebar = (props) => {
             page: 'Documentation',
             icon: <TiDocumentAdd className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
             to: '/documentation',
+        },
+        {
+            page: 'Invoicing',
+            icon: <FaDollarSign className={!isOpen ? "fa-fw" : "mr-3 fa-fw"} />,
+            to: '/invoicing',
         },
     ]
 
