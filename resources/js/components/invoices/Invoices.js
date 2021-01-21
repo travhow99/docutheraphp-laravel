@@ -48,7 +48,7 @@ const Invoices = (props) => {
                                         <tbody>
                                             {console.log(props.invoices)}
                                             {props.invoices.map((invoice, index) => (
-                                                <tr key={index} index={index}>
+                                                <tr key={index} data-invoice_id={invoice.id}>
                                                     <td>
                                                         {/* todo status */}
                                                         {invoice.date_sent ? (
@@ -73,7 +73,7 @@ const Invoices = (props) => {
                                                             items={[
                                                                 {
                                                                     value: 'View',
-                                                                    onClick: () => console.log('click')
+                                                                    onClick: () => props.editInvoice(invoice.id)
                                                                 },
                                                                 {
                                                                     value: 'Update',
