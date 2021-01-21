@@ -9,10 +9,7 @@ const Calendar = (props) => {
     const dt = DateTime.local();
 
     const [selectedDay, setSelectedDay] = useState(dt);
-
-    console.log('current selected...', selectedDay, selectedDay.toISODate(), selectedDay.year)
-
-    const dateSessions = props.data[selectedDay];
+    const dateSessions = props.data[selectedDay.toISODate()];
 
     let firstWeekInMonth = selectedDay.startOf('month').weekNumber;
     console.log(firstWeekInMonth);
@@ -44,8 +41,6 @@ const Calendar = (props) => {
 
     const dateClassName = (day) => {
         let className = 'calendar-day-container';
-
-        console.log(day.toISODate(), selectedDay.toISODate())
 
         let useDate = selectedDay.hasSame(dt, 'month') && selectedDay.hasSame(dt, 'year')
                     ? dt

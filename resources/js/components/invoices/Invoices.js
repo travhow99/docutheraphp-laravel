@@ -86,6 +86,7 @@ const Invoices = (props) => {
                                     </div>
                                 }
 
+                                {/* TODO: indicate # of un-invoiced sessions */}
                             </CardBody>
                             <CardFooter>
                                 <Button onClick={() => setAdding(true)}>
