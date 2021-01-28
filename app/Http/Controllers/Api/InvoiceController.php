@@ -21,7 +21,7 @@ class InvoiceController extends Controller
         // Get the related line items
         // TODO: Always include from the Model
         foreach ($invoices as $i) {
-            $i->invoice_line_items = $i->invoiceLineItems();
+            $i->invoice_line_items = $i->invoiceLineItems()->get();
         }
 
         return response($invoices, 200);
@@ -48,7 +48,7 @@ class InvoiceController extends Controller
             'agency' => $request->agency,
         ]);
 
-        $invoice->invoice_line_items = $invoice->invoiceLineItems();
+        $invoice->invoice_line_items = $invoice->invoiceLineItems()->get();
 
         return response($invoice, 201);
     }

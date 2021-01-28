@@ -26,6 +26,6 @@ class Invoice extends Model
      */
     public function invoiceLineItems()
     {
-        return $this->hasMany('App\InvoiceLineItem');
+        return $this->hasMany(InvoiceLineItem::class);
     }
 }

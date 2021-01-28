@@ -22,14 +22,14 @@ const ManageInvoices = () => {
     return (
         <React.Fragment>
             {invoices.length ? (
-                <div className="d-flex h-100 anti-container">
+                <div className="d-flex h-100"/*  anti-container" */>
                     {editing ? (
                         <React.Fragment>
-                            <div className="d-flex h-100 client-sidebar">
-                                {/* <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} /> */}
-                            </div>
-                            <div>
-                                <EditInvoice invoice={invoice} editInvoice={setEditing} />
+                            {/* <div className="d-flex h-100 client-sidebar">
+                                <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} />
+                            </div> */}
+                            <div className="w-100">
+                                <EditInvoice invoice={currentInvoice} editInvoice={setEditing} />
                             </div>
 
                         </React.Fragment>
