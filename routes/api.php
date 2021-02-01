@@ -65,8 +65,12 @@ Route::group(['middleware' => ['json.response']], function () {
              * @todo get session details to include
              */
             foreach ($invoices as $i) {
-                $i->invoice_line_items = $i->invoiceLineItems()->get();
                 $i->client_name = Client::clientNameFromId($i->client_id);
+                $i->invoice_line_items = $i->invoiceLineItems()->get();
+
+                foreach ($i->invoice_line_items as $key => $line_item) {
+                    $i->invoice_line_items[$key]->session = $line_item->session()->get()[0];
+                }
             }
 
             return response([

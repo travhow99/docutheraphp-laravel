@@ -21,4 +21,11 @@ class InvoiceLineItem extends Model
         return $this->belongsTo(Invoice::class);
     }
 
+    /**
+     * Get the owning invoice model.
+     */
+    public function session()
+    {
+        return $this->belongsTo(Session::class);
+    }
 }

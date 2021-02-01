@@ -59,4 +59,13 @@ class Session extends Model
     {
         return $this->morphMany('App\SessionAttribute', 'attributable');
     }
+
+    /**
+     * Get all of the session's attributes.
+     */
+    public function invoiceLineItem()
+    {
+        return $this->hasOne('App\InvoiceLineItem');
+    }
+
 }

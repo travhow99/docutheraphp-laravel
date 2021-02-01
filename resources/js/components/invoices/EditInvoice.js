@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { 
-    Card, CardHeader, CardBody, Form, FormGroup, Input, Button, CardFooter
+    Card, CardHeader, CardBody, Form, FormGroup, Input, Button, CardFooter, Table
  } from "reactstrap";
- import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaCheck, FaTimesCircle } from 'react-icons/fa';
 import { useAlert } from 'react-alert';
+import DropdownMenu from '../utilities/DropdownMenu';
 
 const EditInvoice = (props) => {
     const [invoiceName, setInvoiceName] = useState(false);
@@ -37,7 +38,7 @@ const EditInvoice = (props) => {
         .catch((err) => console.log(err)) */
     }
 
-    const deleteInvoice = (index, id) => {
+    const deleteLineItem = (index, id) => {
         /* axios.delete(`/api/clients/${props.client_id}/invoices/${id}`)
             .then((res) => res)
             .then((json) => {
@@ -51,11 +52,15 @@ const EditInvoice = (props) => {
             .catch((err) => console.log(err)) */
     }
 
+    const calculateUnitPrice = (units, price) => {
+        return units * price;
+    }
+
     return (
         <React.Fragment>
-            <Card>
+            <Card className="mt-4">
                 <CardHeader>
-                    <FaTimes className="float-right c-pointer" onClick={() => props.setEditing(false)} />
+                    <FaTimes className="float-right c-pointer" onClick={() => props.editInvoice(false)} />
                 </CardHeader>
                 <CardBody>
                     <Form /* onSubmit={updateInvoice} */>
@@ -65,6 +70,7 @@ const EditInvoice = (props) => {
                                 name="invoice_name"
                                 id="invoice_name"
                                 placeholder="Invoice Name"
+                                defaultValue={props.invoice.invoice_name}
                                 onBlur={props.editInvoice}
                                 required
                             />
@@ -76,6 +82,7 @@ const EditInvoice = (props) => {
                                 name="invoice_description"
                                 id="invoice_description"
                                 placeholder="Description"
+                                defaultValue={props.invoice.invoice_details}
                                 onBlur={props.editInvoice}
                             />
                         </FormGroup>
@@ -88,9 +95,45 @@ const EditInvoice = (props) => {
             <Card className="mt-2">
                 <CardBody>
                     {props.invoice.invoice_line_items && props.invoice.invoice_line_items.map((item, index) => (
-                        <div key={index}>
-                            {item.session_units}
-                        </div>
+                        <Table key={index} hover>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Session Date</th>
+                                    <th>Units</th>
+                                    <th>Cost</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {item.session.complete ? 
+                                            <FaCheck className="text-success" />
+                                            :
+                                            <FaTimesCircle className="text-danger" />
+                                        }
+                                    </td>
+                                    <td>{item.session.session_date}</td>
+                                    <td>{item.session_units}</td>
+                                    <td>${calculateUnitPrice(item.session_units, item.unit_cost)}</td>
+                                    <td className="position-relative">
+                                        <DropdownMenu 
+                                            items={[
+                                                {
+                                                    value: 'View',
+                                                    onClick: () => props.editInvoice(invoice.id)
+                                                },
+                                                {
+                                                    value: 'Remove',
+                                                    onClick: () => deleteLineItem(index, invoice.id)
+                                                },
+                                            ]}
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
                     ))}
                 </CardBody>
 
