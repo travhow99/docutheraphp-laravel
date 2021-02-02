@@ -6,7 +6,7 @@ use App\InvoiceLineItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class InvoiceController extends Controller
+class InvoiceLineItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -85,7 +85,7 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($invoice_id, $id)
     {
         $InvoiceLineItem = InvoiceLineItem::find($id);
 

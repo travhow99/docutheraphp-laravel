@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { 
+import {
     Card, CardHeader, CardBody, Form, FormGroup, Input, Button, CardFooter, Table
- } from "reactstrap";
-import { FaTimes, FaCheck, FaTimesCircle } from 'react-icons/fa';
+} from "reactstrap";
+import { FaTimes, FaCheck, FaTimesCircle, FaEye, FaTrash } from 'react-icons/fa';
 import { useAlert } from 'react-alert';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 import DropdownMenu from '../utilities/DropdownMenu';
 
 const EditInvoice = (props) => {
@@ -16,7 +17,7 @@ const EditInvoice = (props) => {
     const alert = useAlert();
 
     const updateInvoice = (index, id, data) => {
-        const {name, value} = data;
+        const { name, value } = data;
 
         /* axios.put(`/api/clients/${props.client_id}/invoices/${id}`, {
             [name]: value
@@ -39,17 +40,46 @@ const EditInvoice = (props) => {
     }
 
     const deleteLineItem = (index, id) => {
-        /* axios.delete(`/api/clients/${props.client_id}/invoices/${id}`)
-            .then((res) => res)
-            .then((json) => {
-                if (json.status === 200) {
-                    let newPocs = [...props.pocs];
-                    newPocs.splice(index, 1);
-                    
-                    props.updatePocs(newPocs);
+        console.log(index, id);
+
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to do this.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        axios.delete(`/api/invoices/${props.invoice.id}/invoiceLineItems/${id}`)
+                            .then((res) => res)
+                            .then((json) => {
+                                if (json.status === 200) {
+                                    let newLineItems = [...props.invoice.invoice_line_items];
+                                    newLineItems.splice(index, 1);
+                
+                                    let updatedInvoice = props.invoice;
+                                    updatedInvoice.invoice_line_items = newLineItems;
+                                    
+                                    const updatedInvoiceIndex = props.invoices.findIndex((i) => i.id === props.invoice.id);
+
+                                    const updatedInvoices = [...props.invoices];
+
+                                    updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
+
+                                    console.log('prev inv', props.invoices);
+                                    console.log('updated inv', updatedInvoices);
+
+                                    props.updateInvoices(updatedInvoices);
+                                }
+                            })
+                            .catch((err) => console.log(err))
+                    }
+                },
+                {
+                    label: 'No',
+                    // onClick: () => alert('Click No')
                 }
-            })
-            .catch((err) => console.log(err)) */
+            ]
+        });
     }
 
     const calculateUnitPrice = (units, price) => {
@@ -94,21 +124,21 @@ const EditInvoice = (props) => {
             </Card>
             <Card className="mt-2">
                 <CardBody>
-                    {props.invoice.invoice_line_items && props.invoice.invoice_line_items.map((item, index) => (
-                        <Table key={index} hover>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Session Date</th>
-                                    <th>Units</th>
-                                    <th>Cost</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {item.session.complete ? 
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Session Date</th>
+                                <th>Units</th>
+                                <th>Cost</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {props.invoice.invoice_line_items && props.invoice.invoice_line_items.map((item, index) => (
+                                <tr key={index}>
+                                    <td width="5%">
+                                        {item.session.complete ?
                                             <FaCheck className="text-success" />
                                             :
                                             <FaTimesCircle className="text-danger" />
@@ -117,24 +147,20 @@ const EditInvoice = (props) => {
                                     <td>{item.session.session_date}</td>
                                     <td>{item.session_units}</td>
                                     <td>${calculateUnitPrice(item.session_units, item.unit_cost)}</td>
-                                    <td className="position-relative">
-                                        <DropdownMenu 
-                                            items={[
-                                                {
-                                                    value: 'View',
-                                                    onClick: () => props.editInvoice(invoice.id)
-                                                },
-                                                {
-                                                    value: 'Remove',
-                                                    onClick: () => deleteLineItem(index, invoice.id)
-                                                },
-                                            ]}
-                                        />
+                                    <td className="flex-end">
+                                        <div>
+                                            <Button className="mr-2" color="success" onClick={() => deleteLineItem(index, item.id)}>
+                                                <FaEye />
+                                            </Button>
+                                            <Button color="danger" onClick={() => deleteLineItem(index, item.id)}>
+                                                <FaTrash />
+                                            </Button>
+                                        </div>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </Table>
-                    ))}
+                            ))}
+                        </tbody>
+                    </Table>
                 </CardBody>
 
                 <CardFooter>

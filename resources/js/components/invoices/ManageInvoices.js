@@ -29,13 +29,13 @@ const ManageInvoices = () => {
                                 <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} />
                             </div> */}
                             <div className="w-100">
-                                <EditInvoice invoice={currentInvoice} editInvoice={setEditing} />
+                                <EditInvoice invoice={currentInvoice} invoices={invoices} editInvoice={setEditing} updateInvoices={setInvoices} />
                             </div>
 
                         </React.Fragment>
                     ) : (
-                            <Invoices invoices={invoices} withClientName={true} editInvoice={setEditing} />
-                        )}
+                        <Invoices invoices={invoices} withClientName={true} editInvoice={setEditing} />
+                    )}
                 </div>
             ) : (
                     <div>Loading {/* TODO loading svg */}</div>

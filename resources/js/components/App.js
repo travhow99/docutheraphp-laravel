@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Header from './Header';
 import Login from './login/Login';
 import Register from './register/Register';
