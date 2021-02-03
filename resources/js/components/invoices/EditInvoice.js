@@ -6,6 +6,7 @@ import { FaTimes, FaCheck, FaTimesCircle, FaEye, FaTrash } from 'react-icons/fa'
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import DropdownMenu from '../utilities/DropdownMenu';
+import CrudTable from '../utilities/CrudTable/CrudTable';
 
 const EditInvoice = (props) => {
     const [invoiceName, setInvoiceName] = useState(false);
@@ -124,6 +125,37 @@ const EditInvoice = (props) => {
             </Card>
             <Card className="mt-2">
                 <CardBody>
+                    <CrudTable
+                        view = {() => updateInvoice(index, item.id)}
+                        delete = {() => deleteLineItem(index, item.id)}
+                        headers={[
+                            {
+                                title: '',
+                                width: '5%',
+                                key: 'complete',
+                            },
+                            {
+                                title: 'Session Date',
+                                key: 'session_date',
+                            },
+                            {
+                                title: 'Units',
+                                key: 'session_units',
+                            },
+                            {
+                                title: 'Cost',
+                                key: 'unit_cost',
+                            },
+                        ]}
+                        keys={[
+                            'complete',
+                            'session_date',
+                            'session_units',
+                            'unit_cost',
+                        ]}
+                        items={props.invoice.invoice_line_items}
+                    />
+
                     <Table>
                         <thead>
                             <tr>
