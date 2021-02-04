@@ -40,8 +40,16 @@ const EditInvoice = (props) => {
         .catch((err) => console.log(err)) */
     }
 
+    const viewLineItem = (index, id) => {
+        console.log(index, id);
+
+
+    }
+
     const deleteLineItem = (index, id) => {
         console.log(index, id);
+
+        return;
 
         confirmAlert({
             title: 'Confirm to submit',
@@ -126,8 +134,16 @@ const EditInvoice = (props) => {
             <Card className="mt-2">
                 <CardBody>
                     <CrudTable
-                        view = {() => updateInvoice(index, item.id)}
-                        delete = {() => deleteLineItem(index, item.id)}
+                        actions={[
+                            {
+                                type: 'view',
+                                callback: viewLineItem,
+                            },
+                            {
+                                type: 'delete',
+                                callback: deleteLineItem,
+                            },
+                        ]}
                         headers={[
                             {
                                 title: '',
@@ -136,7 +152,7 @@ const EditInvoice = (props) => {
                             },
                             {
                                 title: 'Session Date',
-                                key: 'session_date',
+                                key: 'session.session_date',
                             },
                             {
                                 title: 'Units',
@@ -148,10 +164,20 @@ const EditInvoice = (props) => {
                             },
                         ]}
                         keys={[
-                            'complete',
-                            'session_date',
-                            'session_units',
-                            'unit_cost',
+                            {
+                                key: 'complete',
+                            },
+                            {
+                                key: 'session.session_date',
+                            },
+                            {
+                                key: 'session_units',
+                            },
+                            {
+                                key: 'unit_cost',
+                                pre: '$',
+                                function: () => session_units * unit_cost,
+                            },
                         ]}
                         items={props.invoice.invoice_line_items}
                     />
