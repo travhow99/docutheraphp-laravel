@@ -23,7 +23,6 @@ const CrudTableAction = (props) => {
                 break;
         }
 
-        console.log(color);
         return color;
     }
 

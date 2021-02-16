@@ -95,6 +95,21 @@ const EditInvoice = (props) => {
         return units * price;
     }
 
+    const generateColor = (status) => {
+        let ret;
+
+        switch (status) {
+            case 'complete':
+                ret = <FaCheck className="text-success" />;                
+                break;
+            default:
+                ret = <FaTimesCircle className="text-danger" />
+                break;
+        }
+
+        return ret;
+    }
+
     return (
         <React.Fragment>
             <Card className="mt-4">
@@ -166,6 +181,7 @@ const EditInvoice = (props) => {
                         keys={[
                             {
                                 key: 'complete',
+                                function: generateColor,
                             },
                             {
                                 key: 'session.session_date',
