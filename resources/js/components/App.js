@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, forwardRef } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
@@ -14,6 +14,7 @@ import ManageClient from './clients/ManageClient';
 import Sidebar from './sidebar/Sidebar';
 import { Container } from 'reactstrap';
 import ManageInvoices from './invoices/ManageInvoices';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // optional configuration
 const options = {
@@ -23,7 +24,7 @@ const options = {
     offset: '30px',
     // you can also just use 'scale'
     transition: transitions.SCALE
-}  
+}
 
 /**
  * @todo Not updating when token set in LoginContainer
@@ -35,9 +36,9 @@ class App extends Component {
         let AppState;
         let state = localStorage["appState"];
         if (state) {
-          AppState = JSON.parse(state);
+            AppState = JSON.parse(state);
         }
-    
+
         this.state = {
             isLoggedIn: AppState.isLoggedIn || false,
             user: AppState.user || {},
@@ -50,7 +51,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        console.log('top state',this.state);
+        console.log('top state', this.state);
     }
 
     updateStorage(storage) {
@@ -66,6 +67,7 @@ class App extends Component {
         console.log('render', this.state);
         return (
             <BrowserRouter>
+                <CssBaseline />
                 <AlertProvider template={AlertTemplate} {...options}>
                     <div>
                         <Header userData={this.state.user} userIsLoggedIn={this.state.isLoggedIn} remember_me={this.state.remember_me} update={this.updateStorage} />

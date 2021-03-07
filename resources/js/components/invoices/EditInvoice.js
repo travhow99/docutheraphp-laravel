@@ -7,6 +7,7 @@ import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import DropdownMenu from '../utilities/DropdownMenu';
 import CrudTable from '../utilities/CrudTable/CrudTable';
+import { getReadableDate } from '../helpers/functions';
 
 const EditInvoice = (props) => {
     const [invoiceName, setInvoiceName] = useState(false);
@@ -110,6 +111,26 @@ const EditInvoice = (props) => {
         return ret;
     }
 
+    const buildData = (items) => {
+        console.log(items);
+        const data = [];
+
+        items.map((i) => {
+            const row = {
+                status: generateColor('complete'),
+                'data-client_id': i.session.client_id,
+                'data-session_id': i.session_id,
+                session_date: getReadableDate(i.session.session_date),
+                session_units: i.session_units,
+                unit_cost: '$' + (i.session_units * i.unit_cost),
+            }
+
+            data.push(row);
+        })
+
+        return data;
+    }
+
     return (
         <React.Fragment>
             <Card className="mt-4">
@@ -178,24 +199,7 @@ const EditInvoice = (props) => {
                                 key: 'unit_cost',
                             },
                         ]}
-                        keys={[
-                            {
-                                key: 'complete',
-                                function: generateColor,
-                            },
-                            {
-                                key: 'session.session_date',
-                            },
-                            {
-                                key: 'session_units',
-                            },
-                            {
-                                key: 'unit_cost',
-                                pre: '$',
-                                function: () => session_units * unit_cost,
-                            },
-                        ]}
-                        items={props.invoice.invoice_line_items}
+                        data={buildData(props.invoice.invoice_line_items)}
                     />
 
                     <Table>

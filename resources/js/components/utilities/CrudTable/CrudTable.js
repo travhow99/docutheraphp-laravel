@@ -5,12 +5,14 @@ import CrudTableRow from "./CrudTableRow";
 
 
 const CrudTable = (props) => {
+    console.log('props:', props);
+
 
     return (
         <Table>
             <thead>
                 <tr>
-                    {props.headers && props.headers.map((head, index) => (
+                    {props.headers.length && props.headers.map((head, index) => (
                         <th
                             key={index}
                             width={head.width || 'auto'}
@@ -22,8 +24,8 @@ const CrudTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {props.items.map((item, index) => (
-                    <CrudTableRow key={index} keys={props.keys} item={item} actions={props.actions} />
+                {props.data.length >= 0 && props.data.map((item, index) => (
+                    <CrudTableRow key={index} item={item} actions={props.actions} headers={props.headers} />
                 ))}
             </tbody>
         </Table>

@@ -27,8 +27,11 @@
         "serialize-javascript": ">=3.1.0"
     },
     "dependencies": {
+        "@material-ui/core": "^4.11.3",
+        "@material-ui/icons": "^4.11.2",
         "eslint": "^7.19.0",
         "luxon": "^1.25.0",
+        "material-table": "^1.69.2",
         "moment": "^2.27.0",
         "react-alert": "^7.0.2",
         "react-alert-template-basic": "^1.0.0",

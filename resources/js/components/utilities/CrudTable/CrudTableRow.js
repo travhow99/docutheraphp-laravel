@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "reactstrap";
 import { FaEye, FaTrash } from "react-icons/fa";
 import CrudTableAction from './CrudTableAction';
+import CrudTableCell from './CrudTableCell';
 
 const CrudTableRow = (props) => {
 
@@ -21,7 +22,8 @@ const CrudTableRow = (props) => {
             console.log(find);
             build += props.item[find[0]][find[1]];
         } else if (key.function) {
-            console.log('func:', key.function);
+            console.log('func:', key, key.function);
+            // console.log('func:', key.function());
         } else {
             build += props.item[key.key];
         }
@@ -29,14 +31,16 @@ const CrudTableRow = (props) => {
         return build;
     }
 
+
     return (
         <tr>
-            {props.keys.map((key, k_index) => (
-                <td key={k_index}>
-                    {/* {key.pre && key.pre}
-                    {props.item[key.key]} */}
-                    {getItem(key)}
+            {/* props.headers.map((key, index) => (
+                <td key={index}>
+                    {props.item[key]}
                 </td>
+            )) */}
+            {Object.keys(props.item).map((key, k_index) => (
+                <CrudTableCell key={k_index} field={key} val={props.item[key]} />
             ))}
 
             <td className="flex-end">
