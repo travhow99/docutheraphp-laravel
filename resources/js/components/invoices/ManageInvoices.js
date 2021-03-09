@@ -7,7 +7,7 @@ const ManageInvoices = () => {
     const [invoices, setInvoices] = useState([]);
     const [editing, setEditing] = useState(false)
 
-    console.log(invoices);
+    console.log('invoices state:', invoices);
     console.log(editing);
     useEffect(() => {
         (async () => {

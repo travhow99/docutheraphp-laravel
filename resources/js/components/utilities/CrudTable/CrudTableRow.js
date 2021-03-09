@@ -6,11 +6,6 @@ import CrudTableCell from './CrudTableCell';
 
 const CrudTableRow = (props) => {
 
-
-    // const text = props.function ? props.function() : props.
-
-    console.log('c row', props);
-
     const getDataElements = (item) => {
         const data = {};
 

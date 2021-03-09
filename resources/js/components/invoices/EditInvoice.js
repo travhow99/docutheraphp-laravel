@@ -14,7 +14,7 @@ const EditInvoice = (props) => {
     const [invoiceDescription, setInvoiceDescription] = useState(false);
     const [adding, setAdding] = useState(false)
 
-    console.log(props.invoice);
+    console.log('invoice state:', props.invoice);
 
     const alert = useAlert();
 
@@ -47,7 +47,7 @@ const EditInvoice = (props) => {
 
     }
 
-    const deleteLineItem = (index, id) => {
+    /* const deleteLineItem = (index, id) => {
         console.log(index, id);
 
         return;
@@ -90,7 +90,7 @@ const EditInvoice = (props) => {
                 }
             ]
         });
-    }
+    } */
 
     const calculateUnitPrice = (units, price) => {
         return units * price;
@@ -131,6 +131,37 @@ const EditInvoice = (props) => {
         })
 
         return data;
+    }
+
+    const updateLineItems = () => {
+        let result = [];
+
+        props.updateInvoices(result);
+    }
+
+    const deleteLineItem = (id) => {
+        let newLineItems = [...props.invoice.invoice_line_items];
+        const index = newLineItems.findIndex((i) => i.id === id);
+        newLineItems.splice(index, 1);
+
+        let updatedInvoice = props.invoice;
+        updatedInvoice.invoice_line_items = newLineItems;
+
+        console.log('updated invoice', updatedInvoice);
+        
+        const updatedInvoiceIndex = props.invoices.findIndex((i) => i.id === props.invoice.id);
+
+        const updatedInvoices = [...props.invoices];
+
+        console.log(updatedInvoices, updatedInvoiceIndex);
+
+        updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
+
+        console.log('prev inv', props.invoices);
+        console.log('updated inv', updatedInvoices);
+
+        props.updateInvoices(updatedInvoices);
+
     }
 
     return (
@@ -184,7 +215,7 @@ const EditInvoice = (props) => {
                                 url: `/api/invoices/$1/invoiceLineItems/$2`,
                                 action: 'delete',
                                 data: ['invoice_id', 'invoice_line_item_id'],
-                                update: props.updateInvoices,
+                                delete: deleteLineItem,
                             },
                         ]}
                         headers={[

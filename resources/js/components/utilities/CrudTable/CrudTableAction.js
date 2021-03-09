@@ -76,8 +76,7 @@ const CrudTableAction = (props) => {
     const deleteAction = () => {
         let url = generateUrl();
 
-        props.action.update([]);
-        return;
+        let id = getDataAttribute(props.action.data.pop());
 
         axios.delete(url)
             .then((res) => res)
@@ -85,6 +84,7 @@ const CrudTableAction = (props) => {
                 if (json.status === 200) {
                     console.log('success');
 
+                    props.action.delete(id);
                     // props.update()
 
                     /* let newPocs = [...props.pocs];
@@ -102,8 +102,6 @@ const CrudTableAction = (props) => {
         return props.data[`data-${attr}`];
     }
 
-    console.log('action p', props);
-
     if (props.action.action === 'link') {
         return (
             <Button className="mr-2" color={generateColor()} /* onClick={props.action.callback()} */ >
@@ -118,7 +116,6 @@ const CrudTableAction = (props) => {
     } else {
         return (
             <Button className="mr-2" color={generateColor()} onClick={generateOnClick} >
-                {console.log(props.action.type, props.data)}
                 {props.action.type === 'view' && <FaEye />}
                 {props.action.type === 'edit' && <BsPencil />}
                 {props.action.type === 'delete' && <FaTrash />}
