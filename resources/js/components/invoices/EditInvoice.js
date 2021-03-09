@@ -120,6 +120,8 @@ const EditInvoice = (props) => {
                 status: generateColor('complete'),
                 'data-client_id': i.session.client_id,
                 'data-session_id': i.session_id,
+                'data-invoice_id': i.invoice_id,
+                'data-invoice_line_item_id': i.id,
                 session_date: getReadableDate(i.session.session_date),
                 session_units: i.session_units,
                 unit_cost: '$' + (i.session_units * i.unit_cost),
@@ -175,73 +177,33 @@ const EditInvoice = (props) => {
                                 type: 'view',
                                 url: `/clients/$1/sessions/$2`,
                                 action: 'link',
-                                data: ['client_id', 'session_id']
+                                data: ['client_id', 'session_id'],
                             },
                             {
                                 type: 'delete',
-                                url: ``, //(9, 10),
-                                action: 'delete'
+                                url: `/api/invoices/$1/invoiceLineItems/$2`,
+                                action: 'delete',
+                                data: ['invoice_id', 'invoice_line_item_id'],
+                                update: props.updateInvoices,
                             },
                         ]}
                         headers={[
                             {
                                 title: '',
                                 width: '5%',
-                                key: 'complete',
                             },
                             {
                                 title: 'Session Date',
-                                key: 'session.session_date',
                             },
                             {
                                 title: 'Units',
-                                key: 'session_units',
                             },
                             {
                                 title: 'Cost',
-                                key: 'unit_cost',
                             },
                         ]}
                         data={buildData(props.invoice.invoice_line_items)}
                     />
-
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Session Date</th>
-                                <th>Units</th>
-                                <th>Cost</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {props.invoice.invoice_line_items && props.invoice.invoice_line_items.map((item, index) => (
-                                <tr key={index}>
-                                    <td width="5%">
-                                        {item.session.complete ?
-                                            <FaCheck className="text-success" />
-                                            :
-                                            <FaTimesCircle className="text-danger" />
-                                        }
-                                    </td>
-                                    <td>{item.session.session_date}</td>
-                                    <td>{item.session_units}</td>
-                                    <td>${calculateUnitPrice(item.session_units, item.unit_cost)}</td>
-                                    <td className="flex-end">
-                                        <div>
-                                            <Button className="mr-2" color="success" onClick={() => deleteLineItem(index, item.id)}>
-                                                <FaEye />
-                                            </Button>
-                                            <Button color="danger" onClick={() => deleteLineItem(index, item.id)}>
-                                                <FaTrash />
-                                            </Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
                 </CardBody>
 
                 <CardFooter>

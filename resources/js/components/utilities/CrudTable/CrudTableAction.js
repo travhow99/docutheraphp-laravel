@@ -4,12 +4,13 @@ import { BsPencil } from 'react-icons/bs';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { GoGear } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 
 const CrudTableAction = (props) => {
     const generateColor = () => {
         let color;
 
-        switch(props.action.type) {
+        switch (props.action.type) {
             case 'view':
                 color = 'primary';
                 break;
@@ -31,7 +32,7 @@ const CrudTableAction = (props) => {
 
     }
 
-    const generateLink = () => {
+    const generateUrl = () => {
         let url = props.action.url;
 
         props.action.data.forEach((d, index) => {
@@ -39,6 +40,61 @@ const CrudTableAction = (props) => {
         });
 
         return url;
+    }
+
+    const generateOnClick = () => {
+        switch (props.action.action) {
+            case 'delete':
+                deletePrompt();
+                break;
+            default:
+                break;
+        }
+    }
+
+    const deletePrompt = () => {
+        if (!props.no_alert) {
+            confirmAlert({
+                title: 'Delete this item?',
+                message: 'This cannot be undone!',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => deleteAction()
+                    },
+                    {
+                        label: 'No',
+                    },
+                ],
+            });
+        } else {
+            deleteAction();
+        }
+
+    }
+
+    const deleteAction = () => {
+        let url = generateUrl();
+
+        props.action.update([]);
+        return;
+
+        axios.delete(url)
+            .then((res) => res)
+            .then((json) => {
+                if (json.status === 200) {
+                    console.log('success');
+
+                    // props.update()
+
+                    /* let newPocs = [...props.pocs];
+                    newPocs.splice(index, 1);
+                    
+                    props.updatePocs(newPocs); */
+                }
+            })
+            .catch((err) => console.log(err))
+
     }
 
     const getDataAttribute = (attr) => {
@@ -50,16 +106,18 @@ const CrudTableAction = (props) => {
 
     if (props.action.action === 'link') {
         return (
-            <Link to={generateLink}>
-                {props.action.type === 'view' && <FaEye />}
-                {props.action.type === 'edit' && <BsPencil />}
-                {props.action.type === 'delete' && <FaTrash />}
-                {props.action.type === 'default' && <GoGear />}
-            </Link>
+            <Button className="mr-2" color={generateColor()} /* onClick={props.action.callback()} */ >
+                <Link style={{ color: "white" }} to={generateUrl}>
+                    {props.action.type === 'view' && <FaEye />}
+                    {props.action.type === 'edit' && <BsPencil />}
+                    {props.action.type === 'delete' && <FaTrash />}
+                    {props.action.type === 'default' && <GoGear />}
+                </Link>
+            </Button>
         )
     } else {
         return (
-            <Button className="mr-2" color={generateColor()} /* onClick={props.action.callback()} */ >
+            <Button className="mr-2" color={generateColor()} onClick={generateOnClick} >
                 {console.log(props.action.type, props.data)}
                 {props.action.type === 'view' && <FaEye />}
                 {props.action.type === 'edit' && <BsPencil />}

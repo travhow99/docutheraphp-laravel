@@ -11,34 +11,12 @@ const CrudTableRow = (props) => {
 
     console.log('c row', props);
 
-    const getItem = (key) => {
-        let build = '';
-
-        if (key.pre) build += key.pre;
-
-        if (key.key.indexOf('.') >= 0) {
-            const find = key.key.split('.');
-
-            console.log(find);
-            build += props.item[find[0]][find[1]];
-        } else if (key.function) {
-            console.log('func:', key, key.function);
-            // console.log('func:', key.function());
-        } else {
-            build += props.item[key.key];
-        }
-
-        return build;
-    }
-
     const getDataElements = (item) => {
         const data = {};
 
         Object.keys(item).map((key, k_index) => {
             if (key.indexOf('data-') === 0) data[key] = props.item[key];
         });
-
-        console.log(data);
 
         return data;
     }

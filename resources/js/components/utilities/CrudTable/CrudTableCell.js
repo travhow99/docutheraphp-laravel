@@ -9,7 +9,6 @@ const CrudTableCell = (props) => {
         
     }
 
-    console.log('cell proops:', props);
     if (props.field.indexOf('data-') === 0) return null;
 
     return (
