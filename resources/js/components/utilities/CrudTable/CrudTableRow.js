@@ -31,14 +31,20 @@ const CrudTableRow = (props) => {
         return build;
     }
 
+    const getDataElements = (item) => {
+        const data = {};
+
+        Object.keys(item).map((key, k_index) => {
+            if (key.indexOf('data-') === 0) data[key] = props.item[key];
+        });
+
+        console.log(data);
+
+        return data;
+    }
 
     return (
-        <tr>
-            {/* props.headers.map((key, index) => (
-                <td key={index}>
-                    {props.item[key]}
-                </td>
-            )) */}
+        <tr {...getDataElements(props.item)}>
             {Object.keys(props.item).map((key, k_index) => (
                 <CrudTableCell key={k_index} field={key} val={props.item[key]} />
             ))}
@@ -46,7 +52,7 @@ const CrudTableRow = (props) => {
             <td className="flex-end">
                 <div>
                     {props.actions.map((action, index) => (
-                        <CrudTableAction key={index} action={action} />
+                        <CrudTableAction key={index} action={action} data={getDataElements(props.item)} />
                     ))}
                 </div>
             </td>

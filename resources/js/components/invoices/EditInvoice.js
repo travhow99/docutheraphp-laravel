@@ -173,11 +173,14 @@ const EditInvoice = (props) => {
                         actions={[
                             {
                                 type: 'view',
-                                callback: viewLineItem,
+                                url: `/clients/$1/sessions/$2`,
+                                action: 'link',
+                                data: ['client_id', 'session_id']
                             },
                             {
                                 type: 'delete',
-                                callback: deleteLineItem,
+                                url: ``, //(9, 10),
+                                action: 'delete'
                             },
                         ]}
                         headers={[
