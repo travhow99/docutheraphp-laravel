@@ -126,3 +126,5 @@ const CrudTableAction = (props) => {
 }
 
 export default CrudTableAction;
+
+module.exports = { generateUrl };
