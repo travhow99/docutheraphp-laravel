@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {String} type Action type
+ * @returns string
+ */
 function generateColor(type) {
     let color;
 
@@ -19,4 +24,23 @@ function generateColor(type) {
     return color;
 }
 
-module.exports = { generateColor };
+/**
+ * 
+ * @param {String} attr Attribute
+ * @param {Object} data Table action data
+ * @returns string
+ */
+function getDataAttribute(attr, data) {
+    return data[`data-${attr}`];
+}
+
+function generateUrl(url, data = [], obj) {
+    console.log('generate', url, data);
+    data.forEach((d, index) => {
+        url = url.replace(`$${index + 1}`, getDataAttribute(d, obj));
+    });
+
+    return url;
+}
+
+module.exports = { generateColor, getDataAttribute, generateUrl };
