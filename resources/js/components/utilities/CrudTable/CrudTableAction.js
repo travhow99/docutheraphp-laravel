@@ -5,28 +5,9 @@ import { FaEye, FaTrash } from 'react-icons/fa';
 import { GoGear } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
+import { generateColor } from './functions';
 
 const CrudTableAction = (props) => {
-    const generateColor = () => {
-        let color;
-
-        switch (props.action.type) {
-            case 'view':
-                color = 'primary';
-                break;
-            case 'edit':
-                color = 'success';
-                break;
-            case 'delete':
-                color = 'danger';
-                break;
-            default:
-                color = 'primary';
-                break;
-        }
-
-        return color;
-    }
 
     const view = () => {
 
@@ -104,7 +85,7 @@ const CrudTableAction = (props) => {
 
     if (props.action.action === 'link') {
         return (
-            <Button className="mr-2" color={generateColor()} /* onClick={props.action.callback()} */ >
+            <Button className="mr-2" color={generateColor(props.action.type)} /* onClick={props.action.callback()} */ >
                 <Link style={{ color: "white" }} to={generateUrl}>
                     {props.action.type === 'view' && <FaEye />}
                     {props.action.type === 'edit' && <BsPencil />}
@@ -115,7 +96,7 @@ const CrudTableAction = (props) => {
         )
     } else {
         return (
-            <Button className="mr-2" color={generateColor()} onClick={generateOnClick} >
+            <Button className="mr-2" color={generateColor(props.action.type)} onClick={generateOnClick} >
                 {props.action.type === 'view' && <FaEye />}
                 {props.action.type === 'edit' && <BsPencil />}
                 {props.action.type === 'delete' && <FaTrash />}
@@ -126,5 +107,3 @@ const CrudTableAction = (props) => {
 }
 
 export default CrudTableAction;
-
-module.exports = { generateUrl };
