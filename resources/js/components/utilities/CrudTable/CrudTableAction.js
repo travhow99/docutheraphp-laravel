@@ -5,41 +5,12 @@ import { FaEye, FaTrash } from 'react-icons/fa';
 import { GoGear } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
+import { generateColor, generateUrl, getDataAttribute } from './functions';
 
 const CrudTableAction = (props) => {
-    const generateColor = () => {
-        let color;
-
-        switch (props.action.type) {
-            case 'view':
-                color = 'primary';
-                break;
-            case 'edit':
-                color = 'success';
-                break;
-            case 'delete':
-                color = 'danger';
-                break;
-            default:
-                color = 'primary';
-                break;
-        }
-
-        return color;
-    }
 
     const view = () => {
 
-    }
-
-    const generateUrl = () => {
-        let url = props.action.url;
-
-        props.action.data.forEach((d, index) => {
-            url = url.replace(`$${index + 1}`, getDataAttribute(d));
-        });
-
-        return url;
     }
 
     const generateOnClick = () => {
@@ -74,9 +45,9 @@ const CrudTableAction = (props) => {
     }
 
     const deleteAction = () => {
-        let url = generateUrl();
+        let url = generateUrl(props.action.url, props.action.data, props.data);
 
-        let id = getDataAttribute(props.action.data.pop());
+        let id = getDataAttribute(props.action.data.pop(), props.data);
 
         axios.delete(url)
             .then((res) => res)
@@ -97,15 +68,10 @@ const CrudTableAction = (props) => {
 
     }
 
-    const getDataAttribute = (attr) => {
-        // return attr.replace('data-', '');
-        return props.data[`data-${attr}`];
-    }
-
     if (props.action.action === 'link') {
         return (
-            <Button className="mr-2" color={generateColor()} /* onClick={props.action.callback()} */ >
-                <Link style={{ color: "white" }} to={generateUrl}>
+            <Button className="mr-2" color={generateColor(props.action.type)} /* onClick={props.action.callback()} */ >
+                <Link style={{ color: "white" }} to={generateUrl(props.action.url, props.action.data, props.data)}>
                     {props.action.type === 'view' && <FaEye />}
                     {props.action.type === 'edit' && <BsPencil />}
                     {props.action.type === 'delete' && <FaTrash />}
@@ -115,7 +81,7 @@ const CrudTableAction = (props) => {
         )
     } else {
         return (
-            <Button className="mr-2" color={generateColor()} onClick={generateOnClick} >
+            <Button className="mr-2" color={generateColor(props.action.type)} onClick={generateOnClick} >
                 {props.action.type === 'view' && <FaEye />}
                 {props.action.type === 'edit' && <BsPencil />}
                 {props.action.type === 'delete' && <FaTrash />}
