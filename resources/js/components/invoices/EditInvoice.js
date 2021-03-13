@@ -177,6 +177,7 @@ const EditInvoice = (props) => {
                     <Card className="mt-2">
                         <CardBody>
                             <CrudTable
+                                title="Invoice Items"
                                 actions={[
                                     {
                                         type: 'view',
