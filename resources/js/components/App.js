@@ -16,6 +16,7 @@ import ManageInvoices from './invoices/ManageInvoices';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import EditInvoice from './invoices/EditInvoice';
 
 // optional configuration
 const options = {
@@ -88,7 +89,8 @@ class App extends Component {
                                         <PrivateRoute exact path="/" component={Home} />
                                         <PrivateRoute exact path="/clients" component={Clients} />
                                         <PrivateRoute path="/clients/:id" component={ManageClient} />
-                                        <PrivateRoute path="/invoicing" component={ManageInvoices} />
+                                        <PrivateRoute exact path="/invoicing" component={ManageInvoices} />
+                                        <PrivateRoute path="/invoicing/:invoice_id" component={EditInvoice} />
 
                                     </Switch>
                                 </Container>

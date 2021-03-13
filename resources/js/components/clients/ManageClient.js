@@ -10,6 +10,7 @@ import EditSession from '../sessions/EditSession';
 import { useAlert } from 'react-alert';
 import { getRandomColor } from '../helpers/functions';
 import Invoices from '../invoices/Invoices';
+import EditInvoice from '../invoices/EditInvoice';
 
 const ManageClient = (props) => {
     const params = useParams();
@@ -34,40 +35,40 @@ const ManageClient = (props) => {
                 axios.get(`/api/clients/${id}/pocs`),
                 axios.get(`/api/clients/${id}/invoices`),
             ])
-            .then(axios.spread((clientDataRes, goalDataRes, pocsDataRes, invoicesDataRes) => {
-                setClient(goalDataRes.data.client);
-                setGoals(goalDataRes.data.goals);
-                setPocs(pocsDataRes.data);
-                setInvoices(invoicesDataRes.data);
-            }))
-            .catch((err) => console.log(err))
+                .then(axios.spread((clientDataRes, goalDataRes, pocsDataRes, invoicesDataRes) => {
+                    setClient(goalDataRes.data.client);
+                    setGoals(goalDataRes.data.goals);
+                    setPocs(pocsDataRes.data);
+                    setInvoices(invoicesDataRes.data);
+                }))
+                .catch((err) => console.log(err))
         }
 
-        fetchClient();        
+        fetchClient();
     }, [id, setPocs]);
-    
+
     const updateClient = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         if (client[name] === value) return;
 
         axios.put(`/api/clients/${id}`, {
             [name]: value,
         })
-        .then((res) => res)
-        .then((json) => {
-            if (json.status === 200) {
-                alert.show('Client updated!', {
-                    timeout: 2000, // custom timeout just for this one alert
-                    type: 'success',
-                })
+            .then((res) => res)
+            .then((json) => {
+                if (json.status === 200) {
+                    alert.show('Client updated!', {
+                        timeout: 2000, // custom timeout just for this one alert
+                        type: 'success',
+                    })
 
-                setClient({
-                    ...client,
-                    [name]: value,
-                })
-            }
-        })
+                    setClient({
+                        ...client,
+                        [name]: value,
+                    })
+                }
+            })
     }
 
 
@@ -78,10 +79,10 @@ const ManageClient = (props) => {
                     <div className="d-flex h-100 client-sidebar">
                         <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} />
                     </div>
-                    <Route 
+                    <Route
                         exact
-                        path="/clients/:id" 
-                        render={() => <ClientOverview client={client} goals={goals} />} 
+                        path="/clients/:id"
+                        render={() => <ClientOverview client={client} goals={goals} />}
                     />
                     <Route
                         path="/clients/:id/details"
@@ -99,7 +100,7 @@ const ManageClient = (props) => {
                     <Route
                         exact
                         path="/clients/:id/sessions/new"
-                        render={() => <AddSession client={client}/>}
+                        render={() => <AddSession client={client} />}
                     />
                     <Route
                         path="/clients/:id/sessions/:session_id"
@@ -108,6 +109,10 @@ const ManageClient = (props) => {
                     <Route
                         path="/clients/:id/invoices"
                         render={() => <Invoices client={client} invoices={invoices} updateInvoices={setInvoices} />}
+                    />
+                    <Route
+                        path="/clients/:id/invoices/:invoice_id"
+                        render={() => <EditInvoice client={client} invoices={invoices} updateInvoices={setInvoices} />}
                     />
                 </div>
             ) : (

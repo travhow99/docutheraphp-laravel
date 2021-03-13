@@ -1,6 +1,7 @@
 <?php
 
 use App\Client;
+use App\Http\Controllers\Api\InvoiceController;
 use Illuminate\Http\Request;
 
 /*
@@ -77,6 +78,8 @@ Route::group(['middleware' => ['json.response']], function () {
                 'invoices' => $invoices,
             ], 200);
         });
+
+        Route::get('invoices/{invoice}', 'Api\InvoiceController@show');
         
         // Route::get('/')
 

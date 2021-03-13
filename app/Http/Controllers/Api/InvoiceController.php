@@ -63,6 +63,12 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
 
+        $invoice->invoice_line_items = $invoice->invoiceLineItems()->get();
+
+        foreach ($invoice->invoice_line_items as $key => $line_item) {
+            $invoice->invoice_line_items[$key]->session = $line_item->session()->get()[0];
+        }
+
         return response($invoice, 200);
     }
 
