@@ -22,27 +22,20 @@ const ManageInvoices = () => {
     return (
         <React.Fragment>
             {invoices.length ? (
-                <div className="d-flex h-100"/*  anti-container" */>
+                <React.Fragment>
                     {editing ? (
-                        <React.Fragment>
-                            {/* <div className="d-flex h-100 client-sidebar">
-                                <ClientInfo active={active} setActive={setActive} client={client} pocs={pocs} randomColor={randomColor} />
-                            </div> */}
-                            <div className="w-100">
-                                <EditInvoice invoice={currentInvoice} invoices={invoices} editInvoice={setEditing} updateInvoices={setInvoices} />
-                            </div>
-
-                        </React.Fragment>
+                        <EditInvoice invoice={currentInvoice} invoices={invoices} editInvoice={setEditing} updateInvoices={setInvoices} />
                     ) : (
-                        <Invoices invoices={invoices} withClientName={true} editInvoice={setEditing} />
+                        <div className="d-flex h-100"/*  anti-container" */>
+                            <Invoices invoices={invoices} withClientName={true} editInvoice={setEditing} />
+                        </div>
                     )}
-                </div>
+                </React.Fragment>
             ) : (
-                    <div>Loading {/* TODO loading svg */}</div>
-                )}
-        </React.Fragment>
+                <div>Loading {/* TODO loading svg */}</div>
+            )}
+        </React.Fragment >
     );
-
 }
 
 export default ManageInvoices;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { useHistory } from 'react-router';
 import {
     Row, Col,
     Card, Table, Button, CardText, Form, FormGroup, CardHeader, CardBody, CardFooter
@@ -8,7 +9,12 @@ import DropdownMenu from '../utilities/DropdownMenu';
 import AddInvoice from './AddInvoice';
 
 const Invoices = (props) => {
+    const history = useHistory();
     const [adding, setAdding] = useState(false);
+
+    const editInvoice = (id) => {
+        return 
+    }
 
     const deleteInvoice = (index, id) => {
         axios.delete(`/api/clients/${props.client.id}/invoices/${id}`)
@@ -73,7 +79,7 @@ const Invoices = (props) => {
                                                             items={[
                                                                 {
                                                                     value: 'View',
-                                                                    onClick: () => props.editInvoice(invoice.id)
+                                                                    onClick: () => history.push(`/clients/${props.client.id}/invoices/${invoice.id}`) // editInvoice(invoice.id)
                                                                 },
                                                                 {
                                                                     value: 'Update',

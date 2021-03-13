@@ -137,7 +137,7 @@ const EditInvoice = (props) => {
     }
 
     return (
-        <React.Fragment>
+        <div className="client-container">
             {invoice ? 
                 <React.Fragment>
                     <Card className="mt-4">
@@ -223,7 +223,7 @@ const EditInvoice = (props) => {
                 Loading...
             </div>
             }
-        </React.Fragment>
+        </div>
 
     )
 }

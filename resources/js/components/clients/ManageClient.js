@@ -107,6 +107,7 @@ const ManageClient = (props) => {
                         render={() => <EditSession client={client} />}
                     />
                     <Route
+                        exact
                         path="/clients/:id/invoices"
                         render={() => <Invoices client={client} invoices={invoices} updateInvoices={setInvoices} />}
                     />
