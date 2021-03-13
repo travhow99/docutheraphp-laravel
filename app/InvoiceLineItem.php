@@ -14,6 +14,13 @@ class InvoiceLineItem extends Model
     protected $fillable = ['invoice_id', 'session_id', 'session_units', 'unit_cost'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['session'];
+
+    /**
      * Get the owning invoice model.
      */
     public function invoice()
@@ -27,5 +34,15 @@ class InvoiceLineItem extends Model
     public function session()
     {
         return $this->belongsTo(Session::class);
+    }
+
+    /**
+     * Set the invoice_line_items attribute.
+     */
+    public function getInvoiceLineItemSessionAttribute()
+    {
+        $session = $this->sessions();
+
+        return $session->count() ? $session : [];
     }
 }

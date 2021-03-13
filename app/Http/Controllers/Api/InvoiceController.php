@@ -18,12 +18,6 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::all();
 
-        // Get the related line items
-        // TODO: Always include from the Model
-        foreach ($invoices as $i) {
-            $i->invoice_line_items = $i->invoiceLineItems()->get();
-        }
-
         return response($invoices, 200);
     }
 
@@ -48,8 +42,6 @@ class InvoiceController extends Controller
             'agency' => $request->agency,
         ]);
 
-        $invoice->invoice_line_items = $invoice->invoiceLineItems()->get();
-
         return response($invoice, 201);
     }
 
@@ -62,12 +54,6 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $invoice = Invoice::find($id);
-
-        $invoice->invoice_line_items = $invoice->invoiceLineItems()->get();
-
-        foreach ($invoice->invoice_line_items as $key => $line_item) {
-            $invoice->invoice_line_items[$key]->session = $line_item->session()->get()[0];
-        }
 
         return response($invoice, 200);
     }
@@ -103,6 +89,7 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
 
+        $invoice->invoiceLineItems()->delete();
         $invoice->delete();
 
         return response('success', 200);

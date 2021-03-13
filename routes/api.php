@@ -61,19 +61,6 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::get('invoices', function (Request $request) {
             $invoices = $request->user()->invoices()->get();
 
-            // Get the related line items
-            /**
-             * @todo get session details to include
-             */
-            foreach ($invoices as $i) {
-                $i->client_name = Client::clientNameFromId($i->client_id);
-                $i->invoice_line_items = $i->invoiceLineItems()->get();
-
-                foreach ($i->invoice_line_items as $key => $line_item) {
-                    $i->invoice_line_items[$key]->session = $line_item->session()->get()[0];
-                }
-            }
-
             return response([
                 'invoices' => $invoices,
             ], 200);
@@ -81,15 +68,6 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::get('invoices/{invoice}', 'Api\InvoiceController@show');
         
-        // Route::get('/')
-
-        // Route::get('/clients', 'Api\ClientController@index');
-        // Route::get('/client/{id}', 'Api\ClientController@show');
-        // Route::get('/clients/{client}/edit', 'Api\ClientController@edit');
-        // Route::post('/client', 'Api\ClientController@store');
-        // Route::patch('/client/{client}', 'Api\ClientController@update');
-        // Route::delete('/clients/{client}', 'Api\ClientController@destroy');
-
         /**
          * Pocs, Sessions
          * TODO: Switch to shallow resource upon upgrading Laravel.
