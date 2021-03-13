@@ -79,7 +79,10 @@ const Invoices = (props) => {
                                                             items={[
                                                                 {
                                                                     value: 'View',
-                                                                    onClick: () => history.push(`/clients/${props.client.id}/invoices/${invoice.id}`) // editInvoice(invoice.id)
+                                                                    onClick: () => 
+                                                                    props.client ? history.push(`/clients/${props.client.id}/invoices/${invoice.id}`)
+                                                                    :
+                                                                    history.push(`/invoicing/${invoice.id}`) // editInvoice(invoice.id)
                                                                 },
                                                                 {
                                                                     value: 'Update',
