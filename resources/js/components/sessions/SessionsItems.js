@@ -4,14 +4,19 @@ import { getReadableDate, toLocalTime } from '../helpers/functions';
 import CrudTable from '../utilities/CrudTable/CrudTable';
 
 const SessionsItems = (props) => {
+    console.log('sesh itesm props', props);
     const [sessions, setSessions] = useState(props.priorData || []);
 
     useEffect(() => {
         const fetchSessions = async() => {
-            axios.get(`/api/sessions`)
+            const url = props.client_id ? `/api/clients/${props.client_id}/sessions` : '/api/sessions';
+
+            axios.get(url)
                 .then((res) => {
-                    setSessions(res.data)
-                    props.setPriorData(res.data)
+                    const data = res.data.sessions ? res.data.sessions : res.data;
+                    
+                    setSessions(data)
+                    props.setPriorData(data)
                 })
                 .catch((err) => console.log(err))
         }

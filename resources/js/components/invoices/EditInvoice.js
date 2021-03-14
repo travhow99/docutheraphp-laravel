@@ -12,6 +12,7 @@ import SessionsItems from '../sessions/SessionsItems';
 
 const EditInvoice = (props) => {
     const params = useParams();
+    const client_id = params.id || null;
     const invoice_id = params.invoice_id;
 
     console.log('inv invoice_id:', invoice_id);
@@ -218,7 +219,7 @@ const EditInvoice = (props) => {
                             </Button>
                         </CardFooter>
                     </Card>
-                    {adding && <SessionsItems id={0} buttonLabel={'Save'} priorData={priorData} setPriorData={setPriorData} />}
+                    {adding && <SessionsItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} setPriorData={setPriorData} />}
             </React.Fragment>
             :
             <div>
