@@ -14,6 +14,13 @@ class SessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function get()
+    {
+        $sessions = Session::all();
+
+        return response($sessions, 200);
+    }
+
     public function index($id)
     {
         $client = Client::find($id);

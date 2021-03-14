@@ -4,12 +4,11 @@ import {
 } from "reactstrap";
 import { FaTimes, FaCheck, FaTimesCircle, FaEye, FaTrash } from 'react-icons/fa';
 import { useAlert } from 'react-alert';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import DropdownMenu from '../utilities/DropdownMenu';
 import CrudTable from '../utilities/CrudTable/CrudTable';
 import { getReadableDate } from '../helpers/functions';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import SessionsItems from '../sessions/SessionsItems';
 
 const EditInvoice = (props) => {
     const params = useParams();
@@ -20,6 +19,7 @@ const EditInvoice = (props) => {
     const [invoiceName, setInvoiceName] = useState(false);
     const [invoiceDescription, setInvoiceDescription] = useState(false);
     const [adding, setAdding] = useState(false)
+    const [priorData, setPriorData] = useState([])
 
     useEffect(() => {
         const fetchInvoice = async() => {
@@ -213,11 +213,12 @@ const EditInvoice = (props) => {
                         </CardBody>
 
                         <CardFooter>
-                            <Button onClick={() => setAdding(true)}>
-                                Add Session
+                            <Button onClick={() => setAdding(!adding)}>
+                                {!adding ? 'Add Session' : 'Close'}
                             </Button>
                         </CardFooter>
                     </Card>
+                    {adding && <SessionsItems id={0} buttonLabel={'Save'} priorData={priorData} setPriorData={setPriorData} />}
             </React.Fragment>
             :
             <div>

@@ -1,11 +1,12 @@
 import React from "react";
-import { FaEye, FaTrash } from "react-icons/fa";
-import { Button, Table } from "reactstrap";
+import { Table } from "reactstrap";
 import CrudTableRow from "./CrudTableRow";
 
 
 const CrudTable = (props) => {
     console.log('props:', props);
+
+    const actions = props.actions || [];
 
 
     return (
@@ -24,12 +25,12 @@ const CrudTable = (props) => {
                                     {head.title}
                                 </th>
                             ))}
-                            {props.actions.length >= 0 && <th />}
+                            {actions.length >= 0 && <th />}
                         </tr>
                     </thead>
                     <tbody>
                         {props.data.map((item, index) => (
-                            <CrudTableRow key={index} item={item} actions={props.actions} headers={props.headers} />
+                            <CrudTableRow key={index} item={item} actions={actions} headers={props.headers} />
                         ))}
                     </tbody>
                 </Table>
