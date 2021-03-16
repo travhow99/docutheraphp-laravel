@@ -10,8 +10,11 @@ function generateColor(type) {
         case 'view':
             color = 'primary';
             break;
-        case 'edit':
+        case 'add':
             color = 'success';
+            break;
+        case 'edit':
+            color = 'warning';
             break;
         case 'delete':
             color = 'danger';
@@ -35,10 +38,10 @@ function getDataAttribute(attr, data) {
 }
 
 function generateUrl(url, data = [], obj) {
-    console.log('generate', url, data);
     data.forEach((d, index) => {
         url = url.replace(`$${index + 1}`, getDataAttribute(d, obj));
     });
+    console.log('generate', url, data, obj);
 
     return url;
 }

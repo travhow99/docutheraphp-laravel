@@ -17,7 +17,7 @@ const CrudTable = (props) => {
                 <Table>
                     <thead>
                         <tr>
-                            {props.headers.length && props.headers.map((head, index) => (
+                            {props.headers.length > 0 && props.headers.map((head, index) => (
                                 <th
                                     key={index}
                                     width={head.width || 'auto'}

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { BsPencil } from 'react-icons/bs';
-import { FaEye, FaTrash } from 'react-icons/fa';
-import { GoGear } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { generateColor, generateUrl, getDataAttribute } from './functions';
+import CrudTableButton from './CrudTableButton';
 
 const CrudTableAction = (props) => {
 
@@ -15,12 +14,58 @@ const CrudTableAction = (props) => {
 
     const generateOnClick = () => {
         switch (props.action.action) {
+            case 'post':
+                postPrompt();
+                break;
             case 'delete':
                 deletePrompt();
                 break;
             default:
                 break;
         }
+    }
+
+    const postPrompt = () => {
+        if (!props.no_alert) {
+            confirmAlert({
+                title: 'Add this item?',
+                message: props.action.text || 'You can change this at any time.',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => postAction(),
+                    },
+                    {
+                        label: 'No',
+                    },
+                ],
+            });
+        } else {
+            postAction();
+        }
+    }
+
+    const postAction = () => {
+        let url = generateUrl(props.action.url, props.action.data, props.data);
+
+        let id = getDataAttribute(props.action.data.pop(), props.data);
+
+        const data = {
+            session_id: id,
+        }
+
+        console.log(data, url);
+        return;
+
+        axios.post(url, data)
+            .then((json) => {
+                if (json.status === 201) {
+                    console.log('success');
+
+                    props.action.callback(id);
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
     const deletePrompt = () => {
@@ -31,7 +76,7 @@ const CrudTableAction = (props) => {
                 buttons: [
                     {
                         label: 'Yes',
-                        onClick: () => deleteAction()
+                        onClick: () => deleteAction(),
                     },
                     {
                         label: 'No',
@@ -41,7 +86,6 @@ const CrudTableAction = (props) => {
         } else {
             deleteAction();
         }
-
     }
 
     const deleteAction = () => {
@@ -50,42 +94,28 @@ const CrudTableAction = (props) => {
         let id = getDataAttribute(props.action.data.pop(), props.data);
 
         axios.delete(url)
-            .then((res) => res)
             .then((json) => {
                 if (json.status === 200) {
                     console.log('success');
 
-                    props.action.delete(id);
-                    // props.update()
-
-                    /* let newPocs = [...props.pocs];
-                    newPocs.splice(index, 1);
-                    
-                    props.updatePocs(newPocs); */
+                    props.action.callback(id);
                 }
             })
             .catch((err) => console.log(err))
-
     }
 
     if (props.action.action === 'link') {
         return (
-            <Button className="mr-2" color={generateColor(props.action.type)} /* onClick={props.action.callback()} */ >
-                <Link style={{ color: "white" }} to={generateUrl(props.action.url, props.action.data, props.data)}>
-                    {props.action.type === 'view' && <FaEye />}
-                    {props.action.type === 'edit' && <BsPencil />}
-                    {props.action.type === 'delete' && <FaTrash />}
-                    {props.action.type === 'default' && <GoGear />}
-                </Link>
-            </Button>
+            <Link style={{ color: "white" }} to={generateUrl(props.action.url, props.action.data, props.data)}>
+                <Button className="mr-2" color={generateColor(props.action.type)} /* onClick={props.action.callback()} */ >
+                    <CrudTableButton type={props.action.type} />
+                </Button>
+            </Link>
         )
     } else {
         return (
             <Button className="mr-2" color={generateColor(props.action.type)} onClick={generateOnClick} >
-                {props.action.type === 'view' && <FaEye />}
-                {props.action.type === 'edit' && <BsPencil />}
-                {props.action.type === 'delete' && <FaTrash />}
-                {props.action.type === 'default' && <GoGear />}
+                <CrudTableButton type={props.action.type} />
             </Button>
         )
     }

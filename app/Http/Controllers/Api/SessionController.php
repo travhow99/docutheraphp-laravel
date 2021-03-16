@@ -14,9 +14,15 @@ class SessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get()
+    public function completed($id=null)
     {
-        $sessions = Session::all();
+        $sessions = Session::where('complete', 1);
+
+        if ($id) {
+            $sessions = $sessions->where('client_id', $id);
+        }
+        
+        $sessions = $sessions->get();
 
         return response($sessions, 200);
     }

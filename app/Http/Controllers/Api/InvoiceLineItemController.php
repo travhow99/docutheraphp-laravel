@@ -31,6 +31,7 @@ class InvoiceLineItemController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
+            'session_id' => 'required',
             'session_units' => 'required',
             'unit_cost' => 'required',
         ]);

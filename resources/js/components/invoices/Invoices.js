@@ -114,6 +114,9 @@ const Invoices = (props) => {
                             </CardFooter>
                         </Card>
                         :
+                        /**
+                         * @todo dynamic addInvoice for adding from invoices.js
+                         */
                         <AddInvoice setAdding={setAdding} agency={props.client.agency} client_id={props.client.id} invoices={props.invoices} updateInvoices={props.updateInvoices} />
                     }
                 </Col>

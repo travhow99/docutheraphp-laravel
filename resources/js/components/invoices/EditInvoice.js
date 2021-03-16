@@ -191,7 +191,7 @@ const EditInvoice = (props) => {
                                         url: `/api/invoices/$1/invoiceLineItems/$2`,
                                         action: 'delete',
                                         data: ['invoice_id', 'invoice_line_item_id'],
-                                        delete: deleteLineItem,
+                                        callback: deleteLineItem,
                                     },
                                 ]}
                                 headers={[
@@ -219,7 +219,7 @@ const EditInvoice = (props) => {
                             </Button>
                         </CardFooter>
                     </Card>
-                    {adding && <SessionsItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} setPriorData={setPriorData} />}
+                    {adding && <SessionsItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} invoice={invoice} setPriorData={setPriorData} />}
             </React.Fragment>
             :
             <div>

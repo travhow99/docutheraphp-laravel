@@ -37,7 +37,7 @@ const DropdownMenu = (props) => {
             <BsThreeDotsVertical className="c-pointer" onClick={() => setExpanded(!expanded)} />
 
             <div className="th-dropdown-menu" data-expanded={expanded} onBlur={() => setExpanded(false)}>
-                {props.items.length && (
+                {props.items.length > 0 && (
                     props.items.map((p, index) => (
                         <div className="th-dropdown-menu-item" key={index} onClick={() => p.onClick()}>{p.value}</div>
                     ))

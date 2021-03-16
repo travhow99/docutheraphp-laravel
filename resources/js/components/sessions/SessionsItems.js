@@ -9,7 +9,7 @@ const SessionsItems = (props) => {
 
     useEffect(() => {
         const fetchSessions = async() => {
-            const url = props.client_id ? `/api/clients/${props.client_id}/sessions` : '/api/sessions';
+            const url = props.client_id ? `/api/clients/${props.client_id}/sessions/completed` : '/api/sessions/completed';
 
             axios.get(url)
                 .then((res) => {
@@ -33,6 +33,7 @@ const SessionsItems = (props) => {
             const row = {
                 'data-client_id': i.client_id,
                 'data-session_id': i.id,
+                'data-invoice_id': props.invoice.id,
                 billed: i.billed,
                 client: i.client_name,
                 session_date: getReadableDate(i.session_date),
@@ -43,6 +44,11 @@ const SessionsItems = (props) => {
         })
 
         return data;
+    }
+
+    const addLineItem = (id) => {
+        // post to add line item to invoices
+        console.log('add item', id);
     }
 
     return (
@@ -56,6 +62,17 @@ const SessionsItems = (props) => {
                             url: `/clients/$1/sessions/$2`,
                             action: 'link',
                             data: ['client_id', 'session_id'],
+                        },
+                        /**
+                         * @todo Add session to invoice action
+                         */
+                         {
+                            type: 'add',
+                            url: `/api/invoices/$1/invoiceLineItems`,
+                            action: 'post',
+                            data: ['invoice_id'],
+                            text: 'Add session to this invoice?',
+                            callback: addLineItem,
                         },
                     ]}
                     headers={[

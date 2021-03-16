@@ -67,7 +67,8 @@ Route::group(['middleware' => ['json.response']], function () {
         });
 
         Route::get('invoices/{invoice}', 'Api\InvoiceController@show');
-        Route::get('sessions', 'Api\SessionController@get');
+        Route::get('sessions/completed', 'Api\SessionController@completed');
+        Route::get('clients/{client}/sessions/completed', 'Api\SessionController@completed');
         
         /**
          * Pocs, Sessions

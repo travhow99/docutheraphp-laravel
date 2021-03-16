@@ -5,7 +5,7 @@ import { withRouter, Link, Redirect } from 'react-router-dom';
 import {
     Row, Col,
     Card, Button,
-    Input, Select
+    Input, Label
 } from 'reactstrap';
 import SessionGoal from './SessionGoal';
 import ToggleSwitch from '../utilities/ToggleSwitch';
@@ -57,9 +57,9 @@ class EditSession extends Component {
                     this.setState({
                         possible_goals: response.data.goals,
                     });
-        
+
                     console.log(this.state);
-                })        
+                })
             }
         })
     }
@@ -73,6 +73,34 @@ class EditSession extends Component {
 
         const name = e.target.name;
         const val = e.target.checked;
+
+
+        axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
+            [name]: val,
+        })
+            .then((response) => response)
+            .then((json) => {
+                if (json.status === 200) {
+                    console.log(json.data);
+
+                    this.setState({
+                        session: {
+                            ...this.state.session,
+                            [name]: val,
+                        },
+                    });
+                }
+            })
+    }
+
+    updateValue(e) {
+        e.preventDefault();
+
+        const name = e.target.name;
+        const val = e.target.value;
+
+        console.log(e, name, val);
+        return;
 
 
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
@@ -152,7 +180,7 @@ class EditSession extends Component {
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             notes: this.state.session.notes,
         })
-        .catch((err) => console.log(err));
+            .catch((err) => console.log(err));
     }
 
     submitSessionAttribute(e) {
@@ -241,6 +269,22 @@ class EditSession extends Component {
                                     <ToggleSwitch name="billed" isChecked={this.state.session.billed} toggle={this.toggleAttribute} />
                                 </div>
                             </div>
+                            {this.state.session.complete &&
+                                <div className="d-flex">
+                                    <div className="mt-3 mr-3">
+                                        <div>
+                                            <Label for="session_units" className="mb-0">Units</Label>
+                                            <Input type="number" name="session_units" id="session_units" placeholder="0" min="0" onBlur={this.updateValue} />
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 mr-3">
+                                        <div>
+                                            <Label for="session_cost" className="mb-0">Cost</Label>
+                                            <Input type="number" name="session_cost" id="session_cost" placeholder="0" min="0" onBlur={this.updateValue} />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </Col>
                     </Row>
                 }
@@ -259,7 +303,7 @@ class EditSession extends Component {
                                     <Link to={`/clients/${this.state.client.id}/goals/new`}>
                                         <Button color="primary">Add One?</Button>
                                     </Link>
-                                    {this.state.possible_goals.length && 
+                                    {this.state.possible_goals.length > 0 &&
                                         <Input type="select">
                                             {this.state.possible_goals.map((goal, index) => (
                                                 <option key={index} value={goal.id}>{goal.goal}</option>
@@ -288,7 +332,7 @@ class EditSession extends Component {
                         {/* POC: continue poc, modify poc, discontinue poc */}
                         <Row className="mt-3">
                             <Col className="p-4 mb-3">
-                                <SessionPoc 
+                                <SessionPoc
                                     submit={this.submitSessionAttribute}
                                     selected={this.state.session.attributes.length ? this.state.session.attributes[0].attribute : null}
                                 />
