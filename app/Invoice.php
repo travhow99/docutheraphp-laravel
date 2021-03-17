@@ -43,6 +43,6 @@ class Invoice extends Model
     {
         $items = $this->invoiceLineItems();
         
-        return $items->count() ? $items : [];
+        return $items->count() ? $items->get() : [];
     }
 }

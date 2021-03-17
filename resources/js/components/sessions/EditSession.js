@@ -11,7 +11,7 @@ import SessionGoal from './SessionGoal';
 import ToggleSwitch from '../utilities/ToggleSwitch';
 import DatePicker from "react-datepicker";
 import { GoGear } from 'react-icons/go';
-import { toLocalTime } from '../helpers/functions';
+import { getSessionAttribute, toLocalTime } from '../helpers/functions';
 import SessionNote from './SessionNote';
 import SessionPoc from './SessionPoc';
 
@@ -36,6 +36,7 @@ class EditSession extends Component {
         this.toggleAttribute = this.toggleAttribute.bind(this);
         this.deleteSession = this.deleteSession.bind(this);
         this.submitSessionAttribute = this.submitSessionAttribute.bind(this);
+        this.setAttribute = this.setAttribute.bind(this);
     }
 
     componentDidMount() {
@@ -78,28 +79,48 @@ class EditSession extends Component {
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             [name]: val,
         })
-            .then((response) => response)
-            .then((json) => {
-                if (json.status === 200) {
-                    console.log(json.data);
+        .then((response) => response)
+        .then((json) => {
+            if (json.status === 200) {
+                console.log(json.data);
 
-                    this.setState({
-                        session: {
-                            ...this.state.session,
-                            [name]: val,
-                        },
-                    });
-                }
-            })
+                this.setState({
+                    session: {
+                        ...this.state.session,
+                        [name]: val,
+                    },
+                });
+            }
+        })
     }
 
-    updateValue(e) {
+    setAttribute(e) {
         e.preventDefault();
 
         const name = e.target.name;
         const val = e.target.value;
 
         console.log(e, name, val);
+
+        axios.post(`/api/sessionAttributes`, {
+            name,
+            attribute: val,
+            attributable_id: this.state.session.id,
+        })
+        .then((json) => {
+
+            if (json.status === 200) {
+                console.log(json.data);
+
+                /* this.setState({
+                    session: {
+                        ...this.state.session,
+                        [name]: val,
+                    },
+                }); */
+            }
+        })
+
         return;
 
 
@@ -148,21 +169,20 @@ class EditSession extends Component {
             session_date,
             session_time,
         })
-            .then((response) => response)
-            .then((json) => {
-                if (json.status === 200) {
-                    console.log(json.data);
+        .then((json) => {
+            if (json.status === 200) {
+                console.log(json.data);
 
-                    this.setState({
-                        session: {
-                            ...this.state.session,
-                            session_date: session_date,
-                            session_time: session_time,
-                        },
-                        editingDate: false,
-                    });
-                }
-            })
+                this.setState({
+                    session: {
+                        ...this.state.session,
+                        session_date: session_date,
+                        session_time: session_time,
+                    },
+                    editingDate: false,
+                });
+            }
+        })
     }
 
     handleNoteChange(e) {
@@ -180,7 +200,7 @@ class EditSession extends Component {
         axios.put(`/api/clients/${this.state.client.id}/sessions/${this.state.session.id}`, {
             notes: this.state.session.notes,
         })
-            .catch((err) => console.log(err));
+        .catch((err) => console.log(err));
     }
 
     submitSessionAttribute(e) {
@@ -227,7 +247,7 @@ class EditSession extends Component {
             <div className="client-container">
                 {this.state.session &&
                     <Row className="mt-4">
-                        <Col xs="6">
+                        <Col xs="4">
                             <h2>{this.state.client.name}</h2>
                             <div className="d-flex justify-content-around mb-4">
                                 {!this.state.editingDate ?
@@ -274,13 +294,32 @@ class EditSession extends Component {
                                     <div className="mt-3 mr-3">
                                         <div>
                                             <Label for="session_units" className="mb-0">Units</Label>
-                                            <Input type="number" name="session_units" id="session_units" placeholder="0" min="0" onBlur={this.updateValue} />
+                                            <Input 
+                                                type="number" 
+                                                name="session_units" id="session_units" 
+                                                defaultValue={getSessionAttribute(this.state.session.session_attributes, 'session_units', '0')} 
+                                                placeholder={getSessionAttribute(this.state.session.session_attributes, 'session_units', '0')} 
+                                                min="0" 
+                                                onBlur={this.setAttribute} 
+                                            />
                                         </div>
                                     </div>
                                     <div className="mt-3 mr-3">
                                         <div>
-                                            <Label for="session_cost" className="mb-0">Cost</Label>
-                                            <Input type="number" name="session_cost" id="session_cost" placeholder="0" min="0" onBlur={this.updateValue} />
+                                            <Label for="unit_cost" className="mb-0">Cost</Label>
+                                            {/* 
+                                                @todo
+                                                Set default attribute from client/agency setting? Check with @alli
+                                            */}
+                                            <Input 
+                                                type="number" 
+                                                name="unit_cost" id="unit_cost" 
+                                                defaultValue={getSessionAttribute(this.state.session.session_attributes, 'unit_cost', '0')}
+                                                placeholder={getSessionAttribute(this.state.session.session_attributes, 'unit_cost', '0')} 
+                                                min="0" 
+                                                step="0.05"
+                                                onBlur={this.setAttribute} 
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -334,7 +373,7 @@ class EditSession extends Component {
                             <Col className="p-4 mb-3">
                                 <SessionPoc
                                     submit={this.submitSessionAttribute}
-                                    selected={this.state.session.attributes.length ? this.state.session.attributes[0].attribute : null}
+                                    selected={this.state.session.session_attributes.length ? this.state.session.session_attributes[0].attribute : null}
                                 />
                             </Col>
                         </Row>

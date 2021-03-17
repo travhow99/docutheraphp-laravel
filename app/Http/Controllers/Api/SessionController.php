@@ -94,7 +94,6 @@ class SessionController extends Controller
             'client' => $client,
             'session' => $session,
             'goals' => $goals,
-            'attributes' => $session->attributes,
         ], 200);
     }
 

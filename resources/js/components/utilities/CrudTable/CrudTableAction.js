@@ -25,6 +25,17 @@ const CrudTableAction = (props) => {
         }
     }
 
+    const buildPostData = (targets, data) => {
+        console.log(targets, data);
+        const obj = {};
+
+        targets.forEach((d) => {
+            obj[d] = getDataAttribute(d, data);
+        });
+
+        return obj;
+    }
+
     const postPrompt = () => {
         if (!props.no_alert) {
             confirmAlert({
@@ -50,12 +61,7 @@ const CrudTableAction = (props) => {
 
         let id = getDataAttribute(props.action.data.pop(), props.data);
 
-        const data = {
-            session_id: id,
-        }
-
-        console.log(data, url);
-        return;
+        const data = buildPostData(props.action.post, props.data);
 
         axios.post(url, data)
             .then((json) => {

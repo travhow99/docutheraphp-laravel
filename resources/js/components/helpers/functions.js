@@ -38,3 +38,19 @@ export function getRandomColor() {
   }
   return color;
 }
+
+/**
+ * Get session attribute (session_attributes morhMany table)
+ * @param {Array} data Data array of session attributes
+ * @param {string} attr Attribute being searched for
+ * @param {string|number} fallback Fallback if attribute is not found
+ */
+export const getSessionAttribute = (data, attr, fallback="0") => {
+  console.log(data, attr, fallback);
+  if (!data.length) return fallback;
+
+  const find = data.find((att) => att.name === attr);
+  if (!find) return fallback;
+
+  return find.attribute || fallback;
+}

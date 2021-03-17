@@ -18,7 +18,7 @@ class Session extends Model
      *
      * @var array
      */
-    protected $appends = ['client_name'];
+    protected $appends = ['client_name', 'session_attributes'];
 
     /**
      * Return the client who owns the session.
@@ -58,6 +58,14 @@ class Session extends Model
     public function attributes()
     {
         return $this->morphMany('App\SessionAttribute', 'attributable');
+    }
+
+    /**
+     * Set the session session_attributes attributes.
+     */
+    public function getSessionAttributesAttribute()
+    {
+        return $this->attributes()->get();
     }
 
     /**

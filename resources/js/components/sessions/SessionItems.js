@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardBody } from 'reactstrap';
-import { getReadableDate, toLocalTime } from '../helpers/functions';
+import { getReadableDate, getSessionAttribute, toLocalTime } from '../helpers/functions';
 import CrudTable from '../utilities/CrudTable/CrudTable';
 
-const SessionsItems = (props) => {
+const SessionItems = (props) => {
     console.log('sesh itesm props', props);
     const [sessions, setSessions] = useState(props.priorData || []);
 
@@ -27,6 +27,7 @@ const SessionsItems = (props) => {
     console.log('sesh:', sessions);
 
     const buildData = (items) => {
+        if (!items.length) items = [];
         const data = [];
 
         items.map((i) => {
@@ -34,10 +35,14 @@ const SessionsItems = (props) => {
                 'data-client_id': i.client_id,
                 'data-session_id': i.id,
                 'data-invoice_id': props.invoice.id,
+                'data-session_units': getSessionAttribute(i.session_attributes, 'session_units', '0'),
+                'data-unit_cost': getSessionAttribute(i.session_attributes, 'unit_cost', '0'),
                 billed: i.billed,
                 client: i.client_name,
                 session_date: getReadableDate(i.session_date),
                 session_time: toLocalTime(i.session_time),
+                session_units: getSessionAttribute(i.session_attributes, 'session_units', '0'),
+                unit_cost: '$' + getSessionAttribute(i.session_attributes, 'unit_cost', '0'),
             }
 
             data.push(row);
@@ -71,6 +76,7 @@ const SessionsItems = (props) => {
                             url: `/api/invoices/$1/invoiceLineItems`,
                             action: 'post',
                             data: ['invoice_id'],
+                            post: ['session_id', 'session_units', 'unit_cost'],
                             text: 'Add session to this invoice?',
                             callback: addLineItem,
                         },
@@ -89,6 +95,12 @@ const SessionsItems = (props) => {
                         {
                             title: 'Session Time',
                         },
+                        {
+                            title: 'Units',
+                        },
+                        {
+                            title: 'Cost',
+                        },
                     ]}
                     data={buildData(sessions)}
                 />
@@ -97,4 +109,4 @@ const SessionsItems = (props) => {
     );
 }
 
-export default SessionsItems;
+export default SessionItems;

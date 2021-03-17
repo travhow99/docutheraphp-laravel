@@ -2,6 +2,7 @@
 
 use App\Client;
 use App\Http\Controllers\Api\InvoiceController;
+use App\Invoice;
 use Illuminate\Http\Request;
 
 /*

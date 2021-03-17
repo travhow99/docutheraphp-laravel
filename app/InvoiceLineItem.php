@@ -39,10 +39,10 @@ class InvoiceLineItem extends Model
     /**
      * Set the invoice_line_items attribute.
      */
-    public function getInvoiceLineItemSessionAttribute()
+    public function getSessionAttribute()
     {
-        $session = $this->sessions();
+        $session = $this->session();
 
-        return $session->count() ? $session : [];
+        return $session->count() ? $session->get() : [];
     }
 }

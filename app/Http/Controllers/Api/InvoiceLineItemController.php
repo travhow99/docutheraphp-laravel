@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\InvoiceLineItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Invoice;
 
 class InvoiceLineItemController extends Controller
 {
@@ -37,7 +38,7 @@ class InvoiceLineItemController extends Controller
         ]);
 
         $invoice = Invoice::find($id);
-
+        
         $InvoiceLineItem = $invoice->invoiceLineItems()->create([
             'session_id' => $request->session_id,
             'session_units' => $request->session_units,

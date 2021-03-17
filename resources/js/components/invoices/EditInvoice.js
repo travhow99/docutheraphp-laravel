@@ -8,7 +8,7 @@ import CrudTable from '../utilities/CrudTable/CrudTable';
 import { getReadableDate } from '../helpers/functions';
 import { useParams } from 'react-router';
 import axios from 'axios';
-import SessionsItems from '../sessions/SessionsItems';
+import SessionItems from '../sessions/SessionItems';
 
 const EditInvoice = (props) => {
     const params = useParams();
@@ -85,7 +85,9 @@ const EditInvoice = (props) => {
     }
 
     const buildData = (items) => {
+        if (!items.length) items = [];
         console.log(items);
+
         const data = [];
 
         items.map((i) => {
@@ -219,7 +221,7 @@ const EditInvoice = (props) => {
                             </Button>
                         </CardFooter>
                     </Card>
-                    {adding && <SessionsItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} invoice={invoice} setPriorData={setPriorData} />}
+                    {adding && <SessionItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} invoice={invoice} setPriorData={setPriorData} />}
             </React.Fragment>
             :
             <div>
