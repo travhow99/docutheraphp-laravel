@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardBody } from 'reactstrap';
-import { getReadableDate, getSessionAttribute, toLocalTime } from '../helpers/functions';
+import { getReadableDate, getSessionAttribute, to2digits, toLocalTime } from '../helpers/functions';
 import CrudTable from '../utilities/CrudTable/CrudTable';
 
 const SessionItems = (props) => {
@@ -30,6 +30,8 @@ const SessionItems = (props) => {
         if (!items.length) items = [];
         const data = [];
 
+        console.log('building d', items);
+
         items.map((i) => {
             const row = {
                 'data-client_id': i.client_id,
@@ -42,7 +44,7 @@ const SessionItems = (props) => {
                 session_date: getReadableDate(i.session_date),
                 session_time: toLocalTime(i.session_time),
                 session_units: getSessionAttribute(i.session_attributes, 'session_units', '0'),
-                unit_cost: '$' + getSessionAttribute(i.session_attributes, 'unit_cost', '0'),
+                unit_cost: '$' + to2digits(getSessionAttribute(i.session_attributes, 'unit_cost', '0')),
             }
 
             data.push(row);

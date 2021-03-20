@@ -5,12 +5,14 @@ import {
 import { FaTimes, FaCheck, FaTimesCircle, FaEye, FaTrash } from 'react-icons/fa';
 import { useAlert } from 'react-alert';
 import CrudTable from '../utilities/CrudTable/CrudTable';
-import { getReadableDate } from '../helpers/functions';
+import { getReadableDate, to2digits } from '../helpers/functions';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import SessionItems from '../sessions/SessionItems';
 
 const EditInvoice = (props) => {
+    console.log('editinovice props', props);
+
     const params = useParams();
     const client_id = params.id || null;
     const invoice_id = params.invoice_id;
@@ -86,7 +88,7 @@ const EditInvoice = (props) => {
 
     const buildData = (items) => {
         if (!items.length) items = [];
-        console.log(items);
+        console.log('i line items:', items);
 
         const data = [];
 
@@ -94,12 +96,12 @@ const EditInvoice = (props) => {
             const row = {
                 status: generateColor('complete'),
                 'data-client_id': i.session.client_id,
-                'data-session_id': i.session_id,
+                'data-session_id': i.session.id,
                 'data-invoice_id': i.invoice_id,
                 'data-invoice_line_item_id': i.id,
-                session_date: getReadableDate(i.session.session_date),
+                session_date: getReadableDate(i.session_date),
                 session_units: i.session_units,
-                unit_cost: '$' + (i.session_units * i.unit_cost),
+                unit_cost: '$' + to2digits(i.session_units * i.unit_cost),
             }
 
             data.push(row);
@@ -119,25 +121,32 @@ const EditInvoice = (props) => {
         const index = newLineItems.findIndex((i) => i.id === id);
         newLineItems.splice(index, 1);
 
-        let updatedInvoice = invoice;
+        let updatedInvoice = {...invoice};
         updatedInvoice.invoice_line_items = newLineItems;
 
         console.log('updated invoice', updatedInvoice);
-        
-        const updatedInvoiceIndex = props.invoices.findIndex((i) => i.id === invoice.id);
 
-        const updatedInvoices = [...props.invoices];
-
-        console.log(updatedInvoices, updatedInvoiceIndex);
-
-        updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
-
-        console.log('prev inv', props.invoices);
-        console.log('updated inv', updatedInvoices);
-
-        props.updateInvoices(updatedInvoices);
-
+        // If has props.invoices passed from ManageInvoices.js
+        if (props.invoices) {
+            const updatedInvoiceIndex = props.invoices.findIndex((i) => i.id === invoice.id);
+    
+            const updatedInvoices = [...props.invoices];
+    
+            console.log(updatedInvoices, updatedInvoiceIndex);
+    
+            updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
+    
+            console.log('prev inv', props.invoices);
+            console.log('updated inv', updatedInvoices);
+    
+            props.updateInvoices(updatedInvoices);
+        } else {
+            console.log('prev inv:', invoice, 'new inv:', updatedInvoice);
+            setInvoice(updatedInvoice);
+        }
     }
+
+    console.log('editinovice props', props);
 
     return (
         <div className="client-container">

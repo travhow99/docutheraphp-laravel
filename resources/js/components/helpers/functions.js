@@ -54,3 +54,5 @@ export const getSessionAttribute = (data, attr, fallback="0") => {
 
   return find.attribute || fallback;
 }
+
+export const to2digits = (num) => Math.round(num * 100) / 100;

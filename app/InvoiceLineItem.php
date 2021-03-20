@@ -43,6 +43,6 @@ class InvoiceLineItem extends Model
     {
         $session = $this->session();
 
-        return $session->count() ? $session->get() : [];
+        return $session->count() ? $session->first() : [];
     }
 }
