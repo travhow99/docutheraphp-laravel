@@ -17,7 +17,6 @@ const EditInvoice = (props) => {
     const client_id = params.id || null;
     const invoice_id = params.invoice_id;
 
-    console.log('inv invoice_id:', invoice_id);
     const [invoice, setInvoice] = useState(null)
     const [invoiceName, setInvoiceName] = useState(false);
     const [invoiceDescription, setInvoiceDescription] = useState(false);
@@ -25,7 +24,7 @@ const EditInvoice = (props) => {
     const [priorData, setPriorData] = useState([])
 
     useEffect(() => {
-        const fetchInvoice = async() => {
+        const fetchInvoice = async () => {
             axios.get(`/api/invoices/${invoice_id}`)
                 .then((res) => setInvoice(res.data))
                 .catch((err) => console.log(err))
@@ -67,16 +66,12 @@ const EditInvoice = (props) => {
 
     }
 
-    const calculateUnitPrice = (units, price) => {
-        return units * price;
-    }
-
     const generateColor = (status) => {
         let ret;
 
         switch (status) {
             case 'complete':
-                ret = <FaCheck className="text-success" />;                
+                ret = <FaCheck className="text-success" />;
                 break;
             default:
                 ret = <FaTimesCircle className="text-danger" />
@@ -121,7 +116,7 @@ const EditInvoice = (props) => {
         const index = newLineItems.findIndex((i) => i.id === id);
         newLineItems.splice(index, 1);
 
-        let updatedInvoice = {...invoice};
+        let updatedInvoice = { ...invoice };
         updatedInvoice.invoice_line_items = newLineItems;
 
         console.log('updated invoice', updatedInvoice);
@@ -129,19 +124,15 @@ const EditInvoice = (props) => {
         // If has props.invoices passed from ManageInvoices.js
         if (props.invoices) {
             const updatedInvoiceIndex = props.invoices.findIndex((i) => i.id === invoice.id);
-    
+
             const updatedInvoices = [...props.invoices];
-    
+
             console.log(updatedInvoices, updatedInvoiceIndex);
-    
+
             updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
-    
-            console.log('prev inv', props.invoices);
-            console.log('updated inv', updatedInvoices);
-    
+
             props.updateInvoices(updatedInvoices);
         } else {
-            console.log('prev inv:', invoice, 'new inv:', updatedInvoice);
             setInvoice(updatedInvoice);
         }
     }
@@ -150,7 +141,7 @@ const EditInvoice = (props) => {
 
     return (
         <div className="client-container">
-            {invoice ? 
+            {invoice ?
                 <React.Fragment>
                     <Card className="mt-4">
                         <CardHeader>
@@ -230,12 +221,21 @@ const EditInvoice = (props) => {
                             </Button>
                         </CardFooter>
                     </Card>
-                    {adding && <SessionItems client_id={client_id} buttonLabel={'Save'} priorData={priorData} invoice={invoice} setPriorData={setPriorData} />}
-            </React.Fragment>
-            :
-            <div>
-                Loading...
-            </div>
+                    {adding && 
+                        <SessionItems
+                            client_id={client_id}
+                            buttonLabel={'Save'}
+                            priorData={priorData}
+                            invoice={invoice}
+                            updateInvoice={setInvoice}
+                            setPriorData={setPriorData}
+                        />
+                    }
+                </React.Fragment>
+                :
+                <div>
+                    Loading...
+                </div>
             }
         </div>
 

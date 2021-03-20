@@ -53,9 +53,18 @@ const SessionItems = (props) => {
         return data;
     }
 
-    const addLineItem = (id) => {
-        // post to add line item to invoices
-        console.log('add item', id);
+    const addLineItem = (newLineItem) => {
+        // Update parent invoice to include new line item
+
+        console.log('new', newLineItem, sessions);
+
+        const newInvoice = {...props.invoice};
+
+        console.log('add item', newLineItem);
+
+        newInvoice.invoice_line_items.push(newLineItem);
+
+        props.updateInvoice(newInvoice);
     }
 
     return (

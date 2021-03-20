@@ -56,19 +56,24 @@ const CrudTableAction = (props) => {
         }
     }
 
+    /**
+     * @todo return newly created resource
+     */
     const postAction = () => {
         let url = generateUrl(props.action.url, props.action.data, props.data);
 
-        let id = getDataAttribute(props.action.data.pop(), props.data);
+        // let id = getDataAttribute(props.action.post[0], props.data);
 
         const data = buildPostData(props.action.post, props.data);
 
         axios.post(url, data)
             .then((json) => {
+                console.log('ret', json);
+                
                 if (json.status === 201) {
                     console.log('success');
 
-                    props.action.callback(id);
+                    props.action.callback(json.data);
                 }
             })
             .catch((err) => console.log(err))
