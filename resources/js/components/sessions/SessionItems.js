@@ -8,13 +8,13 @@ const SessionItems = (props) => {
     const [sessions, setSessions] = useState(props.priorData || []);
 
     useEffect(() => {
-        const fetchSessions = async() => {
+        const fetchSessions = async () => {
             const url = props.client_id ? `/api/clients/${props.client_id}/sessions/completed` : '/api/sessions/completed';
 
             axios.get(url)
                 .then((res) => {
                     const data = res.data.sessions ? res.data.sessions : res.data;
-                    
+
                     setSessions(data)
                     props.setPriorData(data)
                 })
@@ -25,6 +25,17 @@ const SessionItems = (props) => {
     }, [setSessions]);
 
     console.log('sesh:', sessions);
+
+    /**
+     * @todo filter sessions by those not already part of invoice
+     */
+
+    const filteredSessions = (sessions) => {
+        const currentSessions = props.invoice.invoice_line_items.map((item) => item.session_id);
+        const unassigned = sessions.filter((sesh) => currentSessions.indexOf(sesh.id) === -1);
+
+        return unassigned;
+    }
 
     const buildData = (items) => {
         if (!items.length) items = [];
@@ -54,13 +65,7 @@ const SessionItems = (props) => {
     }
 
     const addLineItem = (newLineItem) => {
-        // Update parent invoice to include new line item
-
-        console.log('new', newLineItem, sessions);
-
-        const newInvoice = {...props.invoice};
-
-        console.log('add item', newLineItem);
+        const newInvoice = { ...props.invoice };
 
         newInvoice.invoice_line_items.push(newLineItem);
 
@@ -70,7 +75,7 @@ const SessionItems = (props) => {
     return (
         <Card>
             <CardBody>
-                <CrudTable 
+                <CrudTable
                     title="Sessions"
                     actions={[
                         {
@@ -79,10 +84,7 @@ const SessionItems = (props) => {
                             action: 'link',
                             data: ['client_id', 'session_id'],
                         },
-                        /**
-                         * @todo Add session to invoice action
-                         */
-                         {
+                        {
                             type: 'add',
                             url: `/api/invoices/$1/invoiceLineItems`,
                             action: 'post',
@@ -95,7 +97,6 @@ const SessionItems = (props) => {
                     headers={[
                         {
                             title: 'Billed',
-                            // width: '5%',
                         },
                         {
                             title: 'Client',
@@ -113,7 +114,7 @@ const SessionItems = (props) => {
                             title: 'Cost',
                         },
                     ]}
-                    data={buildData(sessions)}
+                    data={buildData(filteredSessions(sessions))}
                 />
             </CardBody>
         </Card>

@@ -11,8 +11,6 @@ import axios from 'axios';
 import SessionItems from '../sessions/SessionItems';
 
 const EditInvoice = (props) => {
-    console.log('editinovice props', props);
-
     const params = useParams();
     const client_id = params.id || null;
     const invoice_id = params.invoice_id;
@@ -32,8 +30,6 @@ const EditInvoice = (props) => {
 
         fetchInvoice();
     }, [invoice_id, setInvoice]);
-
-    console.log('invoice state:', invoice);
 
     const alert = useAlert();
 
@@ -94,7 +90,7 @@ const EditInvoice = (props) => {
                 'data-session_id': i.session.id,
                 'data-invoice_id': i.invoice_id,
                 'data-invoice_line_item_id': i.id,
-                session_date: getReadableDate(i.session_date),
+                session_date: getReadableDate(i.session.session_date),
                 session_units: i.session_units,
                 unit_cost: '$' + to2digits(i.session_units * i.unit_cost),
             }
@@ -127,17 +123,19 @@ const EditInvoice = (props) => {
 
             const updatedInvoices = [...props.invoices];
 
+            updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
+            
             console.log(updatedInvoices, updatedInvoiceIndex);
 
-            updatedInvoices[updatedInvoiceIndex] = updatedInvoice;
-
             props.updateInvoices(updatedInvoices);
+
+            setInvoice(updatedInvoice);
         } else {
             setInvoice(updatedInvoice);
         }
     }
 
-    console.log('editinovice props', props);
+    console.log(props);
 
     return (
         <div className="client-container">

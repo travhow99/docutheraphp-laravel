@@ -41,7 +41,6 @@ function generateUrl(url, data = [], obj) {
     data.forEach((d, index) => {
         url = url.replace(`$${index + 1}`, getDataAttribute(d, obj));
     });
-    console.log('generate', url, data, obj);
 
     return url;
 }

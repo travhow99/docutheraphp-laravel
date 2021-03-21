@@ -16,7 +16,7 @@ class SessionController extends Controller
      */
     public function completed($id=null)
     {
-        $sessions = Session::where('complete', 1);
+        $sessions = Session::where('complete', 1)->where('billed', 0);
 
         if ($id) {
             $sessions = $sessions->where('client_id', $id);

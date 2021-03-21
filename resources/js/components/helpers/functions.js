@@ -46,7 +46,6 @@ export function getRandomColor() {
  * @param {string|number} fallback Fallback if attribute is not found
  */
 export const getSessionAttribute = (data, attr, fallback="0") => {
-  console.log(data, attr, fallback);
   if (!data.length) return fallback;
 
   const find = data.find((att) => att.name === attr);
