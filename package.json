@@ -37,7 +37,7 @@
         "eslint": "^7.19.0",
         "luxon": "^1.25.0",
         "material-table": "^1.69.2",
-        "moment": "^2.27.0",
+        "moment": "^2.29.2",
         "react-alert": "^7.0.2",
         "react-alert-template-basic": "^1.0.0",
         "react-confirm-alert": "^2.7.0",
